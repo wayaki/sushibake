@@ -2,97 +2,169 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sushibake</title>
+  <title>Sushibake Menu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f6efe6; /* beige */
-      color: #333;
+      background: #f6efe6;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { margin-bottom: 40px; }
+
+    .menu-item {
+      display: inline-block;
+      width: 200px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .menu-item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .item-name { font-weight: bold; margin: 10px 0 5px; }
+    .item-price { color: #555; margin-bottom: 10px; }
+
+    .quantity {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .quantity button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: #f8b400;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .quantity span {
+      min-width: 20px;
+      display: inline-block;
       text-align: center;
     }
-    header {
-      padding: 60px 20px;
-    }
-    img {
-      max-width: 200px;
-    }
-    .menu {
-      padding: 40px 20px;
-    }
-    footer {
-      padding: 20px;
-      font-size: 14px;
-      color: #777;
+
+    #cart-list { margin-top: 30px; list-style: none; padding: 0; }
+    #cart-list li { margin: 5px 0; }
+    #order-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #f85c50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="images/logo.jpg" alt="Sushibake Logo" />
-    <h1>Sushibake 🍣</h1>
-    <p>Fresh baked sushi, made with love</p>
-  </header>
+  <h1>Sushibake Menu 🍣</h1>
 
-  <section class="menu">
-    <h2>Menu</h2>
-    
-    <button onclick="addToCart('Salmon Sushibake', 10)">Salmon Sushibake – $10</button>
-    <button onclick="addToCart('Prawn Sushibake', 12)">Prawn Sushibake – $12</button>
-    
-    <h3>Cart</h3>
-    <ul id="cart"></ul>
-    
-    <button onclick="orderWhatsApp()">Order via WhatsApp</button>
-    
-    <script>
-      let cart = [];
-    
-      function addToCart(name, price) {
-        cart.push({ name, price });
+  <div class="menu-item">
+    <img src="images/salmon.jpg" alt="Salmon Mix">
+    <div class="item-name">Salmon Mix</div>
+    <div class="item-price">$10</div>
+    <div class="quantity">
+      <button onclick="changeQty('Salmon Mix', -1)">-</button>
+      <span id="qty-Salmon Mix">0</span>
+      <button onclick="changeQty('Salmon Mix', 1)">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <img src="images/tuna.jpg" alt="Tuna Mayo">
+    <div class="item-name">Tuna Mayo</div>
+    <div class="item-price">$12</div>
+    <div class="quantity">
+      <button onclick="changeQty('Tuna Mayo', -1)">-</button>
+      <span id="qty-Tuna Mayo">0</span>
+      <button onclick="changeQty('Tuna Mayo', 1)">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <img src="images/egg.jpg" alt="Egg Mayo">
+    <div class="item-name">Egg Mayo</div>
+    <div class="item-price">$8</div>
+    <div class="quantity">
+      <button onclick="changeQty('Egg Mayo', -1)">-</button>
+      <span id="qty-Egg Mayo">0</span>
+      <button onclick="changeQty('Egg Mayo', 1)">+</button>
+    </div>
+  </div>
+
+  <h2>Cart</h2>
+  <ul id="cart-list"></ul>
+  <button id="order-btn" onclick="orderWhatsApp()">Order via WhatsApp</button>
+
+  <script>
+    const cart = {
+      "Salmon Mix": { qty: 0, price: 10 },
+      "Tuna Mayo": { qty: 0, price: 12 },
+      "Egg Mayo": { qty: 0, price: 8 }
+    };
+
+    function changeQty(itemName, delta) {
+      const newQty = cart[itemName].qty + delta;
+      if (newQty >= 0) {
+        cart[itemName].qty = newQty;
+        document.getElementById(`qty-${itemName}`).textContent = newQty;
         renderCart();
       }
-    
-      function renderCart() {
-        const cartEl = document.getElementById('cart');
-        cartEl.innerHTML = '';
-        cart.forEach(item => {
+    }
+
+    function renderCart() {
+      const cartList = document.getElementById('cart-list');
+      cartList.innerHTML = '';
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
           const li = document.createElement('li');
-          li.textContent = `${item.name} – $${item.price}`;
-          cartEl.appendChild(li);
-        });
-      }
-    
-      function orderWhatsApp() {
-        if (cart.length === 0) {
-          alert('Your cart is empty!');
-          return;
+          li.textContent = `${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}`;
+          cartList.appendChild(li);
         }
-    
-        let message = "Hello! I'd like to order from Sushibake 🍣\n\nOrder:\n";
-        let total = 0;
-    
-        cart.forEach(item => {
-          message += `- ${item.name} – $${item.price}\n`;
-          total += item.price;
-        });
-    
-        message += `\nTotal: $${total}`;
-    
-        const phone = '6596180504'; // your WhatsApp number
-        const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
       }
-    </script>
+    }
 
-  </section>
+    function orderWhatsApp() {
+      let message = "Hello! I'd like to order from Sushibake 🍣\n\nOrder:\n";
+      let total = 0;
+      let hasItems = false;
 
-  <footer>
-    Order via Instagram DM<br />
-    © 2026 Sushibake
-  </footer>
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
+          hasItems = true;
+          message += `- ${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}\n`;
+          total += cart[item].qty * cart[item].price;
+        }
+      }
+
+      if (!hasItems) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      message += `\nTotal: $${total}`;
+      const phone = "6596180504"; // change to your WhatsApp number
+      const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+  </script>
 
 </body>
 </html>
