@@ -2,88 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sushibake Cart</title>
+  <title>WAYAKI Sushibake Cart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body { font-family: Arial; text-align: center; background: #f6efe6; padding: 20px; }
-    h1 { margin-bottom: 20px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 10px 0; }
-    button { margin-left: 5px; padding: 5px 10px; }
-    #order-btn { margin-top: 20px; padding: 10px 20px; background: #f85c50; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  <link href="stylesheet.css" rel="stylesheet">
 </head>
 <body>
 
-  <h1>Your Cart 🛒</h1>
-  <ul id="cart-list"></ul>
-  <button id="order-btn" onclick="orderWhatsApp()">Order via WhatsApp</button>
+  <header>
+    <h1>Your Cart</h1>
+  </header>
+
+  <div class="cart-container">
+    <button id="back-btn" onclick="window.location.href='index.html'">Back to Menu</button>
+
+    <h2>Order Details</h2>
+    <ul id="cart-list"></ul>
+
+    <div class="checkout-section">
+      <h2>Customer Details</h2>
+
+      <label>
+        Full Name
+        <input type="text" id="name" placeholder="e.g. Lim Wenqi" required>
+      </label>
+
+      <label>
+        Phone Number
+        <input type="tel" id="phone" placeholder="e.g. 9123 4567" required>
+      </label>
+
+      <h2>Collection Method</h2>
+
+      <label class="radio">
+        <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
+        Self Collect (Free)
+      </label>
+
+      <label class="radio">
+        <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
+        Delivery
+      </label>
+
+      <div id="delivery-options" style="display:none;">
+        <label>
+          Delivery Area
+          <select id="area" onchange="updateTotal()" disabled>
+            <option value="">Select area</option>
+            <option value="north">North (+$8)</option>
+            <option value="west">West / Central (+$12)</option>
+            <option value="south">South / East (+$15)</option>
+          </select>
+        </label>
+
+        <label>
+          Postal Code
+          <input type="text" id="postal" placeholder="e.g. 560123" disabled>
+        </label>
+
+        <label>
+          Unit Number
+          <input type="text" id="unit" placeholder="#01-23" disabled>
+        </label>
+      </div>
+
+      <div class="total-box">
+        Total: $<span id="total-price">0</span>
+      </div>
+    </div>
+
+    <button id="order-btn" onclick="orderWhatsApp()">
+      Order via WhatsApp 💬
+    </button>
+
+  </div>
+
+  <footer>
+    © 2026 WAYAKI Sushibake
+  </footer>
 
   <script>
-    // Load cart from localStorage
+    // Cart with internal keys
     let cart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
 
+    // Friendly display names
+    const displayNames = {
+      salmon: "Salmon Buddy",
+      tuna: "Tuna Pop",
+      egg: "Egg Pal"
+    };
+
+    // Delivery fees
+    const deliveryFees = { north: 8, west: 12, south: 15 };
+
+    // Render cart
     function renderCart() {
       const cartList = document.getElementById("cart-list");
       cartList.innerHTML = '';
       let hasItems = false;
+
       for (const item in cart) {
         if (cart[item].qty > 0) {
           hasItems = true;
           const li = document.createElement("li");
-          li.textContent = `${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}`;
-
-          // Optional: buttons to increase/decrease
-          const minusBtn = document.createElement("button");
-          minusBtn.textContent = "-";
-          minusBtn.onclick = () => { changeQty(item, -1); };
-
-          const plusBtn = document.createElement("button");
-          plusBtn.textContent = "+";
-          plusBtn.onclick = () => { changeQty(item, 1); };
-
-          li.appendChild(minusBtn);
-          li.appendChild(plusBtn);
-
+          li.innerHTML = `${displayNames[item]} x ${cart[item].qty} <span class="item-price">$${(cart[item].qty * cart[item].price).toFixed(2)}</span>`;
           cartList.appendChild(li);
         }
       }
+
       if (!hasItems) {
         cartList.innerHTML = "<li>Your cart is empty!</li>";
       }
+
+      updateTotal();
     }
 
-    function changeQty(item, delta) {
-      const newQty = cart[item].qty + delta;
-      if (newQty >= 0) {
-        cart[item].qty = newQty;
-        localStorage.setItem("sushibakeCart", JSON.stringify(cart));
-        renderCart();
-      }
+    // Toggle delivery options
+    function toggleDelivery() {
+      const method = document.querySelector('input[name="method"]:checked').value;
+      const deliveryDiv = document.getElementById("delivery-options");
+      deliveryDiv.style.display = method === "delivery" ? "block" : "none";
+
+      // Enable/disable inputs depending on selection
+      const inputs = deliveryDiv.querySelectorAll("input, select");
+      inputs.forEach(input => input.disabled = method !== "delivery");
+
+      updateTotal();
     }
 
-    function orderWhatsApp() {
-      let message = "Hello! I'd like to order from Sushibake 🍣\n\nOrder:\n";
+    // Calculate total
+    function calculateTotal() {
       let total = 0;
-      let hasItems = false;
-
       for (const item in cart) {
-        if (cart[item].qty > 0) {
-          hasItems = true;
-          message += `- ${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}\n`;
-          total += cart[item].qty * cart[item].price;
+        total += cart[item].qty * cart[item].price;
+      }
+
+      const method = document.querySelector('input[name="method"]:checked').value;
+      if (method === "delivery") {
+        const area = document.getElementById("area").value;
+        if (deliveryFees[area]) total += deliveryFees[area];
+      }
+
+      return total.toFixed(2);
+    }
+
+    function updateTotal() {
+      document.getElementById("total-price").textContent = calculateTotal();
+    }
+
+    // WhatsApp order
+    function orderWhatsApp() {
+      const nameInput = document.getElementById("name").value.trim();
+      if (!nameInput) { alert("Please enter your full name."); return; }
+
+      const phoneInput = document.getElementById("phone").value.trim();
+      if (!phoneInput) { alert("Please enter your phone number."); return; }
+
+      const method = document.querySelector('input[name="method"]:checked').value;
+
+      let postal = '';
+      let unit = '';
+      let area = '';
+
+      if (method === "delivery") {
+        area = document.getElementById("area").value;
+        postal = document.getElementById("postal").value.trim();
+        unit = document.getElementById("unit").value.trim();
+        if (!area || !postal || !unit) {
+          alert("Please fill in delivery area, postal code, and unit number.");
+          return;
         }
       }
 
-      if (!hasItems) {
-        alert("Your cart is empty!");
-        return;
+      // Build message
+      let message = `Hello! My name is ${nameInput}.\nI'd like to order from WAYAKI Sushibake 🍣\n\nOrder:\n`;
+      let hasItems = false;
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
+          hasItems = true;
+          message += `- ${displayNames[item]} x ${cart[item].qty}\n`;
+        }
       }
+      if (!hasItems) { alert("Your cart is empty!"); return; }
 
-      message += `\nTotal: $${total}`;
-      const phone = "6596180504"; // your WhatsApp number
+      message += `\nMethod: ${method === "self" ? "Self Collect" : "Delivery"}`;
+      if (method === "delivery") {
+        message += `\nArea: ${area.charAt(0).toUpperCase() + area.slice(1)}`;
+        message += `\nPostal Code: ${postal}`;
+        message += `\nUnit No: ${unit}`;
+      }
+      message += `\nPhone: ${phoneInput}`;
+      message += `\nTotal: $${calculateTotal()}`;
+
+      const phone = "6596180504";
       const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
+    }
+
+    // Load saved cart
+    const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
+    for (const item in savedCart) {
+      if (cart[item]) cart[item].qty = savedCart[item].qty;
     }
 
     renderCart();

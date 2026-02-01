@@ -1,0 +1,300 @@
+/* === Global Styles === */
+body {
+    font-family: 'Baloo 2', cursive;
+    background: #f6efe6;
+    margin: 0;
+    padding: 0;
+}
+
+/* === Header === */
+header {
+    text-align: center;
+    padding: 10px;
+    background: #ffe8d6;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header img {
+    max-width: 150px;
+    border-radius: 12px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #a6480d;
+}
+
+h2 {
+    margin: 10px 0 5px;
+    color: #a6480d;
+    font-size: 24px;
+}
+
+/* === Menu === */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 10px;
+}
+
+.menu-item {
+    background: #fff3e0;
+    border-radius: 20px;
+    width: 90%;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.2s;
+}
+
+.menu-item:hover {
+    transform: translateY(-4px);
+}
+
+.menu-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.item-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #a6480d;
+}
+
+.item-desc {
+    font-size: 14px;
+    color: #464646;
+}
+
+.item-price {
+    font-size: 18px;
+    color: #000;
+}
+
+/* === Quantity Buttons === */
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: #f8b400;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+}
+
+.quantity button:hover {
+    transform: scale(1.1);
+}
+
+.quantity span {
+    min-width: 25px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* === Cart Button === */
+.cart-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #f85c50;
+    color: #fff;
+    border: none;
+    padding: 15px 22px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+.cart-btn:hover {
+    transform: scale(1.1);
+}
+
+/* === Footer === */
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #777;
+    margin-top: 80px;
+}
+
+/* === Cart Container === */
+.cart-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff3e0;
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+#cart-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+#cart-list li {
+    display: flex;
+    justify-content: space-between; /* pushes name left, price right */
+    padding: 12px 0;
+    border-bottom: 1px dashed #f8b400;
+    font-size: 18px;
+    color: #000000;
+}
+
+#cart-list li:last-child {
+    border-bottom: none;
+}
+
+#cart-list li .item-price {
+    margin-left: 20px; /* optional, gives a little space from the name */
+}
+
+#order-date {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer; /* shows it's selectable */
+}
+
+/* === Checkout Section === */
+.checkout-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.checkout-section label {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: #464646;
+    gap: 5px;
+}
+
+.checkout-section input,
+.checkout-section select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+
+/* === Radio Buttons === */
+.radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #464646;
+}
+
+/* === Total Box === */
+.total-box {
+    margin: 10px 0;
+    padding: 12px;
+    background: #ffe8d6;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* === Order Button === */
+#order-btn {
+    width: 100%;
+    background: #f85c50;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+#order-btn:hover {
+    transform: scale(1.05);
+}
+
+/* === Back Button === */
+#back-btn {
+    background: #ffe9ac;
+    color: #a6480d;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+#back-btn:hover {
+    transform: scale(1.05);
+}
+
+/* === Responsive === */
+@media (max-width: 650px) {
+    .menu-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .menu-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    .quantity {
+        justify-content: center;
+    }
+}
