@@ -4,72 +4,71 @@
   <meta charset="UTF-8" />
   <title>WAYAKI Sushibake</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f6efe6;
+      font-family: 'Baloo 2', cursive;
+      background: #f6efe6; /* beige background */
       margin: 0;
-      padding: 20px;
-      position: relative;
+      padding: 0;
     }
-    
-    h1 {
+
+    header {
       text-align: center;
-      margin-bottom: 40px;
-    }
-    
-    header { 
-      padding: 60px 20px; 
-    }
-    
-    img { 
-      max-width: 200px; 
+      padding: 50px 20px;
+      background: #ffe8d6; /* soft cream */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Top-right cart button */
-    .cart-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #f85c50;
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 16px;
-      z-index: 100;
+    header img {
+      max-width: 150px;
+      border-radius: 12px;
+      margin-bottom: 15px;
     }
 
-    /* Menu items layout */
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #f85c50;
+    }
+
     .menu-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
+      padding: 30px 10px;
     }
 
     .menu-item {
-      background: #fff;
-      border-radius: 12px;
+      background: #fff3e0;
+      border-radius: 20px;
       width: 200px;
-      padding: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
     }
 
     .menu-item img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 16px;
+      margin-bottom: 10px;
     }
 
     .item-name {
       font-weight: bold;
-      margin: 10px 0 5px;
+      font-size: 18px;
+      color: #f85c50;
+      margin-bottom: 5px;
     }
 
     .item-price {
+      font-size: 16px;
       color: #555;
       margin-bottom: 10px;
     }
@@ -83,34 +82,75 @@
     }
 
     .quantity button {
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       border: none;
       background: #f8b400;
       color: #fff;
       font-weight: bold;
       font-size: 18px;
-      border-radius: 6px;
+      border-radius: 50%;
       cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: transform 0.1s;
+    }
+
+    .quantity button:hover {
+      transform: scale(1.1);
     }
 
     .quantity span {
-      min-width: 20px;
+      min-width: 25px;
       display: inline-block;
       text-align: center;
+      font-size: 16px;
     }
-    footer { 
-      padding: 20px; 
-      font-size: 14px; 
-      color: #777; 
+
+    .cart-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #f85c50;
+      color: #fff;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      z-index: 100;
+      transition: transform 0.2s;
+    }
+
+    .cart-btn:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+      margin-top: 50px;
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .menu-container {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
+
   <header>
-  <img src="images/logo.jpg" alt="Sushibake Logo" />
-  <h1>Sushibake Menu</h1>
+    <img src="images/logo.jpg" alt="Sushibake Logo" />
+    <h1>WAYAKI Sushibake Menu</h1>
   </header>
+
   <div class="menu-container">
     <div class="menu-item">
       <img src="images/salmon.jpg" alt="Salmon Mix">
@@ -145,9 +185,9 @@
       </div>
     </div>
   </div>
-  
+
   <button class="cart-btn" onclick="goToCart()">Cart 🛒</button>
-  
+
   <script>
     // Initialize cart
     const cart = {
@@ -156,7 +196,6 @@
       "Egg Mayo": { qty: 0, price: 8 }
     };
 
-    // Update quantity
     function changeQty(itemName, delta) {
       const newQty = cart[itemName].qty + delta;
       if (newQty >= 0) {
@@ -165,13 +204,12 @@
       }
     }
 
-    // Save cart and go to cart page
     function goToCart() {
       localStorage.setItem("sushibakeCart", JSON.stringify(cart));
       window.location.href = "cart.html";
     }
 
-    // Optional: load cart quantities from localStorage if user comes back
+    // Load cart quantities if returning from cart page
     const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
     for (const item in savedCart) {
       if (cart[item]) {
@@ -181,8 +219,8 @@
     }
   </script>
 
-<footer> 
-  © 2026 WAYAKI Sushibake
-</footer> 
-</body> 
+  <footer>
+    © 2026 WAYAKI Sushibake
+  </footer>
+</body>
 </html>
