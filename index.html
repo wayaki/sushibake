@@ -71,7 +71,7 @@
           return;
         }
     
-        let message = `Hello! I’d like to order from Sushibake 🍣\n\nOrder:\n`;
+        let message = "Hello! I'd like to order from Sushibake 🍣\n\nOrder:\n";
         let total = 0;
     
         cart.forEach(item => {
@@ -82,7 +82,7 @@
         message += `\nTotal: $${total}`;
     
         const phone = '6596180504'; // your WhatsApp number
-        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
       }
     </script>
