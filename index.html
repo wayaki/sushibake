@@ -38,9 +38,55 @@
 
   <section class="menu">
     <h2>Menu</h2>
-    <p>🍣 Salmon Sushibake</p>
-    <p>🍤 Prawn Sushibake</p>
-    <p>🥑 Vegetarian Sushibake</p>
+    
+    <button onclick="addToCart('Salmon Sushibake', 10)">Salmon Sushibake – $10</button>
+    <button onclick="addToCart('Prawn Sushibake', 12)">Prawn Sushibake – $12</button>
+    
+    <h3>Cart</h3>
+    <ul id="cart"></ul>
+    
+    <button onclick="orderWhatsApp()">Order via WhatsApp</button>
+    
+    <script>
+      let cart = [];
+    
+      function addToCart(name, price) {
+        cart.push({ name, price });
+        renderCart();
+      }
+    
+      function renderCart() {
+        const cartEl = document.getElementById('cart');
+        cartEl.innerHTML = '';
+        cart.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} – $${item.price}`;
+          cartEl.appendChild(li);
+        });
+      }
+    
+      function orderWhatsApp() {
+        if (cart.length === 0) {
+          alert('Your cart is empty!');
+          return;
+        }
+    
+        let message = `Hello! I’d like to order from Sushibake 🍣\n\nOrder:\n`;
+        let total = 0;
+    
+        cart.forEach(item => {
+          message += `- ${item.name} – $${item.price}\n`;
+          total += item.price;
+        });
+    
+        message += `\nTotal: $${total}`;
+    
+        const phone = '65XXXXXXXX'; // your WhatsApp number
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+      }
+    </script>
+
   </section>
 
   <footer>
