@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sushibake Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial; text-align: center; background: #f6efe6; padding: 20px; }
+    h1 { margin-bottom: 20px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 10px 0; }
+    button { margin-left: 5px; padding: 5px 10px; }
+    #order-btn { margin-top: 20px; padding: 10px 20px; background: #f85c50; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h1>Your Cart 🛒</h1>
+  <ul id="cart-list"></ul>
+  <button id="order-btn" onclick="orderWhatsApp()">Order via WhatsApp</button>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
+
+    function renderCart() {
+      const cartList = document.getElementById("cart-list");
+      cartList.innerHTML = '';
+      let hasItems = false;
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
+          hasItems = true;
+          const li = document.createElement("li");
+          li.textContent = `${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}`;
+
+          // Optional: buttons to increase/decrease
+          const minusBtn = document.createElement("button");
+          minusBtn.textContent = "-";
+          minusBtn.onclick = () => { changeQty(item, -1); };
+
+          const plusBtn = document.createElement("button");
+          plusBtn.textContent = "+";
+          plusBtn.onclick = () => { changeQty(item, 1); };
+
+          li.appendChild(minusBtn);
+          li.appendChild(plusBtn);
+
+          cartList.appendChild(li);
+        }
+      }
+      if (!hasItems) {
+        cartList.innerHTML = "<li>Your cart is empty!</li>";
+      }
+    }
+
+    function changeQty(item, delta) {
+      const newQty = cart[item].qty + delta;
+      if (newQty >= 0) {
+        cart[item].qty = newQty;
+        localStorage.setItem("sushibakeCart", JSON.stringify(cart));
+        renderCart();
+      }
+    }
+
+    function orderWhatsApp() {
+      let message = "Hello! I'd like to order from Sushibake 🍣\n\nOrder:\n";
+      let total = 0;
+      let hasItems = false;
+
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
+          hasItems = true;
+          message += `- ${item} x ${cart[item].qty} – $${cart[item].qty * cart[item].price}\n`;
+          total += cart[item].qty * cart[item].price;
+        }
+      }
+
+      if (!hasItems) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      message += `\nTotal: $${total}`;
+      const phone = "6596180504"; // your WhatsApp number
+      const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    renderCart();
+  </script>
+
+</body>
+</html>
