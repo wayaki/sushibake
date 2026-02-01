@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sushibake Menu</title>
+  <title>WAYAKI Sushibake</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
@@ -91,13 +91,17 @@
       display: inline-block;
       text-align: center;
     }
+    footer { 
+      padding: 20px; 
+      font-size: 14px; 
+      color: #777; 
+    }
   </style>
 </head>
 <body>
-
+  <img src="images/logo.jpg" alt="Sushibake Logo" />
   <h1>Sushibake Menu</h1>
-  <button class="cart-btn" onclick="goToCart()">Cart 🛒</button>
-
+  
   <div class="menu-container">
     <div class="menu-item">
       <img src="images/salmon.jpg" alt="Salmon Mix">
@@ -132,7 +136,9 @@
       </div>
     </div>
   </div>
-
+  
+  <button class="cart-btn" onclick="goToCart()">Cart 🛒</button>
+  
   <script>
     // Initialize cart
     const cart = {
