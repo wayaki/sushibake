@@ -57,6 +57,9 @@ h2 {
 /* .menu-item:hover {
   transform: translateY(-4px);
 } */
+.menu-item:hover {
+  transform: none !important;
+}
 
 .menu-item img {
   width: 200px;
@@ -391,4 +394,5 @@ footer {
     font-size: 15px;
   }
 }
+
 
