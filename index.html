@@ -92,14 +92,13 @@
       tuna: { qty: 0, price: 9.9 },
       egg: { qty: 0, price: 8.9 }
     };
-    
-    // Mapping for friendly names
+  
     const displayNames = {
       salmon: "Salmon Buddy",
       tuna: "Tuna Pop",
       egg: "Egg Pal"
     };
-
+  
     function changeQty(item, delta) {
       const newQty = cart[item].qty + delta;
       if (newQty >= 0) {
@@ -107,12 +106,12 @@
         document.getElementById(`qty-${item}`).textContent = newQty;
       }
     }
-
+  
     function goToCart() {
       localStorage.setItem("sushibakeCart", JSON.stringify(cart));
       window.location.href = "cart.html";
     }
-
+  
     // Load saved cart
     const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
     for (const item in savedCart) {
@@ -121,7 +120,50 @@
         document.getElementById(`qty-${item}`).textContent = cart[item].qty;
       }
     }
+  
+    /* ========= Fullscreen image modal logic ========= */
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("imgModalImg");
+    const closeBtn = modal.querySelector(".img-close");
+  
+    // 1) Make every menu image clickable
+    document.querySelectorAll(".menu-item img").forEach((img) => {
+      img.addEventListener("click", () => openModal(img.src, img.alt));
+    });
+  
+    function openModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = alt || "Full image";
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+  
+      // prevent background scroll
+      document.body.style.overflow = "hidden";
+    }
+  
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalImg.src = "";
+      document.body.style.overflow = "";
+    }
+  
+    // Close when clicking X
+    closeBtn.addEventListener("click", closeModal);
+  
+    // Close when clicking the dark background (but not the image)
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  
+    // Close on ESC key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) {
+        closeModal();
+      }
+    });
   </script>
+
 
 </body>
 </html>
