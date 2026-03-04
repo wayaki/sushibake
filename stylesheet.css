@@ -298,3 +298,73 @@ footer {
         justify-content: center;
     }
 }
+
+/* ===== Mobile compact layout ===== */
+@media (max-width: 480px) {
+
+  header img {
+    max-width: 110px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .menu-container {
+    padding: 14px 10px;
+    gap: 14px;
+  }
+
+  .menu-item {
+    width: 92%;
+    padding: 12px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  /* Make image smaller and keep it nice */
+  .menu-item img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  .item-name {
+    font-size: 18px;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .item-price {
+    font-size: 16px;
+  }
+
+  .quantity button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .quantity span {
+    font-size: 15px;
+    min-width: 20px;
+  }
+
+  /* Cart button smaller on mobile */
+  .cart-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  footer {
+    margin-top: 50px;
+    padding: 14px;
+    font-size: 12px;
+  }
+}
