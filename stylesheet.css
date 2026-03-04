@@ -332,7 +332,7 @@ small {
 /* === Tablet and below === */
 @media (max-width: 768px) {
   h2 {
-    font-size: 30px;
+    font-size: 22px;
   }
 
   .menu-item {
@@ -410,7 +410,7 @@ small {
   }
 
   h2 {
-    font-size: 26px;
+    font-size: 20px;
   }
 
   .menu-item {
@@ -436,3 +436,4 @@ small {
     font-size: 15px;
   }
 }
+
