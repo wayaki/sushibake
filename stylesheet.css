@@ -290,7 +290,7 @@ footer {
     }
 
     .menu-item img {
-        width: 100%;
+        width: 50%;
         height: auto;
     }
 
@@ -379,3 +379,4 @@ footer {
     font-size: 30px;
   }
 }
+
