@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>WAYAKI Sushibake Cart</title>
+  <title>WAYAKI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
   <link href="stylesheet.css" rel="stylesheet">
@@ -33,37 +33,67 @@
       </label>
 
       <h2>Collection Method</h2>
-
-      <label class="radio">
-        <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
-        Self Collect (Free)
-      </label>
-
-      <label class="radio">
-        <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
-        Delivery
-      </label>
-
-      <div id="delivery-options" style="display:none;">
-        <label>
-          Delivery Area
-          <select id="area" onchange="updateTotal()" disabled>
-            <option value="">Select area</option>
-            <option value="north">North (+$8)</option>
-            <option value="west">West / Central (+$12)</option>
-            <option value="south">South / East (+$15)</option>
-          </select>
+      <div class="collect-methods">
+        <label class="radio">
+          <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
+          Self Collect (Free)
         </label>
 
-        <label>
-          Postal Code
-          <input type="text" id="postal" placeholder="e.g. 560123" disabled>
+        <div id="self-options" style="display:block;">
+          <div class="pickup-box">
+            <div class="pickup-title">Pick-up Location</div>
+              <div class="pickup-value">
+                <span id="pickup-location">Woodlands, Singapore 730877</span><br>
+                <small>Exact unit number will be shared via WhatsApp after ordering.</small>
+              </div>
+          </div>
+
+          <label>
+            Preferred Pick-up Time
+            <select id="pickup-time">
+              <option value="">Select time</option>
+              <option value="12:00 - 13:00">12:00 - 13:00</option>
+              <option value="13:00 - 14:00">13:00 - 14:00</option>
+              <option value="14:00 - 15:00">14:00 - 15:00</option>
+              <option value="15:00 - 16:00">15:00 - 16:00</option>
+              <option value="16:00 - 17:00">16:00 - 17:00</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="collect-methods">
+        <label class="radio">
+          <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
+          Delivery
         </label>
 
-        <label>
-          Unit Number
-          <input type="text" id="unit" placeholder="01-23" disabled>
-        </label>
+        <div id="delivery-options" style="display:none;">
+          <label>
+            Delivery Area
+            <select id="area" onchange="updateTotal()" disabled>
+              <option value="">Select area</option>
+              <option value="north">North (+$8)</option>
+              <option value="west">West / North East (+$12)</option>
+              <option value="south">Central / East (+$15)</option>
+            </select>
+          </label>
+
+          <label>
+            Address
+            <input type="text" id="address" placeholder="Block / Street Name" disabled>
+          </label>
+
+          <label>
+            Postal Code
+            <input type="text" id="postal" placeholder="e.g. 560123" disabled>
+          </label>
+
+          <label>
+            Unit Number
+            <input type="text" id="unit" placeholder="01-23" disabled>
+          </label>
+        </div>
       </div>
 
       <div class="total-box">
@@ -78,7 +108,7 @@
   </div>
 
   <footer>
-    © 2026 WAYAKI Sushibake
+    © 2026 WAYAKI Singapore
   </footer>
 
   <script>
@@ -120,12 +150,17 @@
     // Toggle delivery options
     function toggleDelivery() {
       const method = document.querySelector('input[name="method"]:checked').value;
-      const deliveryDiv = document.getElementById("delivery-options");
-      deliveryDiv.style.display = method === "delivery" ? "block" : "none";
 
-      // Enable/disable inputs depending on selection
-      const inputs = deliveryDiv.querySelectorAll("input, select");
-      inputs.forEach(input => input.disabled = method !== "delivery");
+      const deliveryDiv = document.getElementById("delivery-options");
+      const selfDiv = document.getElementById("self-options");
+
+      // Show/hide sections
+      deliveryDiv.style.display = method === "delivery" ? "block" : "none";
+      selfDiv.style.display = method === "self" ? "block" : "none";
+
+      // Enable/disable delivery inputs
+      const deliveryInputs = deliveryDiv.querySelectorAll("input, select");
+      deliveryInputs.forEach(input => input.disabled = method !== "delivery");
 
       updateTotal();
     }
@@ -158,40 +193,75 @@
       const phoneInput = document.getElementById("phone").value.trim();
       if (!phoneInput) { alert("Please enter your phone number."); return; }
 
+      const address = document.getElementById("address").value.trim();
+      if (!address) {
+        alert("Please enter your address.");
+        return;
+      }
+
       const method = document.querySelector('input[name="method"]:checked').value;
 
+      // Validate cart has items
+      let hasItems = false;
+      for (const item in cart) {
+        if (cart[item].qty > 0) { hasItems = true; break; }
+      }
+      if (!hasItems) { alert("Your cart is empty!"); return; }
+
+      // Delivery fields
       let postal = '';
       let unit = '';
       let area = '';
+
+      // Self collect fields
+      let pickupLocation = '';
+      let pickupTime = '';
 
       if (method === "delivery") {
         area = document.getElementById("area").value;
         postal = document.getElementById("postal").value.trim();
         unit = document.getElementById("unit").value.trim();
+
         if (!area || !postal || !unit) {
           alert("Please fill in delivery area, postal code, and unit number.");
+          return;
+        }
+      } else {
+        // Self collect: read location text + selected time
+        pickupLocation = document.getElementById("pickup-location").innerText;
+
+        pickupTime = document.getElementById("pickup-time").value;
+
+        if (!pickupTime) {
+          alert("Please select your preferred pick-up time.");
           return;
         }
       }
 
       // Build message
-      let message = `Hello! My name is ${nameInput}.\nI'd like to order from WAYAKI Sushibake 🍣\n\nOrder:\n`;
-      let hasItems = false;
+      let message = `Hello! My name is ${nameInput}.\n` +
+                    `I'd like to order from WAYAKI Sushibake 🍣\n\n` +
+                    `Order:\n`;
+
       for (const item in cart) {
         if (cart[item].qty > 0) {
-          hasItems = true;
           message += `- ${displayNames[item]} x ${cart[item].qty}\n`;
         }
       }
-      if (!hasItems) { alert("Your cart is empty!"); return; }
 
-      message += `\nMethod: ${method === "self" ? "Self Collect" : "Delivery"}`;
-      if (method === "delivery") {
-        message += `\nArea: ${area.charAt(0).toUpperCase() + area.slice(1)}`;
+      message += `\nCollection Method: ${method === "self" ? "Self Collect" : "Delivery"}`;
+
+      if (method === "self") {
+        message += `\nPick-up Location: ${pickupLocation}`;
+        message += `\nPreferred Pick-up Time: ${pickupTime}`;
+      } else {
+        message += `\nDelivery Area: ${area.charAt(0).toUpperCase() + area.slice(1)}`;
+        message += `\nAddress: ${address}`;
         message += `\nPostal Code: ${postal}`;
         message += `\nUnit No: ${unit}`;
       }
-      message += `\nPhone: ${phoneInput}`;
+
+      message += `\n\nContact Number: ${phoneInput}`;
       message += `\nTotal: $${calculateTotal()}`;
 
       const phone = "6584840768";
@@ -206,6 +276,7 @@
     }
 
     renderCart();
+    toggleDelivery();
   </script>
 
 </body>
