@@ -391,3 +391,52 @@ footer {
     font-size: 15px;
   }
 }
+
+/* ===== Fullscreen Image Modal ===== */
+.img-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+
+.img-modal.open {
+  display: flex;
+}
+
+.img-modal img {
+  max-width: min(95vw, 900px);
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.img-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(255,255,255,0.9);
+  color: #111;
+}
+
+.img-close:hover {
+  background: rgba(255,255,255,1);
+}
+
+/* Optional: show clickable cursor on menu images */
+.menu-item img {
+  cursor: zoom-in;
+}
