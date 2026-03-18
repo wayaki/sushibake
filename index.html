@@ -55,17 +55,17 @@
 
     <!-- ITEM 3 -->
     <div class="menu-item">
-      <img src="images/egg.jpeg" alt="Egg Mayo">
+      <img src="images/chicken.jpeg" alt="Egg Mayo">
 
       <div class="item-info">
-        <div class="item-name">Egg Mayo</div>
+        <div class="item-name">Teriyaki Chicken with Egg</div>
         <div class="item-desc">Soft-boiled egg blended with cucumber for a gentle, cozy, melt-in-your-mouth treat</div>
         <div class="item-price">$8.90</div>
 
         <div class="quantity">
-          <button onclick="changeQty('egg', -1)">-</button>
-          <span id="qty-egg">0</span>
-          <button onclick="changeQty('egg', 1)">+</button>
+          <button onclick="changeQty('chicken', -1)">-</button>
+          <span id="qty-chicken">0</span>
+          <button onclick="changeQty('chicken', 1)">+</button>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
     const displayNames = {
       salmon: "Salmon Buddy",
       tuna: "Tuna Pop",
-      egg: "Egg Pal"
+      chicken: "Teriyaki Chicken"
     };
   
     function changeQty(item, delta) {

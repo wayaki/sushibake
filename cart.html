@@ -19,7 +19,17 @@
     <h2>Order Details</h2>
     <ul id="cart-list"></ul>
 
+
+
     <div class="checkout-section">
+          <h2>Order Schedule</h2>
+    <label>
+      Select Order Date
+      <select id="order-date" required>
+        <option value="">Select a date</option>
+      </select>
+    </label>
+    
       <h2>Customer Details</h2>
 
       <label>
@@ -193,12 +203,6 @@
       const phoneInput = document.getElementById("phone").value.trim();
       if (!phoneInput) { alert("Please enter your phone number."); return; }
 
-      const address = document.getElementById("address").value.trim();
-      if (!address) {
-        alert("Please enter your address.");
-        return;
-      }
-
       const method = document.querySelector('input[name="method"]:checked').value;
 
       // Validate cart has items
@@ -209,6 +213,7 @@
       if (!hasItems) { alert("Your cart is empty!"); return; }
 
       // Delivery fields
+      let address = "";
       let postal = '';
       let unit = '';
       let area = '';
@@ -219,11 +224,12 @@
 
       if (method === "delivery") {
         area = document.getElementById("area").value;
+        address = document.getElementById("address").value.trim();
         postal = document.getElementById("postal").value.trim();
         unit = document.getElementById("unit").value.trim();
 
-        if (!area || !postal || !unit) {
-          alert("Please fill in delivery area, postal code, and unit number.");
+        if (!area || !address || !postal || !unit) {
+          alert("Please fill in delivery area, address, postal code, and unit number.");
           return;
         }
       } else {
