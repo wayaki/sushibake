@@ -21,7 +21,7 @@
 
     <!-- ITEM 1 -->
     <div class="menu-item">
-      <img src="images/salmon.jpeg" alt="Salmon Crabstick">
+      <img src="images/salmon-crabstick.png" alt="Salmon Crabstick" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Salmon Crabstick</div>
@@ -38,7 +38,7 @@
 
     <!-- ITEM 2 -->
     <div class="menu-item">
-      <img src="images/tuna.jpeg" alt="Tuna Mayo">
+      <img src="images/tuna-cucumber.png" alt="Tuna Mayo" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Tuna Mayo</div>
@@ -55,7 +55,7 @@
 
     <!-- ITEM 3 -->
     <div class="menu-item">
-      <img src="images/chicken.jpeg" alt="Egg Mayo">
+      <img src="images/teriyaki-chicken.png" alt="Teriyaki Chicken" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Teriyaki Chicken with Egg</div>
@@ -70,6 +70,12 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="image-modal">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <img class="modal-content" id="modalImg">
   </div>
 
   <button class="cart-btn" onclick="goToCart()">Your Cart</button>
@@ -113,6 +119,27 @@
         document.getElementById(`qty-${item}`).textContent = cart[item].qty;
       }
     }
+
+    // Image Function
+    function openModal(img) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImg");
+
+      modal.style.display = "block";
+      modalImg.src = img.src;
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";    
+      window.onclick = function(event) {
+        const modal = document.getElementById("imageModal");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+    }
+
+
   </script>
 
 

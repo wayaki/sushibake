@@ -1,7 +1,7 @@
 /* === Global Styles === */
 body {
   font-family: 'Baloo 2', cursive;
-  background: #f6efe6;
+  background: #ffffff;
   margin: 0;
   padding: 0;
 }
@@ -139,6 +139,39 @@ h2 {
 
 .cart-btn:hover {
   transform: scale(1.1);
+}
+
+/* Modal background */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Image inside modal */
+.modal-content {
+  display: block;
+  margin: auto;
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 12px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* === Footer === */
