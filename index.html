@@ -21,12 +21,12 @@
 
     <!-- ITEM 1 -->
     <div class="menu-item">
-      <img src="images/salmon-crabstick.png" alt="Salmon Crabstick" onclick="openModal(this)">
+      <img src="images/salmon-crabstick.png" alt="Salmon Deluxe" onclick="openModal(this)">
 
       <div class="item-info">
-        <div class="item-name">Salmon Crabstick</div>
-        <div class="item-desc">Fresh salmon paired with sweet crabstick and crunchy cucumber — simple, fresh, and super satisfying</div>
-        <div class="item-price">$10.90</div>
+        <div class="item-name">Salmon Deluxe</div>
+        <div class="item-desc"></div>
+        <div class="item-price">$12.90</div>
 
         <div class="quantity">
           <button onclick="changeQty('salmon', -1)">-</button>
@@ -38,12 +38,12 @@
 
     <!-- ITEM 2 -->
     <div class="menu-item">
-      <img src="images/tuna-cucumber.png" alt="Tuna Mayo" onclick="openModal(this)">
+      <img src="images/teriyaki-chicken.png" alt="Chicken Comfort" onclick="openModal(this)">
 
       <div class="item-info">
-        <div class="item-name">Tuna Mayo</div>
+        <div class="item-name">Chicken Comfort</div>
         <div class="item-desc">Creamy tuna mixed with cool cucumber for a smooth, comforting bite</div>
-        <div class="item-price">$9.90</div>
+        <div class="item-price">$10.90</div>
 
         <div class="quantity">
           <button onclick="changeQty('tuna', -1)">-</button>
@@ -55,12 +55,12 @@
 
     <!-- ITEM 3 -->
     <div class="menu-item">
-      <img src="images/teriyaki-chicken.png" alt="Teriyaki Chicken" onclick="openModal(this)">
+      <img src="images/tuna-cucumber.png" alt="Tuna Delight" onclick="openModal(this)">
 
       <div class="item-info">
-        <div class="item-name">Teriyaki Chicken with Egg</div>
+        <div class="item-name">Tuna Delight</div>
         <div class="item-desc">Soft-boiled egg blended with cucumber for a gentle, cozy, melt-in-your-mouth treat</div>
-        <div class="item-price">$8.90</div>
+        <div class="item-price">$9.90</div>
 
         <div class="quantity">
           <button onclick="changeQty('chicken', -1)">-</button>
@@ -89,13 +89,13 @@
     const cart = {
       salmon: { qty: 0, price: 10.9 },
       tuna: { qty: 0, price: 9.9 },
-      egg: { qty: 0, price: 8.9 }
+      chicken: { qty: 0, price: 8.9 }
     };
   
     const displayNames = {
-      salmon: "Salmon Buddy",
-      tuna: "Tuna Pop",
-      chicken: "Teriyaki Chicken"
+      salmon: "Salmon Deluxe",
+      tuna: "Tuna Delight",
+      chicken: "Chicken Comfort"
     };
   
     function changeQty(item, delta) {
