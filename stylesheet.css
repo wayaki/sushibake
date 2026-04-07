@@ -8,14 +8,56 @@ body {
 
 /* === Header === */
 header {
-  text-align: center;
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 24px;
+  height: 90px;
+
   background-image: linear-gradient(to bottom, #faa74a, #ffe3a6);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-header img {
-  max-height: 150px;
+/* Logo */
+.logo {
+  height: 60px;
+}
+
+/* Nav container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Nav buttons */
+.nav-links a {
+  text-decoration: none;
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: bold;
+
+  color: #7a3e00;
+  background: #fff3e0;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+  background: #ffe0b2;
+  transform: translateY(-2px);
+}
+
+/* Cart button (highlight) */
+.linked {
+  background: #7a3e00 !important;
+  color: white !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 h1 {
@@ -59,7 +101,6 @@ h2 {
 
 .menu-item img {
   width: 200px;
-  height: 200px;
   object-fit: cover;
   border-radius: 16px;
   flex-shrink: 0;
@@ -185,12 +226,22 @@ footer {
 
 /* === Cart Container === */
 .cart-container {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 10px;
+}
+
+.cart-item {
   background: #fff3e0;
   border-radius: 20px;
+  width: 90%;
+  padding: 15px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.2s;
 }
 
 #cart-list {

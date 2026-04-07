@@ -13,9 +13,14 @@
 </head>
 <body>
 
-  <header>
-    <img src="images/logo.png" alt="WAYAKI Logo">
-  </header>
+<header>
+  <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
+
+  <nav class="nav-links">
+    <a href="/index.html" class="linked">Home</a>
+    <a href="/cart.html">Cart</a>
+  </nav>
+</header>
 
   <div class="menu-container">
 
@@ -46,9 +51,9 @@
         <div class="item-price">$10.90</div>
 
         <div class="quantity">
-          <button onclick="changeQty('tuna', -1)">-</button>
-          <span id="qty-tuna">0</span>
-          <button onclick="changeQty('tuna', 1)">+</button>
+          <button onclick="changeQty('chicken', -1)">-</button>
+          <span id="qty-chicken">0</span>
+          <button onclick="changeQty('chicken', 1)">+</button>
         </div>
       </div>
     </div>
@@ -63,9 +68,9 @@
         <div class="item-price">$9.90</div>
 
         <div class="quantity">
-          <button onclick="changeQty('chicken', -1)">-</button>
-          <span id="qty-chicken">0</span>
-          <button onclick="changeQty('chicken', 1)">+</button>
+          <button onclick="changeQty('tuna', -1)">-</button>
+          <span id="qty-tuna">0</span>
+          <button onclick="changeQty('tuna', 1)">+</button>
         </div>
       </div>
     </div>
@@ -77,9 +82,6 @@
     <span class="close-btn" onclick="closeModal()">×</span>
     <img class="modal-content" id="modalImg">
   </div>
-
-  <button class="cart-btn" onclick="goToCart()">Your Cart</button>
-
   <footer>
     © 2026 WAYAKI Singapore
   </footer>
@@ -87,15 +89,15 @@
   <!-- JavaScript -->
   <script>
     const cart = {
-      salmon: { qty: 0, price: 10.9 },
-      tuna: { qty: 0, price: 9.9 },
-      chicken: { qty: 0, price: 8.9 }
+      salmon: { qty: 0, price: 12.9 },
+      chicken: { qty: 0, price: 10.9 },
+      tuna: { qty: 0, price: 9.9 }
     };
   
     const displayNames = {
       salmon: "Salmon Deluxe",
-      tuna: "Tuna Delight",
-      chicken: "Chicken Comfort"
+      chicken: "Chicken Comfort",
+      tuna: "Tuna Delight"
     };
   
     function changeQty(item, delta) {
