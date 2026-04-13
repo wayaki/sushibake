@@ -1,7 +1,7 @@
 /* === Global Styles === */
 body {
   font-family: 'Baloo 2', cursive;
-  background: #ffffff;
+  background: #fef5f0;
   margin: 0;
   padding: 0;
 }
@@ -72,7 +72,20 @@ h2 {
   font-size: 24px;
 }
 
+p{
+  color: #a6480d;
+
+}
+
 /* === Home === */
+.title{
+  width: 90%;
+  padding: 0px 55px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .home-container {
   display: flex;
   flex-direction: column;
@@ -83,7 +96,7 @@ h2 {
 
 /* === Menu === */
 .menu-item {
-  background: #fff3e0;
+  background: #feeede;
   border-radius: 20px;
   width: 90%;
   padding: 15px;
