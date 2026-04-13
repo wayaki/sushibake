@@ -341,11 +341,13 @@ header {
   font-size: 16px;
   font-weight: 700;
   white-space: nowrap;
+  color: #4a2a00;
 }
 
 #cart-total {
   font-size: 20px;
   font-weight: 800;
+  color: #4a2a00;
 }
 
 .checkout-btn {
