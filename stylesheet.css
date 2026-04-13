@@ -545,8 +545,6 @@ small {
 .total-box {
   width: 100%;
   padding: 14px 18px;
-  background: #fff3e0;
-  border-radius: 18px;
   text-align: center;
   color: #4a2a00;
   font-size: 16px;
@@ -588,8 +586,8 @@ small {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 10px;
   border-top: 2px dashed #f8b400;
   width: 90%;
-  margin: 20px 0;
+  margin: 30px 0;
 }
