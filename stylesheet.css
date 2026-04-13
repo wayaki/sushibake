@@ -321,7 +321,7 @@ header {
 .cart-left {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 20px;
   min-width: 0;
 }
 
