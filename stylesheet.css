@@ -299,7 +299,7 @@ header {
   position: fixed;
   left: 12px;
   right: 12px;
-  bottom: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
 
   background: linear-gradient(to right, #faa74a, #f9a853);
   color: #7a3e00;
