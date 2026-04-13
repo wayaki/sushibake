@@ -13,27 +13,33 @@
 </head>
 <body>
 
-<header>
-  <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
+  <header>
+    <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
 
-  <nav class="nav-links">
-    <a href="https://wayaki.github.io/sushibake/" class="linked">Home</a>
-    <a href="https://wayaki.github.io/sushibake/cart">Cart</a>
-  </nav>
-</header>
-<div class="title">
-  <h2>Menu🍣</h2>
-  <p>All trays are baked</p>
-</div>
+    <nav class="nav-links">
+      <a href="https://wayaki.github.io/sushibake/" class="linked">Menu</a>
+      <a href="https://wayaki.github.io/sushibake/cart">Cart</a>
+    </nav>
+  </header>
+
+  <div class="cutoff-banner" id="cutoff-banner">
+    <span class="cutoff-icon"></span>
+    <span class="cutoff-text" id="cutoff-text">Loading...</span>
+  </div>
+  
   <div class="home-container">
-    
-    <!-- ITEM 1 -->
+    <!-- MAINS -->
+    <div class="section-title">
+      <h2>Mains</h2>
+    </div>
+
+    <!-- MAIN 1 -->
     <div class="menu-item">
       <img src="images/salmon-crabstick.png" alt="Salmon Deluxe" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Salmon Deluxe</div>
-        <div class="item-desc"></div>
+        <div class="item-desc">Mentaiko · Salmon · Crabstick · Japanese Rice <i>( 1 pax )</i></div>
         <div class="item-price">$12.90</div>
 
         <div class="quantity">
@@ -44,13 +50,13 @@
       </div>
     </div>
 
-    <!-- ITEM 2 -->
+    <!-- MAIN 2 -->
     <div class="menu-item">
       <img src="images/teriyaki-chicken.png" alt="Chicken Comfort" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Chicken Comfort</div>
-        <div class="item-desc">Creamy tuna mixed with cool cucumber for a smooth, comforting bite</div>
+        <div class="item-desc">Mayo · Teriyaki · Chicken · Egg · Japanese Rice <i>( 1 pax )</i></div>
         <div class="item-price">$10.90</div>
 
         <div class="quantity">
@@ -61,13 +67,13 @@
       </div>
     </div>
 
-    <!-- ITEM 3 -->
+    <!-- MAIN 3 -->
     <div class="menu-item">
       <img src="images/tuna-cucumber.png" alt="Tuna Delight" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Tuna Delight</div>
-        <div class="item-desc">Soft-boiled egg blended with cucumber for a gentle, cozy, melt-in-your-mouth treat</div>
+        <div class="item-desc">Mayo · Tuna · Cucumber · Japanese Rice <i>( 1 pax )</i></div>
         <div class="item-price">$9.90</div>
 
         <div class="quantity">
@@ -77,6 +83,60 @@
         </div>
       </div>
     </div>
+  </br>
+
+    <!-- SIDES -->
+    <div class="section-title">
+      <h2>Sides</h2>
+    </div>
+
+    <!-- SIDE 1 -->
+    <div class="menu-item">
+      <img src="images/seaweed.png" alt="Seaweed" onclick="openModal(this)">
+
+      <div class="item-info">
+        <div class="item-name">Seaweed</div>
+        <div class="item-desc">Crispy roasted seaweed</div>
+        <div class="item-price">$1.00</div>
+
+        <div class="quantity">
+          <button onclick="changeQty('seaweed', -1)">-</button>
+          <span id="qty-seaweed">0</span>
+          <button onclick="changeQty('seaweed', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDE 2 -->
+    <div class="menu-item">
+      <img src="images/tea-bag.png" alt="Tea Bag" onclick="openModal(this)">
+
+      <div class="item-info">
+        <div class="item-name">Tea</div>
+        <div class="item-desc">tea bag</div>
+        <div class="item-price">$0.50</div>
+
+        <div class="quantity">
+          <button onclick="changeQty('tea', -1)">-</button>
+          <span id="qty-tea">0</span>
+          <button onclick="changeQty('tea', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Bar -->
+    <div class="cart-bar" id="cartBar" onclick="goToCart()">
+      <div class="cart-left">
+        <img class="cart-mascot" src="images/cart-mascot.png" alt="Cart mascot">
+
+        <div class="cart-info">
+          <span id="cart-count">0 items in cart</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+      </div>
+
+      <button class="checkout-btn" type="button">View Cart</button>
+    </div>
 
   </div>
 
@@ -85,47 +145,72 @@
     <span class="close-btn" onclick="closeModal()">×</span>
     <img class="modal-content" id="modalImg">
   </div>
-  <footer>
-    © 2026 WAYAKI Singapore
-  </footer>
+
   
   <!-- JavaScript -->
   <script>
     const cart = {
       salmon: { qty: 0, price: 12.9 },
       chicken: { qty: 0, price: 10.9 },
-      tuna: { qty: 0, price: 9.9 }
+      tuna: { qty: 0, price: 9.9 },
+      seaweed: { qty: 0, price: 1.0 },
+      tea: { qty: 0, price: 0.5 }
     };
-  
+
     const displayNames = {
       salmon: "Salmon Deluxe",
       chicken: "Chicken Comfort",
-      tuna: "Tuna Delight"
+      tuna: "Tuna Delight",
+      seaweed: "Seaweed",
+      tea: "Tea"
     };
-  
+
     function changeQty(item, delta) {
       const newQty = cart[item].qty + delta;
       if (newQty >= 0) {
         cart[item].qty = newQty;
         document.getElementById(`qty-${item}`).textContent = newQty;
+
+        localStorage.setItem("sushibakeCart", JSON.stringify(cart));
+        updateCartBar();
       }
     }
-  
+
+    function updateCartBar() {
+      let totalItems = 0;
+      let totalPrice = 0;
+
+      for (const item in cart) {
+        totalItems += cart[item].qty;
+        totalPrice += cart[item].qty * cart[item].price;
+      }
+
+      const bar = document.getElementById("cartBar");
+
+      if (totalItems === 0) {
+        bar.style.display = "none";
+      } else {
+        bar.style.display = "flex";
+      }
+
+      document.getElementById("cart-count").textContent = `${totalItems} items in cart`;
+      document.getElementById("cart-total").textContent = `$${totalPrice.toFixed(2)}`;
+    }
+
     function goToCart() {
       localStorage.setItem("sushibakeCart", JSON.stringify(cart));
       window.location.href = "cart.html";
     }
-  
-    // Load saved cart
+
     const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
     for (const item in savedCart) {
       if (cart[item]) {
         cart[item].qty = savedCart[item].qty;
-        document.getElementById(`qty-${item}`).textContent = cart[item].qty;
+        const qtyEl = document.getElementById(`qty-${item}`);
+        if (qtyEl) qtyEl.textContent = cart[item].qty;
       }
     }
 
-    // Image Function
     function openModal(img) {
       const modal = document.getElementById("imageModal");
       const modalImg = document.getElementById("modalImg");
@@ -135,15 +220,122 @@
     }
 
     function closeModal() {
-      document.getElementById("imageModal").style.display = "none";    
-      window.onclick = function(event) {
-        const modal = document.getElementById("imageModal");
-        if (event.target === modal) {
-          modal.style.display = "none";
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("imageModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    function getNextCutoffInfo() {
+      const now = new Date();
+      const aprilEnd = new Date(2026, 3, 30, 23, 59, 59, 999);
+
+      if (now > aprilEnd) return null;
+
+      const day = now.getDay(); // 0 Sun - 6 Sat
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const currentTime = hour * 60 + minute;
+      const cutoffTime = 21 * 60;
+
+      let cutoffDate = new Date(now);
+      let label = "";
+
+      if (day === 1) {
+        if (currentTime < cutoffTime) {
+          cutoffDate.setHours(21, 0, 0, 0);
+          label = "Wednesday orders";
+        } else {
+          cutoffDate.setDate(now.getDate() + 3);
+          cutoffDate.setHours(21, 0, 0, 0);
+          label = "Saturday orders";
         }
+      } else if (day === 2 || day === 3) {
+        cutoffDate.setDate(now.getDate() + (4 - day));
+        cutoffDate.setHours(21, 0, 0, 0);
+        label = "Saturday orders";
+      } else if (day === 4) {
+        if (currentTime < cutoffTime) {
+          cutoffDate.setHours(21, 0, 0, 0);
+          label = "Saturday orders";
+        } else {
+          cutoffDate.setDate(now.getDate() + 4);
+          cutoffDate.setHours(21, 0, 0, 0);
+          label = "Wednesday orders";
+        }
+      } else {
+        let daysUntilMonday = day === 0 ? 1 : 8 - day;
+        cutoffDate.setDate(now.getDate() + daysUntilMonday);
+        cutoffDate.setHours(21, 0, 0, 0);
+        label = "Wednesday orders";
+      }
+
+      if (cutoffDate > aprilEnd) return null;
+
+      return { cutoffDate, label };
+    }
+
+    function formatCountdown(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      // add leading zeros
+      const d = String(days).padStart(2, "0");
+      const h = String(hours).padStart(2, "0");
+      const m = String(minutes).padStart(2, "0");
+      const s = String(seconds).padStart(2, "0");
+
+      return `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    function getNextCutoffText() {
+      const now = new Date();
+      const cutoffInfo = getNextCutoffInfo();
+
+      if (!cutoffInfo) {
+        return {
+          text: `⏰ April orders have closed`,
+          urgent: false
+        };
+      }
+
+      const { cutoffDate, label } = cutoffInfo;
+      const diff = cutoffDate - now;
+
+      return {
+        text: `⚡ Closing ${label} in <br> <span class="big-time"> ${formatCountdown(diff)}</span> `,
+        urgent: true
       };
     }
 
+    function updateCutoffBanner() {
+      const banner = document.getElementById("cutoff-banner");
+      const textEl = document.getElementById("cutoff-text");
+
+      if (!banner || !textEl) return;
+
+      const result = getNextCutoffText();
+      textEl.innerHTML = result.text;
+
+      if (result.urgent) {
+        banner.classList.add("urgent", "ticking");
+      } else {
+        banner.classList.remove("urgent", "ticking");
+      }
+    }
+
+    updateCutoffBanner();
+    setInterval(updateCutoffBanner, 1000);
+
+    updateCartBar();
   </script>
 
 

@@ -8,34 +8,30 @@
   <link href="stylesheet.css" rel="stylesheet">
 </head>
 <body>
+  <header>
+    <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
 
-<header>
-  <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
-
-  <nav class="nav-links">
-    <a href="https://wayaki.github.io/sushibake/">Home</a>
-    <a href="https://wayaki.github.io/sushibake/cart" class="linked">Cart</a>
-  </nav>
-</header>
+    <nav class="nav-links">
+      <a href="https://wayaki.github.io/sushibake/">Menu</a>
+      <a href="https://wayaki.github.io/sushibake/cart" class="linked">Cart</a>
+    </nav>
+  </header>
 
   <div class="cart-container">
-    <div class="cart-item">
+    <!-- Order Details -->
+    <div class="section-title">
       <h2>Order Details</h2>
+    </div>
+    <div class="cart-item">
       <ul id="cart-list"></ul>
+    </div>
 
-
-
-      <div class="checkout-section">
-            <h2>Order Schedule</h2>
-      <label>
-        Select Order Date
-        <select id="order-date" required>
-          <option value="">Select a date</option>
-        </select>
-      </label>
-      
+    <!-- Customer Details -->
+    <div class="section-title">
         <h2>Customer Details</h2>
-
+    </div>
+    <div class="cart-item">
+      <div class="checkout-section">
         <label>
           Full Name
           <input type="text" id="name" placeholder="e.g. Charlie" required>
@@ -45,8 +41,16 @@
           Phone Number
           <input type="tel" id="phone" placeholder="e.g. 9123 4567" required>
         </label>
-
+      </div>
+    </div>
+    
+    <!-- Collection Method -->
+    <div class="section-title">
         <h2>Collection Method</h2>
+    </div>
+    <div class="cart-item">
+      <div class="checkout-section">
+        <!-- Self Collect -->
         <div class="collect-methods">
           <label class="radio">
             <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
@@ -61,234 +65,398 @@
                   <small>Exact unit number will be shared via WhatsApp after ordering.</small>
                 </div>
             </div>
+          </div>
+        </div>
 
+        <!-- Delivery -->
+        <div class="collect-methods">
+          <label class="radio">
+            <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
+            Delivery
+          </label>
+          <div id="delivery-options" style="display:none;">
             <label>
-              Preferred Pick-up Time
-              <select id="pickup-time">
-                <option value="">Select time</option>
-                <option value="12:00 - 13:00">12:00 - 13:00</option>
-                <option value="13:00 - 14:00">13:00 - 14:00</option>
-                <option value="14:00 - 15:00">14:00 - 15:00</option>
-                <option value="15:00 - 16:00">15:00 - 16:00</option>
-                <option value="16:00 - 17:00">16:00 - 17:00</option>
+              Delivery Area
+              <select id="area" onchange="updateTotal()" disabled>
+                <option value="">Select area</option>
+                <option value="north">North (+$8)</option>
+                <option value="west">West / North East (+$12)</option>
+                <option value="south">Central / East (+$15)</option>
               </select>
+            </label>
+            <label>
+              Address
+              <input type="text" id="address" placeholder="Block / Street Name" disabled>
+            </label>
+            <label>
+              Postal Code
+              <input type="text" id="postal" placeholder="e.g. 560123" disabled>
+            </label>
+            <label>
+              Unit Number
+              <input type="text" id="unit" placeholder="01-23" disabled>
             </label>
           </div>
         </div>
       </div>
-
-      <div class="collect-methods">
-        <label class="radio">
-          <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
-          Delivery
+    </div>
+          
+    <!-- Order Schedule -->
+    <div class="section-title">
+      <h2>Order Schedule</h2>
+    </div>
+    <div class="cart-item">
+      <div class="checkout-section">
+        <label>
+          Select Order Date
+          <select id="order-date" required>
+            <option value="">Select a date</option>
+          </select>
         </label>
-
-        <div id="delivery-options" style="display:none;">
-          <label>
-            Delivery Area
-            <select id="area" onchange="updateTotal()" disabled>
-              <option value="">Select area</option>
-              <option value="north">North (+$8)</option>
-              <option value="west">West / North East (+$12)</option>
-              <option value="south">Central / East (+$15)</option>
-            </select>
-          </label>
-
-          <label>
-            Address
-            <input type="text" id="address" placeholder="Block / Street Name" disabled>
-          </label>
-
-          <label>
-            Postal Code
-            <input type="text" id="postal" placeholder="e.g. 560123" disabled>
-          </label>
-
-          <label>
-            Unit Number
-            <input type="text" id="unit" placeholder="01-23" disabled>
-          </label>
-        </div>
-      </div>
-
-      <div class="total-box">
-        Total: $<span id="total-price">0</span>
+        <label>
+          Preferred Pick-up Time
+          <select id="pickup-time">
+            <option value="">Select time</option>
+            <option value="12:00 - 14:00">12:00pm - 2:00pm</option>
+            <option value="15:00 - 17:00">3:00pm - 5:00pm</option>
+            <option  id="late-slot" value="18:00 - 20:00">6:00pm - 8:00pm (Self-Collection Only)</option>
+          </select>
+        </label>
       </div>
     </div>
-
-    <button id="order-btn" onclick="orderWhatsApp()">
-      Order via WhatsApp
-    </button>
-
+    <div class="top-border">
+      <div class="total-box">
+        Total: $<span id="total-price">0</span>
+        <button id="order-btn" onclick="orderWhatsApp()">
+          Order via WhatsApp
+        </button>
+      </div>
+    </div>
   </div>
 
-  <footer>
-    © 2026 WAYAKI Singapore
-  </footer>
-
   <script>
-    // Cart with internal keys
     let cart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
 
-    // Friendly display names
+    const itemImages = {
+      salmon: "images/salmon-crabstick.png",
+      tuna: "images/tuna-cucumber.png",
+      chicken: "images/teriyaki-chicken.png",
+      seaweed: "images/seaweed.png",
+      tea: "images/tea-bag.png"
+    };
+
     const displayNames = {
       salmon: "Salmon Deluxe",
       tuna: "Tuna Delight",
-      chicken: "Chicken Comfort"
+      chicken: "Chicken Comfort",
+      seaweed: "Seaweed",
+      tea: "Tea"
     };
 
-    // Delivery fees
-    const deliveryFees = { north: 8, west: 12, south: 15 };
+    const deliveryFees = {
+      north: 8,
+      west: 12,
+      south: 15
+    };
 
-    // Render cart
-    function renderCart() {
-      const cartList = document.getElementById("cart-list");
-      cartList.innerHTML = '';
-      let hasItems = false;
+    function getSelectedMethod() {
+      return document.querySelector('input[name="method"]:checked').value;
+    }
 
-      for (const item in cart) {
-        if (cart[item].qty > 0) {
-          hasItems = true;
-          const li = document.createElement("li");
-          li.innerHTML = `${displayNames[item]} x ${cart[item].qty} <span class="item-price">$${(cart[item].qty * cart[item].price).toFixed(2)}</span>`;
-          cartList.appendChild(li);
+    function hasCartItems() {
+      return Object.values(cart).some(item => item.qty > 0);
+    }
+
+    function getSelectedOrderDateLabel() {
+      const select = document.getElementById("order-date");
+      return select.options[select.selectedIndex]?.text || "";
+    }
+
+    function getFormData() {
+      return {
+        orderDate: getSelectedOrderDateLabel(),
+        pickupTime: document.getElementById("pickup-time").value.trim(),
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        method: getSelectedMethod(),
+        pickupLocation: document.getElementById("pickup-location")?.innerText.trim() || "",
+        area: document.getElementById("area").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        postal: document.getElementById("postal").value.trim(),
+        unit: document.getElementById("unit").value.trim()
+      };
+    }
+
+    function validateForm(data) {
+      if (!hasCartItems()) {
+        return "Your cart is empty!";
+      }
+
+      if (!data.name) {
+        return "Please enter your full name.";
+      }
+
+      if (!data.phone) {
+        return "Please enter your phone number.";
+      }
+
+      if (!data.orderDate) {
+        return "Please select an order date.";
+      }
+
+      if (!data.pickupTime) {
+        return "Please select a preferred time.";
+      }
+
+      if (data.method === "delivery") {
+        if (!data.area) {
+          return "Please select a delivery area.";
+        }
+
+        if (!data.address) {
+          return "Please enter your delivery address.";
+        }
+
+        if (!data.postal) {
+          return "Please enter your postal code.";
+        }
+
+        if (!/^\d{6}$/.test(data.postal)) {
+          return "Please enter a valid 6-digit postal code.";
+        }
+
+        if (!data.unit) {
+          return "Please enter your unit number.";
         }
       }
 
-      if (!hasItems) {
-        cartList.innerHTML = "<li>Your cart is empty!</li>";
-      }
-
-      updateTotal();
+      return null;
     }
 
-    // Toggle delivery options
-    function toggleDelivery() {
-      const method = document.querySelector('input[name="method"]:checked').value;
-
-      const deliveryDiv = document.getElementById("delivery-options");
-      const selfDiv = document.getElementById("self-options");
-
-      // Show/hide sections
-      deliveryDiv.style.display = method === "delivery" ? "block" : "none";
-      selfDiv.style.display = method === "self" ? "block" : "none";
-
-      // Enable/disable delivery inputs
-      const deliveryInputs = deliveryDiv.querySelectorAll("input, select");
-      deliveryInputs.forEach(input => input.disabled = method !== "delivery");
-
-      updateTotal();
-    }
-
-    // Calculate total
-    function calculateTotal() {
+    function calculateSubtotal() {
       let total = 0;
+
       for (const item in cart) {
         total += cart[item].qty * cart[item].price;
       }
 
-      const method = document.querySelector('input[name="method"]:checked').value;
-      if (method === "delivery") {
-        const area = document.getElementById("area").value;
-        if (deliveryFees[area]) total += deliveryFees[area];
-      }
+      return total;
+    }
 
-      return total.toFixed(2);
+    function getDeliveryFee() {
+      const method = getSelectedMethod();
+      if (method !== "delivery") return 0;
+
+      const area = document.getElementById("area").value;
+      return deliveryFees[area] || 0;
+    }
+
+    function calculateTotal() {
+      const subtotal = calculateSubtotal();
+      const deliveryFee = getDeliveryFee();
+      return (subtotal + deliveryFee).toFixed(2);
     }
 
     function updateTotal() {
       document.getElementById("total-price").textContent = calculateTotal();
     }
 
-    // WhatsApp order
-    function orderWhatsApp() {
-      const nameInput = document.getElementById("name").value.trim();
-      if (!nameInput) { alert("Please enter your full name."); return; }
+    function toggleDelivery() {
+      const method = getSelectedMethod();
 
-      const phoneInput = document.getElementById("phone").value.trim();
-      if (!phoneInput) { alert("Please enter your phone number."); return; }
+      const deliveryDiv = document.getElementById("delivery-options");
+      const selfDiv = document.getElementById("self-options");
+      const lateSlot = document.getElementById("late-slot");
+      const timeSelect = document.getElementById("pickup-time");
 
-      const method = document.querySelector('input[name="method"]:checked').value;
+      deliveryDiv.style.display = method === "delivery" ? "block" : "none";
+      selfDiv.style.display = method === "self" ? "block" : "none";
 
-      // Validate cart has items
-      let hasItems = false;
-      for (const item in cart) {
-        if (cart[item].qty > 0) { hasItems = true; break; }
-      }
-      if (!hasItems) { alert("Your cart is empty!"); return; }
+      const deliveryInputs = deliveryDiv.querySelectorAll("input, select");
+      deliveryInputs.forEach(input => {
+        input.disabled = method !== "delivery";
+      });
 
-      // Delivery fields
-      let address = "";
-      let postal = '';
-      let unit = '';
-      let area = '';
+      if (lateSlot) {
+        if (method === "delivery") {
+          lateSlot.disabled = true;
+          lateSlot.style.display = "none";
 
-      // Self collect fields
-      let pickupLocation = '';
-      let pickupTime = '';
-
-      if (method === "delivery") {
-        area = document.getElementById("area").value;
-        address = document.getElementById("address").value.trim();
-        postal = document.getElementById("postal").value.trim();
-        unit = document.getElementById("unit").value.trim();
-
-        if (!area || !address || !postal || !unit) {
-          alert("Please fill in delivery area, address, postal code, and unit number.");
-          return;
-        }
-      } else {
-        // Self collect: read location text + selected time
-        pickupLocation = document.getElementById("pickup-location").innerText;
-
-        pickupTime = document.getElementById("pickup-time").value;
-
-        if (!pickupTime) {
-          alert("Please select your preferred pick-up time.");
-          return;
+          if (timeSelect.value === lateSlot.value) {
+            timeSelect.value = "";
+          }
+        } else {
+          lateSlot.disabled = false;
+          lateSlot.style.display = "block";
         }
       }
 
-      // Build message
-      let message = `Hello! My name is ${nameInput}.\n` +
-                    `I'd like to order from WAYAKI Sushibake 🍣\n\n` +
-                    `Order:\n`;
+      updateTotal();
+    }
+
+    function buildOrderMessage(data) {
+      let message = `Hello! My name is ${data.name}.\n`;
+      message += `I'd like to order from WAYAKI Sushibake 🍣\n\n`;
+      message += `Order Date: ${data.orderDate}\n`;
+      message += `Preferred Time: ${data.pickupTime}\n\n`;
+      message += `Order:\n`;
 
       for (const item in cart) {
         if (cart[item].qty > 0) {
-          message += `- ${displayNames[item]} x ${cart[item].qty}\n`;
+          const qty = cart[item].qty;
+          const price = cart[item].price;
+          const lineTotal = (qty * price).toFixed(2);
+
+          message += `* ${displayNames[item]} x ${qty} — $${lineTotal}\n`;
         }
       }
 
-      message += `\nCollection Method: ${method === "self" ? "Self Collect" : "Delivery"}`;
+      message += `\nCollection Method: ${data.method === "self" ? "Self-Collect" : "Delivery"}`;
 
-      if (method === "self") {
-        message += `\nPick-up Location: ${pickupLocation}`;
-        message += `\nPreferred Pick-up Time: ${pickupTime}`;
+      if (data.method === "self") {
+        message += `\nPick-up Location: \n #03-268 \n Woodlands Avenue 9 \n Singapore 730877`;
       } else {
-        message += `\nDelivery Area: ${area.charAt(0).toUpperCase() + area.slice(1)}`;
-        message += `\nAddress: ${address}`;
-        message += `\nPostal Code: ${postal}`;
-        message += `\nUnit No: ${unit}`;
+        const fee = deliveryFees[data.area] || 0;
+        const areaLabel = data.area.charAt(0).toUpperCase() + data.area.slice(1);
+
+        message += `\nDelivery Area: ${areaLabel}`;
+        message += `\nDelivery Fee: $${fee.toFixed(2)}`;
+        message += `\nAddress: ${data.address}`;
+        message += `\nPostal Code: ${data.postal}`;
+        message += `\nUnit No: ${data.unit}`;
       }
 
-      message += `\n\nContact Number: ${phoneInput}`;
+      message += `\n\nContact Number: ${data.phone}`;
       message += `\nTotal: $${calculateTotal()}`;
 
+      return message;
+    }
+
+    function orderWhatsApp() {
+      const data = getFormData();
+      const error = validateForm(data);
+
+      if (error) {
+        alert(error);
+        return;
+      }
+
+      const message = buildOrderMessage(data);
       const phone = "6584840768";
       const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }
 
-    // Load saved cart
-    const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
-    for (const item in savedCart) {
-      if (cart[item]) cart[item].qty = savedCart[item].qty;
+    function renderCart() {
+      const cartList = document.getElementById("cart-list");
+      let html = "";
+      let hasItems = false;
+
+      for (const item in cart) {
+        if (cart[item].qty > 0) {
+          hasItems = true;
+
+          const isMain = item === "salmon" || item === "chicken" || item === "tuna";
+
+          html += `
+            <li class="cart-block">
+              <div class="cart-row">
+                <img src="${itemImages[item]}" class="cart-item-img" alt="${displayNames[item]}">
+
+                <div class="cart-item-info">
+                  <div class="cart-item-name">${displayNames[item]}</div>
+                  <div class="cart-item-qty">x ${cart[item].qty}</div>
+                </div>
+
+                <div class="cart-item-price">
+                  $${(cart[item].qty * cart[item].price).toFixed(2)}
+                </div>
+              </div>
+
+              ${
+                isMain
+                  ? `<div class="free-seaweed-line">🎁 Free ${cart[item].qty} seaweed</div>`
+                  : ``
+              }
+            </li>
+          `;
+        }
+      }
+
+      if (!hasItems) {
+        html = "<li>Your cart is empty!</li>";
+      }
+
+      cartList.innerHTML = html;
+      updateTotal();
     }
 
+    function formatDateValue(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDateLabel(date) {
+      const options = {
+        weekday: "long",
+        day: "numeric",
+        month: "short"
+      };
+      return date.toLocaleDateString("en-SG", options);
+    }
+
+    function getCutoffDate(orderDate) {
+      const cutoff = new Date(orderDate);
+      const day = orderDate.getDay(); // Wed = 3, Sat = 6
+
+      if (day === 3) {
+        cutoff.setDate(orderDate.getDate() - 2); // Monday
+      } else if (day === 6) {
+        cutoff.setDate(orderDate.getDate() - 2); // Thursday
+      }
+
+      cutoff.setHours(21, 0, 0, 0);
+      return cutoff;
+    }
+
+    function populateAprilOrderDates() {
+      const select = document.getElementById("order-date");
+      const now = new Date();
+
+      select.innerHTML = `<option value="">Select a date</option>`;
+
+      const year = 2026; // fixed to April 2026
+      const aprilMonthIndex = 3;
+
+      for (let day = 1; day <= 30; day++) {
+        const date = new Date(year, aprilMonthIndex, day);
+        const dayOfWeek = date.getDay();
+
+        if (dayOfWeek === 3 || dayOfWeek === 6) {
+          const cutoff = getCutoffDate(date);
+
+          if (now <= cutoff) {
+            const option = document.createElement("option");
+            option.value = formatDateValue(date);
+            option.textContent = formatDateLabel(date);
+            select.appendChild(option);
+          }
+        }
+      }
+    }
+
+    const savedCart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
+    for (const item in savedCart) {
+      if (cart[item]) {
+        cart[item].qty = savedCart[item].qty;
+      }
+    }
+
+    populateAprilOrderDates();
     renderCart();
     toggleDelivery();
   </script>
-
 </body>
 </html>
