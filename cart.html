@@ -316,7 +316,7 @@
       message += `\nCollection Method: ${data.method === "self" ? "Self-Collect" : "Delivery"}`;
 
       if (data.method === "self") {
-        message += `\nPick-up Location: \n #03-268 \n Woodlands Avenue 9 \n Singapore 730877`;
+        message += `\nPick-up Location: \n ${data.pickupLocation}`;
       } else {
         const fee = deliveryFees[data.area] || 0;
         const areaLabel = data.area.charAt(0).toUpperCase() + data.area.slice(1);
