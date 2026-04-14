@@ -337,16 +337,24 @@
     function orderWhatsApp() {
       const data = getFormData();
       const error = validateForm(data);
-
+    
       if (error) {
         alert(error);
         return;
       }
-
+    
       const message = buildOrderMessage(data);
       const phone = "6584840768";
       const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+    
       window.open(url, "_blank");
+    
+      setTimeout(() => {
+        localStorage.removeItem("sushibakeCart");
+        cart = {};
+        renderCart();
+        updateTotal();
+      }, 1500);
     }
 
     function renderCart() {
