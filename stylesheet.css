@@ -89,8 +89,8 @@ header {
 .cutoff-banner {
   width: 90%;
   margin: 50px auto 1px;
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding: 10px 15px;
+  border-radius: 20px;
   font-weight: 700;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
