@@ -521,10 +521,63 @@ small {
 }
 
 #self-options,
-#delivery-options{
+#delivery-options {
   margin-top: 10px;
   padding-left: 26px;
 }
+
+.area-field {
+  display: block;
+}
+
+.area-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.info-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #faa74a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.area-info-box {
+  display: none;
+  position: absolute;
+  top: 26px;
+  left: -20px;
+  width: 240px;
+  padding: 10px 12px;
+  background: #fff3e0;
+  border: 1px solid #ffd59a;
+  border-radius: 12px;
+  color: #3d2210;
+  font-size: 12px;
+  line-height: 1.6;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  z-index: 20;
+}
+
+.info-wrap:hover .area-info-box,
+.info-wrap:focus-within .area-info-box {
+  display: block;
+}
+
 
 /* === Radio Buttons === */
 .checkout-section label.radio {
