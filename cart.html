@@ -82,8 +82,10 @@
               <select id="area" onchange="updateTotal()" disabled>
                 <option value="">Select area</option>
                 <option value="north">North (+$8)</option>
-                <option value="west">West / North East (+$12)</option>
-                <option value="south">Central / East (+$15)</option>
+                <option value="west">West (+$12)</option>
+                <option value="northeast">North-East (+$12)</option>
+                <option value="central">Central (+$15)</option>
+                <option value="east">East (+$15)</option>
               </select>
             </label>
             <label>
@@ -158,7 +160,9 @@
     const deliveryFees = {
       north: 8,
       west: 12,
-      south: 15
+      northeast: 12,
+      central: 15,
+      east: 15
     };
 
     function getSelectedMethod() {
@@ -211,6 +215,9 @@
       }
 
       if (data.method === "delivery") {
+        if (getTotalMainTrays() < 2) {
+          return "Delivery is available for minimum 2 trays.";
+        }
         if (!data.area) {
           return "Please select a delivery area.";
         }
@@ -245,12 +252,39 @@
       return total;
     }
 
+    function getDeliveryDiscount(subtotal, area) {
+      if (subtotal >= 50) {
+        if (area === "north" || area === "west" || area === "northeast") {
+          return "free";
+        }
+
+        if (area === "central" || area === "east") {
+          return 5;
+        }
+      }
+
+      if (subtotal >= 35) {
+        return 3;
+      }
+
+      return 0;
+    }
+
     function getDeliveryFee() {
       const method = getSelectedMethod();
       if (method !== "delivery") return 0;
 
       const area = document.getElementById("area").value;
-      return deliveryFees[area] || 0;
+      const originalFee = deliveryFees[area] || 0;
+      const subtotal = calculateSubtotal();
+
+      const discount = getDeliveryDiscount(subtotal, area);
+
+      if (discount === "free") {
+        return 0;
+      }
+
+      return Math.max(originalFee - discount, 0);
     }
 
     function calculateTotal() {
@@ -265,11 +299,24 @@
 
     function toggleDelivery() {
       const method = getSelectedMethod();
-
       const deliveryDiv = document.getElementById("delivery-options");
       const selfDiv = document.getElementById("self-options");
       const lateSlot = document.getElementById("late-slot");
       const timeSelect = document.getElementById("pickup-time");
+
+      const deliveryRadio = document.querySelector('input[value="delivery"]');
+      const totalTrays = getTotalMainTrays();
+
+      if (totalTrays < 2) {
+        deliveryRadio.disabled = true;
+
+        // auto switch to self-collect if delivery was selected
+        if (deliveryRadio.checked) {
+          document.querySelector('input[value="self"]').checked = true;
+        }
+      } else {
+        deliveryRadio.disabled = false;
+      }
 
       deliveryDiv.style.display = method === "delivery" ? "block" : "none";
       selfDiv.style.display = method === "self" ? "block" : "none";
@@ -318,11 +365,20 @@
       if (data.method === "self") {
         message += `\nPick-up Location: \n ${data.pickupLocation}`;
       } else {
-        const fee = deliveryFees[data.area] || 0;
+        
+        const originalFee = deliveryFees[data.area] || 0;
+        const finalFee = getDeliveryFee();
+        const subtotal = calculateSubtotal();
         const areaLabel = data.area.charAt(0).toUpperCase() + data.area.slice(1);
 
         message += `\nDelivery Area: ${areaLabel}`;
-        message += `\nDelivery Fee: $${fee.toFixed(2)}`;
+        if (finalFee === 0 && subtotal >= 50) {
+          message += `\nDelivery Fee: FREE`;
+        } else if (finalFee < originalFee) {
+          message += `\nDelivery Fee: $${finalFee.toFixed(2)} (Promo applied)`;
+        } else {
+          message += `\nDelivery Fee: $${finalFee.toFixed(2)}`;
+        }
         message += `\nAddress: ${data.address}`;
         message += `\nPostal Code: ${data.postal}`;
         message += `\nUnit No: ${data.unit}`;
@@ -401,6 +457,20 @@
       updateTotal();
     }
 
+    function getTotalMainTrays() {
+      let total = 0;
+
+      const mains = ["salmon", "tuna", "chicken"];
+
+      mains.forEach(item => {
+        if (cart[item]) {
+          total += cart[item].qty;
+        }
+      });
+
+      return total;
+    }
+
     function formatDateValue(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -419,40 +489,39 @@
 
     function getCutoffDate(orderDate) {
       const cutoff = new Date(orderDate);
-      const day = orderDate.getDay(); // Wed = 3, Sat = 6
-
-      if (day === 3) {
-        cutoff.setDate(orderDate.getDate() - 2); // Monday
-      } else if (day === 6) {
-        cutoff.setDate(orderDate.getDate() - 2); // Thursday
-      }
-
-      cutoff.setHours(21, 0, 0, 0);
+      cutoff.setDate(orderDate.getDate() - 1); // 1 day before
+      cutoff.setHours(19, 0, 0, 0); // 7PM
       return cutoff;
     }
 
-    function populateAprilOrderDates() {
+    function populateOrderDates() {
       const select = document.getElementById("order-date");
       const now = new Date();
 
       select.innerHTML = `<option value="">Select a date</option>`;
 
-      const year = 2026; // fixed to April 2026
-      const aprilMonthIndex = 3;
+      const breakStart = new Date(2026, 3, 30); // Apr 30
+      const breakEnd = new Date(2026, 4, 10);   // May 10
 
-      for (let day = 1; day <= 30; day++) {
-        const date = new Date(year, aprilMonthIndex, day);
+      for (let i = 0; i < 30; i++) {
+        const date = new Date();
+        date.setDate(now.getDate() + i);
+
         const dayOfWeek = date.getDay();
 
-        if (dayOfWeek === 3 || dayOfWeek === 6) {
-          const cutoff = getCutoffDate(date);
+        // ❌ Skip weekends
+        if (dayOfWeek === 0 || dayOfWeek === 6) continue;
 
-          if (now <= cutoff) {
-            const option = document.createElement("option");
-            option.value = formatDateValue(date);
-            option.textContent = formatDateLabel(date);
-            select.appendChild(option);
-          }
+        // ❌ Skip break period (1–10 May)
+        if (date >= breakStart && date <= breakEnd) continue;
+
+        const cutoff = getCutoffDate(date);
+
+        if (now <= cutoff) {
+          const option = document.createElement("option");
+          option.value = formatDateValue(date);
+          option.textContent = formatDateLabel(date);
+          select.appendChild(option);
         }
       }
     }
@@ -464,7 +533,7 @@
       }
     }
 
-    populateAprilOrderDates();
+    populateOrderDates();
     renderCart();
     toggleDelivery();
   </script>
