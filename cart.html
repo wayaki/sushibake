@@ -321,7 +321,7 @@
       const deliveryRadio = document.querySelector('input[value="delivery"]');
       const totalTrays = getTotalMainTrays();
 
-      if (totalTrays < 0) {
+      if (totalTrays < 2) {
         deliveryRadio.disabled = true;
 
         // auto switch to self-collect if delivery was selected
