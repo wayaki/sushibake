@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAYAKI Profit Calculator</title>
+  <link rel="stylesheet" href="profit-style.css" />
+</head>
+
+<body>
+<header>
+  <h1>WAYAKI Profit Calculator 🍣</h1>
+  <p>Track expenses, sales, delivery and real profit</p>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>Monthly Summary</h2>
+    <label>
+      Select Month
+      <input type="month" id="summaryMonth">
+    </label>
+
+    <div class="summary-grid">
+      <div><span>Total Food Sales</span><strong id="totalFoodSales">$0.00</strong></div>
+      <div><span>Total Product Cost</span><strong id="totalProductCost">$0.00</strong></div>
+      <div><span>Delivery Collected</span><strong id="deliveryCollected">$0.00</strong></div>
+      <div><span>Delivery Paid</span><strong id="deliveryPaid">$0.00</strong></div>
+      <div><span>Delivery Profit / Loss</span><strong id="deliveryProfit">$0.00</strong></div>
+      <div><span>Other Expenses</span><strong id="otherExpenses">$0.00</strong></div>
+      <div class="profit-box"><span>Real Profit</span><strong id="realProfit">$0.00</strong></div>
+      <div><span>Profit Margin</span><strong id="profitMargin">0%</strong></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Add Sales</h2>
+
+    <label>
+      Customer Name
+      <input type="text" id="customerName" placeholder="e.g. Charlie">
+    </label>
+
+    <label>
+      Order Date
+      <input type="date" id="saleDate">
+    </label>
+
+    <div class="form-grid-2">
+      <label>
+        Tuna Qty
+        <input type="number" id="qtyTuna" min="0" value="0">
+      </label>
+
+      <label>
+        Tuna Price / Tray ($)
+        <input type="number" id="priceTuna" step="0.01" value="9.90">
+      </label>
+
+      <label>
+        Salmon Qty
+        <input type="number" id="qtySalmon" min="0" value="0">
+      </label>
+
+      <label>
+        Salmon Price / Tray ($)
+        <input type="number" id="priceSalmon" step="0.01" value="12.90">
+      </label>
+
+      <label>
+        Chicken Qty
+        <input type="number" id="qtyChicken" min="0" value="0">
+      </label>
+
+      <label>
+        Chicken Price / Tray ($)
+        <input type="number" id="priceChicken" step="0.01" value="10.90">
+      </label>
+    </div>
+
+    <div class="form-grid-4">
+      <label>
+        Collection Method
+        <select id="collectionMethod" onchange="toggleDeliveryFields()">
+          <option value="self">Self Collect</option>
+          <option value="delivery">Delivery</option>
+        </select>
+      </label>
+
+      <label class="delivery-field hidden">
+        Delivery Area
+        <select id="deliveryArea" onchange="setDeliveryFee()">
+          <option value="">Select area</option>
+          <option value="north">North +$8</option>
+          <option value="west">West +$12</option>
+          <option value="northeast">North-East +$12</option>
+          <option value="central">Central +$15</option>
+          <option value="east">East +$15</option>
+        </select>
+      </label>
+
+      <label class="delivery-field hidden">
+        Customer Paid Delivery ($)
+        <input type="number" id="customerDeliveryPaid" step="0.01" value="0">
+      </label>
+
+      <label class="delivery-field hidden">
+        You Paid Driver ($)
+        <input type="number" id="driverPaid" step="0.01" value="0">
+      </label>
+    </div>
+
+    <button onclick="addSale()">Add Sale</button>
+
+    <div class="list-box">
+      <h3>All Sales</h3>
+      <div id="salesList"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Add Shopping / Expense</h2>
+
+    <div class="form-grid">
+      <label>
+        Date
+        <input type="date" id="expenseDate">
+      </label>
+
+      <label>
+        Item Name
+        <input type="text" id="expenseName" placeholder="e.g. Tuna, Mayo, Tray">
+      </label>
+
+      <label>
+        Cost ($)
+        <input type="number" id="expenseCost" step="0.01" placeholder="3.48">
+      </label>
+
+      <label>
+        Amount / Grams / Pcs
+        <input type="text" id="expenseAmount" placeholder="150g / 1000ml / 125pcs">
+      </label>
+    </div>
+
+    <button onclick="addExpense()">Add Expense</button>
+
+    <div class="list-box">
+      <h3>All Expenses</h3>
+      <div id="expenseList"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Product Cost Settings</h2>
+    <p class="small-text">This is still saved in browser only for now.</p>
+
+    <div class="form-grid">
+      <label>
+        Tuna Cost / Tray ($)
+        <input type="number" id="tunaCost" step="0.01" value="4.20">
+      </label>
+
+      <label>
+        Salmon Cost / Tray ($)
+        <input type="number" id="salmonCost" step="0.01" value="5.20">
+      </label>
+
+      <label>
+        Chicken Cost / Tray ($)
+        <input type="number" id="chickenCost" step="0.01" value="4.50">
+      </label>
+    </div>
+
+    <button onclick="saveCostSettings()">Save Product Costs</button>
+  </section>
+
+  <section class="card">
+    <h2>Pay Yourself + Keep Business Money</h2>
+
+    <div class="form-grid">
+      <label>
+        Owner Pay % of Profit
+        <input type="number" id="ownerPercent" value="50">
+      </label>
+
+      <label>
+        Next Month Ingredient Fund %
+        <input type="number" id="ingredientPercent" value="30">
+      </label>
+
+      <label>
+        Emergency / Buffer %
+        <input type="number" id="bufferPercent" value="20">
+      </label>
+    </div>
+
+    <button onclick="calculateSummary()">Calculate Split</button>
+
+    <div class="summary-grid">
+      <div><span>Pay Yourself</span><strong id="ownerPay">$0.00</strong></div>
+      <div><span>Ingredient Fund</span><strong id="ingredientFund">$0.00</strong></div>
+      <div><span>Emergency Buffer</span><strong id="bufferFund">$0.00</strong></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const API_URL = "http://localhost:3000/api";
+
+  let expenses = [];
+  let sales = [];
+
+  let productCosts = JSON.parse(localStorage.getItem("productCosts")) || {
+    tuna: 4.20,
+    salmon: 5.20,
+    chicken: 4.50
+  };
+
+  const deliveryFees = {
+    north: 8,
+    west: 12,
+    northeast: 12,
+    central: 15,
+    east: 15
+  };
+
+  window.onload = function () {
+    const today = new Date();
+    const month = today.toISOString().slice(0, 7);
+
+    document.getElementById("summaryMonth").value = month;
+    document.getElementById("expenseDate").valueAsDate = today;
+    document.getElementById("saleDate").valueAsDate = today;
+
+    document.getElementById("tunaCost").value = productCosts.tuna;
+    document.getElementById("salmonCost").value = productCosts.salmon;
+    document.getElementById("chickenCost").value = productCosts.chicken;
+
+    loadExpenses();
+    loadSales();
+  };
+
+  document.getElementById("summaryMonth").addEventListener("change", calculateSummary);
+
+  async function loadExpenses() {
+    const res = await fetch(`${API_URL}/expenses`);
+    expenses = await res.json();
+    renderExpenses();
+    calculateSummary();
+  }
+
+  async function loadSales() {
+    const res = await fetch(`${API_URL}/orders`);
+    sales = await res.json();
+    renderSales();
+    calculateSummary();
+  }
+
+  async function addExpense() {
+    const date = document.getElementById("expenseDate").value;
+    const name = document.getElementById("expenseName").value;
+    const cost = parseFloat(document.getElementById("expenseCost").value);
+    const amount = document.getElementById("expenseAmount").value;
+
+    if (!date || !name || isNaN(cost)) {
+      alert("Please fill in expense date, name and cost.");
+      return;
+    }
+
+    await fetch(`${API_URL}/expenses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ date, name, cost, amount })
+    });
+
+    document.getElementById("expenseName").value = "";
+    document.getElementById("expenseCost").value = "";
+    document.getElementById("expenseAmount").value = "";
+
+    loadExpenses();
+  }
+
+  async function addSale() {
+    const customerName = document.getElementById("customerName").value || "Guest";
+    const date = document.getElementById("saleDate").value;
+
+    const qtyTuna = parseInt(document.getElementById("qtyTuna").value) || 0;
+    const qtySalmon = parseInt(document.getElementById("qtySalmon").value) || 0;
+    const qtyChicken = parseInt(document.getElementById("qtyChicken").value) || 0;
+
+    const priceTuna = parseFloat(document.getElementById("priceTuna").value) || 0;
+    const priceSalmon = parseFloat(document.getElementById("priceSalmon").value) || 0;
+    const priceChicken = parseFloat(document.getElementById("priceChicken").value) || 0;
+
+    const method = document.getElementById("collectionMethod").value;
+
+    let customerDeliveryPaid = 0;
+    let driverPaid = 0;
+
+    if (method === "delivery") {
+      customerDeliveryPaid = parseFloat(document.getElementById("customerDeliveryPaid").value) || 0;
+      driverPaid = parseFloat(document.getElementById("driverPaid").value) || 0;
+    }
+
+    if (!date || qtyTuna + qtySalmon + qtyChicken === 0) {
+      alert("Please enter date and at least 1 tray.");
+      return;
+    }
+
+    await fetch(`${API_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        date,
+        customerName,
+        items: {
+          tuna: { qty: qtyTuna, price: priceTuna },
+          salmon: { qty: qtySalmon, price: priceSalmon },
+          chicken: { qty: qtyChicken, price: priceChicken }
+        },
+        method,
+        customerDeliveryPaid,
+        driverPaid
+      })
+    });
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("qtyTuna").value = 0;
+    document.getElementById("qtySalmon").value = 0;
+    document.getElementById("qtyChicken").value = 0;
+    document.getElementById("customerDeliveryPaid").value = 0;
+    document.getElementById("driverPaid").value = 0;
+
+    loadSales();
+  }
+
+  function renderExpenses() {
+    const box = document.getElementById("expenseList");
+    box.innerHTML = "";
+
+    expenses.forEach((e) => {
+      box.innerHTML += `
+        <div class="list-item">
+          <div>
+            <strong>${e.name}</strong>
+            <p>${e.date} · ${e.amount || "-"}</p>
+          </div>
+          <div>
+            <strong>$${Number(e.cost).toFixed(2)}</strong>
+            <button class="mini-delete" onclick="deleteExpense('${e._id}')">x</button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function renderSales() {
+    const box = document.getElementById("salesList");
+    box.innerHTML = "";
+
+    sales.forEach((s) => {
+      const items = s.items || {};
+      let orderText = "";
+      let orderTotal = 0;
+
+      Object.keys(items).forEach(item => {
+        const qty = items[item].qty || 0;
+        const price = items[item].price || 0;
+
+        if (qty > 0) {
+          orderText += `${formatItemName(item)} x ${qty} — $${(qty * price).toFixed(2)}<br>`;
+          orderTotal += qty * price;
+        }
+      });
+
+      box.innerHTML += `
+        <div class="list-item">
+          <div>
+            <strong>${orderText}</strong>
+            <p>${s.customerName || "Guest"} · ${s.date} · ${s.method}</p>
+          </div>
+          <div>
+            <strong>$${orderTotal.toFixed(2)}</strong>
+            <button class="mini-delete" onclick="deleteSale('${s._id}')">x</button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function calculateSummary() {
+    const selectedMonth = document.getElementById("summaryMonth").value;
+
+    const monthlySales = sales.filter(s => s.date && s.date.startsWith(selectedMonth));
+    const monthlyExpenses = expenses.filter(e => e.date && e.date.startsWith(selectedMonth));
+
+    let totalFoodSales = 0;
+    let totalProductCost = 0;
+    let deliveryCollected = 0;
+    let deliveryPaid = 0;
+    let otherExpenses = 0;
+
+    monthlySales.forEach(s => {
+      const items = s.items || {};
+
+      Object.keys(items).forEach(item => {
+        const qty = items[item].qty || 0;
+        const price = items[item].price || 0;
+
+        totalFoodSales += qty * price;
+        totalProductCost += qty * productCosts[item];
+      });
+
+      deliveryCollected += s.customerDeliveryPaid || 0;
+      deliveryPaid += s.driverPaid || 0;
+    });
+
+    monthlyExpenses.forEach(e => {
+      otherExpenses += Number(e.cost) || 0;
+    });
+
+    const deliveryProfit = deliveryCollected - deliveryPaid;
+    const realProfit = totalFoodSales - totalProductCost - otherExpenses + deliveryProfit;
+    const profitMargin = totalFoodSales > 0 ? (realProfit / totalFoodSales) * 100 : 0;
+
+    document.getElementById("totalFoodSales").textContent = money(totalFoodSales);
+    document.getElementById("totalProductCost").textContent = money(totalProductCost);
+    document.getElementById("deliveryCollected").textContent = money(deliveryCollected);
+    document.getElementById("deliveryPaid").textContent = money(deliveryPaid);
+    document.getElementById("deliveryProfit").textContent = money(deliveryProfit);
+    document.getElementById("otherExpenses").textContent = money(otherExpenses);
+    document.getElementById("realProfit").textContent = money(realProfit);
+    document.getElementById("profitMargin").textContent = profitMargin.toFixed(1) + "%";
+
+    const ownerPercent = parseFloat(document.getElementById("ownerPercent").value) || 0;
+    const ingredientPercent = parseFloat(document.getElementById("ingredientPercent").value) || 0;
+    const bufferPercent = parseFloat(document.getElementById("bufferPercent").value) || 0;
+
+    document.getElementById("ownerPay").textContent = money(realProfit * ownerPercent / 100);
+    document.getElementById("ingredientFund").textContent = money(realProfit * ingredientPercent / 100);
+    document.getElementById("bufferFund").textContent = money(realProfit * bufferPercent / 100);
+  }
+
+  function saveCostSettings() {
+    productCosts = {
+      tuna: parseFloat(document.getElementById("tunaCost").value) || 0,
+      salmon: parseFloat(document.getElementById("salmonCost").value) || 0,
+      chicken: parseFloat(document.getElementById("chickenCost").value) || 0
+    };
+
+    localStorage.setItem("productCosts", JSON.stringify(productCosts));
+    calculateSummary();
+    alert("Product costs saved!");
+  }
+
+  function toggleDeliveryFields() {
+    const method = document.getElementById("collectionMethod").value;
+
+    document.querySelectorAll(".delivery-field").forEach(field => {
+      field.classList.toggle("hidden", method !== "delivery");
+    });
+  }
+
+  function setDeliveryFee() {
+    const area = document.getElementById("deliveryArea").value;
+    document.getElementById("customerDeliveryPaid").value = deliveryFees[area] || 0;
+  }
+
+  async function deleteExpense(id) {
+    await fetch(`${API_URL}/expenses/${id}`, {
+      method: "DELETE"
+    });
+
+    loadExpenses();
+  }
+
+  async function deleteSale(id) {
+    await fetch(`${API_URL}/orders/${id}`, {
+      method: "DELETE"
+    });
+
+    loadSales();
+  }
+
+  function formatItemName(item) {
+    if (item === "tuna") return "Tuna Delight";
+    if (item === "salmon") return "Salmon Deluxe";
+    if (item === "chicken") return "Chicken Comfort";
+    return item;
+  }
+
+  function money(num) {
+    return "$" + Number(num).toFixed(2);
+  }
+</script>
+
+</body>
+</html>
