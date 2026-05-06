@@ -514,23 +514,31 @@
 
       select.innerHTML = `<option value="">Select a date</option>`;
 
-      const breakStart = new Date(2026, 3, 30); // Apr 30
-      const breakEnd = new Date(2026, 4, 10);   // May 10
+      const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0);     // 8 May 2026
+      const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0); // 11 May 2026
+
+      // Before 8 May, customers cannot select yet
+      if (now < orderOpenDate) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "May Drops open on 8 May";
+        option.disabled = true;
+        select.appendChild(option);
+        return;
+      }
 
       for (let i = 0; i < 30; i++) {
-        const date = new Date();
-        date.setDate(now.getDate() + i);
+        const date = new Date(firstDeliveryDate);
+        date.setDate(firstDeliveryDate.getDate() + i);
 
         const dayOfWeek = date.getDay();
 
-        // ❌ Skip weekends
+        // Only Monday to Friday
         if (dayOfWeek === 0 || dayOfWeek === 6) continue;
-
-        // ❌ Skip break period (1–10 May)
-        if (date >= breakStart && date <= breakEnd) continue;
 
         const cutoff = getCutoffDate(date);
 
+        // Show only if cutoff has not passed
         if (now <= cutoff) {
           const option = document.createElement("option");
           option.value = formatDateValue(date);

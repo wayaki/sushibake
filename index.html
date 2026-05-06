@@ -230,91 +230,76 @@
       }
     };
 
-    function getNextCutoffInfo() {
-      const now = new Date();
-      const aprilEnd = new Date(2026, 3, 30, 23, 59, 59, 999);
+function getNextCutoffInfo() {
+  const now = new Date();
 
-      if (now > aprilEnd) return null;
+  const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0); // 8 May
+  const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0); // 11 May
+  const cutoffHour = 19; // 7PM
 
-      const day = now.getDay(); // 0 Sun - 6 Sat
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentTime = hour * 60 + minute;
-      const cutoffTime = 21 * 60;
+  if (now < orderOpenDate) {
+    return { status: "notOpen" };
+  }
 
-      let cutoffDate = new Date(now);
-      let label = "";
+  function isWeekday(date) {
+    const day = date.getDay();
+    return day >= 1 && day <= 5; // Mon-Fri
+  }
 
-      if (day === 1) {
-        if (currentTime < cutoffTime) {
-          cutoffDate.setHours(21, 0, 0, 0);
-          label = "Wednesday orders";
-        } else {
-          cutoffDate.setDate(now.getDate() + 3);
-          cutoffDate.setHours(21, 0, 0, 0);
-          label = "Saturday orders";
-        }
-      } else if (day === 2 || day === 3) {
-        cutoffDate.setDate(now.getDate() + (4 - day));
-        cutoffDate.setHours(21, 0, 0, 0);
-        label = "Saturday orders";
-      } else if (day === 4) {
-        if (currentTime < cutoffTime) {
-          cutoffDate.setHours(21, 0, 0, 0);
-          label = "Saturday orders";
-        } else {
-          cutoffDate.setDate(now.getDate() + 4);
-          cutoffDate.setHours(21, 0, 0, 0);
-          label = "Wednesday orders";
-        }
-      } else {
-        let daysUntilMonday = day === 0 ? 1 : 8 - day;
-        cutoffDate.setDate(now.getDate() + daysUntilMonday);
-        cutoffDate.setHours(21, 0, 0, 0);
-        label = "Wednesday orders";
-      }
+  let orderDate = new Date(firstDeliveryDate);
 
-      if (cutoffDate > aprilEnd) return null;
+  while (orderDate <= now || !isWeekday(orderDate)) {
+    orderDate.setDate(orderDate.getDate() + 1);
+  }
 
-      return { cutoffDate, label };
+  let cutoffDate = new Date(orderDate);
+  cutoffDate.setDate(orderDate.getDate() - 1);
+  cutoffDate.setHours(cutoffHour, 0, 0, 0);
+
+  if (now > cutoffDate) {
+    orderDate.setDate(orderDate.getDate() + 1);
+
+    while (!isWeekday(orderDate)) {
+      orderDate.setDate(orderDate.getDate() + 1);
     }
 
-    function formatCountdown(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
+    cutoffDate = new Date(orderDate);
+    cutoffDate.setDate(orderDate.getDate() - 1);
+    cutoffDate.setHours(cutoffHour, 0, 0, 0);
+  }
 
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+  const orderLabel = orderDate.toLocaleDateString("en-SG", {
+    weekday: "long",
+    day: "numeric",
+    month: "short"
+  });
 
-      // add leading zeros
-      const d = String(days).padStart(2, "0");
-      const h = String(hours).padStart(2, "0");
-      const m = String(minutes).padStart(2, "0");
-      const s = String(seconds).padStart(2, "0");
+  return {
+    status: "open",
+    cutoffDate,
+    label: `${orderLabel} orders`
+  };
+}
 
-      return `${d}d ${h}h ${m}m ${s}s`;
-    }
+function getNextCutoffText() {
+  const now = new Date();
+  const cutoffInfo = getNextCutoffInfo();
 
-    function getNextCutoffText() {
-      const now = new Date();
-      const cutoffInfo = getNextCutoffInfo();
+  if (cutoffInfo.status === "notOpen") {
+    return {
+      text: `⏰ May Drops orders open 8 May <br><span class="big-time">Deliveries from 11 May</span>`,
+      urgent: false
+    };
+  }
 
-      if (!cutoffInfo) {
-        return {
-          text: `⏰ April orders have closed`,
-          urgent: false
-        };
-      }
+  const { cutoffDate, label } = cutoffInfo;
+  const diff = cutoffDate - now;
 
-      const { cutoffDate, label } = cutoffInfo;
-      const diff = cutoffDate - now;
-
-      return {
-        text: `⚡ Closing ${label} in <br> <span class="big-time"> ${formatCountdown(diff)}</span> `,
-        urgent: true
-      };
-    }
+  return {
+    text: `⚡ Closing ${label} in <br><span class="big-time">${formatCountdown(diff)}</span><br><small>Order 1 day before, 7PM</small>`,
+    urgent: true
+  };
+}
 
     function updateCutoffBanner() {
       const banner = document.getElementById("cutoff-banner");
