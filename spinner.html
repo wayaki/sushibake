@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAYAKI Giveaway Picker</title>
+
+  <link rel="stylesheet" href="spinner-style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <input type="file" id="fileInput" accept=".txt,.csv" />
+    <div class="count" id="entryCount">No file uploaded yet</div>
+
+    
+    <h1>BOSS TREAT</h1>
+    <p class="subtitle">Giveaway Winner Picker</p>
+    <button id="spinBtn">Pick Winner 🎉</button>
+
+    <div class="card-area">
+      <div class="spin-card small" id="name1">@wayaki</div>
+      <div class="spin-card small" id="name2">@sushibake</div>
+      <div class="spin-card small" id="name3">@boss_treat</div>
+
+      <div class="spin-card winner" id="mainName">Upload entries first</div>
+
+      <div class="spin-card small" id="name4">@free_tray</div>
+      <div class="spin-card small" id="name5">@free_delivery</div>
+      <div class="spin-card small" id="name6">🍣</div>
+    </div>
+
+    <div class="winner-box" id="winnerBox"></div>
+
+    <p class="note">
+      duplicates = extra chances ✨<br />
+      screen record for IG story 😗
+    </p>
+  </div>
+
+<script>
+  let entries = [];
+
+  const fileInput = document.getElementById("fileInput");
+  const entryCount = document.getElementById("entryCount");
+  const spinBtn = document.getElementById("spinBtn");
+  const winnerBox = document.getElementById("winnerBox");
+  const mainName = document.getElementById("mainName");
+
+  const nameSlots = [
+    document.getElementById("name1"),
+    document.getElementById("name2"),
+    document.getElementById("name3"),
+    document.getElementById("name4"),
+    document.getElementById("name5"),
+    document.getElementById("name6")
+  ];
+
+  fileInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const text = e.target.result;
+
+      entries = text
+        .split(/\r?\n|,/)
+        .map(name => name.trim())
+        .filter(name => name !== "")
+        .filter(name => name.toLowerCase() !== "username");
+
+      entryCount.textContent = `${entries.length} entries loaded 🍣`;
+      winnerBox.style.display = "none";
+      updateFixedCards();
+    };
+
+    reader.readAsText(file);
+  });
+
+  function randomUser() {
+    return entries[Math.floor(Math.random() * entries.length)];
+  }
+
+  function updateFixedCards(mainUser = null) {
+    nameSlots.forEach(slot => {
+      slot.textContent = randomUser();
+    });
+
+    mainName.textContent = mainUser || randomUser();
+  }
+
+  function pickWinnerSecurely() {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      return entries[array[0] % entries.length];
+    }
+
+    return randomUser();
+  }
+
+  spinBtn.addEventListener("click", startSpin);
+
+  function startSpin() {
+    if (entries.length === 0) {
+      alert("Upload a TXT or CSV file first 😗");
+      return;
+    }
+
+    spinBtn.disabled = true;
+    winnerBox.style.display = "none";
+
+    const winner = pickWinnerSecurely();
+
+    let spins = 0;
+    const totalSpins = 138;
+
+    const interval = setInterval(() => {
+      updateFixedCards();
+      spins++;
+
+      if (spins >= totalSpins) {
+        clearInterval(interval);
+
+        updateFixedCards(winner);
+
+        winnerBox.style.display = "block";
+        winnerBox.innerHTML = `🎉 WINNER:<br>${winner}`;
+
+        spinBtn.disabled = false;
+      }
+    }, 50);
+  }
+</script>
+</body>
+</html>
