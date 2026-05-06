@@ -230,76 +230,76 @@
       }
     };
 
-function getNextCutoffInfo() {
-  const now = new Date();
+  function getNextCutoffInfo() {
+    const now = new Date();
 
-  const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0); // 8 May
-  const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0); // 11 May
-  const cutoffHour = 19; // 7PM
+    const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0); // 8 May
+    const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0); // 11 May
+    const cutoffHour = 19; // 7PM
 
-  if (now < orderOpenDate) {
-    return { status: "notOpen" };
-  }
+    if (now < orderOpenDate) {
+      return { status: "notOpen" };
+    }
 
-  function isWeekday(date) {
-    const day = date.getDay();
-    return day >= 1 && day <= 5; // Mon-Fri
-  }
+    function isWeekday(date) {
+      const day = date.getDay();
+      return day >= 1 && day <= 5; // Mon-Fri
+    }
 
-  let orderDate = new Date(firstDeliveryDate);
+    let orderDate = new Date(firstDeliveryDate);
 
-  while (orderDate <= now || !isWeekday(orderDate)) {
-    orderDate.setDate(orderDate.getDate() + 1);
-  }
-
-  let cutoffDate = new Date(orderDate);
-  cutoffDate.setDate(orderDate.getDate() - 1);
-  cutoffDate.setHours(cutoffHour, 0, 0, 0);
-
-  if (now > cutoffDate) {
-    orderDate.setDate(orderDate.getDate() + 1);
-
-    while (!isWeekday(orderDate)) {
+    while (orderDate <= now || !isWeekday(orderDate)) {
       orderDate.setDate(orderDate.getDate() + 1);
     }
 
-    cutoffDate = new Date(orderDate);
+    let cutoffDate = new Date(orderDate);
     cutoffDate.setDate(orderDate.getDate() - 1);
     cutoffDate.setHours(cutoffHour, 0, 0, 0);
-  }
 
-  const orderLabel = orderDate.toLocaleDateString("en-SG", {
-    weekday: "long",
-    day: "numeric",
-    month: "short"
-  });
+    if (now > cutoffDate) {
+      orderDate.setDate(orderDate.getDate() + 1);
 
-  return {
-    status: "open",
-    cutoffDate,
-    label: `${orderLabel} orders`
-  };
-}
+      while (!isWeekday(orderDate)) {
+        orderDate.setDate(orderDate.getDate() + 1);
+      }
 
-function getNextCutoffText() {
-  const now = new Date();
-  const cutoffInfo = getNextCutoffInfo();
+      cutoffDate = new Date(orderDate);
+      cutoffDate.setDate(orderDate.getDate() - 1);
+      cutoffDate.setHours(cutoffHour, 0, 0, 0);
+    }
 
-  if (cutoffInfo.status === "notOpen") {
+    const orderLabel = orderDate.toLocaleDateString("en-SG", {
+      weekday: "long",
+      day: "numeric",
+      month: "short"
+    });
+
     return {
-      text: `⏰ May Drops orders open 8 May <br><span class="big-time">Deliveries from 11 May</span>`,
-      urgent: false
+      status: "open",
+      cutoffDate,
+      label: `${orderLabel} orders`
     };
   }
 
-  const { cutoffDate, label } = cutoffInfo;
-  const diff = cutoffDate - now;
+  function getNextCutoffText() {
+    const now = new Date();
+    const cutoffInfo = getNextCutoffInfo();
 
-  return {
-    text: `⚡ Closing ${label} in <br><span class="big-time">${formatCountdown(diff)}</span><br><small>Order 1 day before, 7PM</small>`,
-    urgent: true
-  };
-}
+    if (cutoffInfo.status === "notOpen") {
+      return {
+        text: `⏰ May Drops orders open 8 May <br><span class="big-time">Deliveries from 11 May</span>`,
+        urgent: false
+      };
+    }
+
+    const { cutoffDate, label } = cutoffInfo;
+    const diff = cutoffDate - now;
+
+    return {
+      text: `⚡ Closing ${label} in <br><span class="big-time">${formatCountdown(diff)}</span><br><small>Order 1 day before, 7PM</small>`,
+      urgent: true
+    };
+  }
 
     function updateCutoffBanner() {
       const banner = document.getElementById("cutoff-banner");
