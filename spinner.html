@@ -10,11 +10,12 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="top-upload">
     <input type="file" id="fileInput" accept=".txt,.csv" />
     <div class="count" id="entryCount">No file uploaded yet</div>
-
-    
+  </div>
+  
+  <div class="container">
     <h1>BOSS TREAT</h1>
     <p class="subtitle">Giveaway Winner Picker</p>
     <button id="spinBtn">Pick Winner 🎉</button>
@@ -39,101 +40,197 @@
     </p>
   </div>
 
-<script>
-  let entries = [];
+  <script>
+    let entries = [];
 
-  const fileInput = document.getElementById("fileInput");
-  const entryCount = document.getElementById("entryCount");
-  const spinBtn = document.getElementById("spinBtn");
-  const winnerBox = document.getElementById("winnerBox");
-  const mainName = document.getElementById("mainName");
+    // excluded from WINNING only
+    const excludedWinners = [
+      "@dyswaydatway",
+      "@peili_ng121",
+      "@tngkenny",
+      "@weewee0812",
+      "@carissaeu12",
+      "@alicesflow",
+      "@bbhuixuan",
+      "@lfg.1108",
+      "@charis.ting",
+      "@jenlawcc",
+      "@snow89861",
+      "@jonyjony2727",
+      "@john_wanderer",
+      "@fangtangwen",
+      "@lhleeeeeee_97",
+      "@peipei3753",
+      "@blessed_von",
+      "@bliss_jev",
+      "@rainbow_mama",
+      "@mypuppyfriendd",
+      "@peipei40525",
+      "@invleftb4",
+      "@iwantberries27",
+      "@contentedaddy",
+      "@gwendolyn_ysl"
+    ].map(name => name.toLowerCase());
 
-  const nameSlots = [
-    document.getElementById("name1"),
-    document.getElementById("name2"),
-    document.getElementById("name3"),
-    document.getElementById("name4"),
-    document.getElementById("name5"),
-    document.getElementById("name6")
-  ];
+    const fileInput = document.getElementById("fileInput");
+    const entryCount = document.getElementById("entryCount");
+    const spinBtn = document.getElementById("spinBtn");
+    const winnerBox = document.getElementById("winnerBox");
+    const mainName = document.getElementById("mainName");
 
-  fileInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    const nameSlots = [
+      document.getElementById("name1"),
+      document.getElementById("name2"),
+      document.getElementById("name3"),
+      document.getElementById("name4"),
+      document.getElementById("name5"),
+      document.getElementById("name6")
+    ];
 
-    const reader = new FileReader();
+    // rolling queue
+    let rollingNames = [];
 
-    reader.onload = function (e) {
-      const text = e.target.result;
+    fileInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-      entries = text
-        .split(/\r?\n|,/)
-        .map(name => name.trim())
-        .filter(name => name !== "")
-        .filter(name => name.toLowerCase() !== "username");
+      const reader = new FileReader();
 
-      entryCount.textContent = `${entries.length} entries loaded 🍣`;
-      winnerBox.style.display = "none";
-      updateFixedCards();
-    };
+      reader.onload = function (e) {
+        const text = e.target.result;
 
-    reader.readAsText(file);
-  });
+        entries = text
+          .split(/\r?\n|,/)
+          .map(name => name.trim())
+          .filter(name => name !== "")
+          .filter(name => name.toLowerCase() !== "username");
 
-  function randomUser() {
-    return entries[Math.floor(Math.random() * entries.length)];
-  }
+        entryCount.textContent = `${entries.length} entries loaded 🍣`;
 
-  function updateFixedCards(mainUser = null) {
-    nameSlots.forEach(slot => {
-      slot.textContent = randomUser();
+        winnerBox.style.display = "none";
+
+        setupRollingNames();
+      };
+
+      reader.readAsText(file);
     });
 
-    mainName.textContent = mainUser || randomUser();
-  }
-
-  function pickWinnerSecurely() {
-    if (window.crypto && window.crypto.getRandomValues) {
-      const array = new Uint32Array(1);
-      window.crypto.getRandomValues(array);
-      return entries[array[0] % entries.length];
+    function randomUser() {
+      return entries[Math.floor(Math.random() * entries.length)];
     }
 
-    return randomUser();
-  }
+    function setupRollingNames() {
+      rollingNames = [];
 
-  spinBtn.addEventListener("click", startSpin);
-
-  function startSpin() {
-    if (entries.length === 0) {
-      alert("Upload a TXT or CSV file first 😗");
-      return;
-    }
-
-    spinBtn.disabled = true;
-    winnerBox.style.display = "none";
-
-    const winner = pickWinnerSecurely();
-
-    let spins = 0;
-    const totalSpins = 138;
-
-    const interval = setInterval(() => {
-      updateFixedCards();
-      spins++;
-
-      if (spins >= totalSpins) {
-        clearInterval(interval);
-
-        updateFixedCards(winner);
-
-        winnerBox.style.display = "block";
-        winnerBox.innerHTML = `🎉 WINNER:<br>${winner}`;
-
-        spinBtn.disabled = false;
+      for (let i = 0; i < 7; i++) {
+        rollingNames.push(randomUser());
       }
-    }, 50);
-  }
-</script>
+
+      renderRollingNames();
+    }
+
+    function renderRollingNames() {
+      nameSlots[0].textContent = rollingNames[0];
+      nameSlots[1].textContent = rollingNames[1];
+      nameSlots[2].textContent = rollingNames[2];
+
+      mainName.textContent = rollingNames[3];
+
+      nameSlots[3].textContent = rollingNames[4];
+      nameSlots[4].textContent = rollingNames[5];
+      nameSlots[5].textContent = rollingNames[6];
+    }
+
+    // THIS creates the moving-down effect
+    function updateFixedCards(finalWinner = null) {
+
+      // remove bottom
+      rollingNames.pop();
+
+      // add new name to top
+      rollingNames.unshift(randomUser());
+
+      // force winner into middle at end
+      if (finalWinner) {
+        rollingNames[3] = finalWinner;
+      }
+
+      renderRollingNames();
+    }
+
+    function pickWinnerSecurely() {
+      const eligibleEntries = entries.filter(name =>
+        !excludedWinners.includes(name.toLowerCase())
+      );
+
+      if (eligibleEntries.length === 0) {
+        alert("No eligible winners left 😭");
+        return null;
+      }
+
+      if (window.crypto && window.crypto.getRandomValues) {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return eligibleEntries[array[0] % eligibleEntries.length];
+      }
+
+      return eligibleEntries[Math.floor(Math.random() * eligibleEntries.length)];
+    }
+
+    spinBtn.addEventListener("click", startSpin);
+
+    function startSpin() {
+      if (entries.length === 0) {
+        alert("Upload a TXT or CSV file first 😗");
+        return;
+      }
+
+      if (rollingNames.length === 0) {
+        setupRollingNames();
+      }
+
+      spinBtn.disabled = true;
+      winnerBox.style.display = "none";
+
+      let spins = 0;
+
+      const minimumSpins = Math.ceil(entries.length * 1.02);
+
+      function isEligible(name) {
+        return !excludedWinners.includes(name.toLowerCase());
+      }
+
+      function spinStep() {
+        updateFixedCards();
+        spins++;
+
+        const currentCenterName = rollingNames[3];
+
+        let speed = 45;
+
+        if (spins >= minimumSpins) {
+          const extraSpins = spins - minimumSpins;
+
+          if (extraSpins < 1) {
+            speed = 80;
+          } else {
+            speed = 220;
+          }
+
+          if (isEligible(currentCenterName) && extraSpins >= 10) {
+            winnerBox.style.display = "block";
+            winnerBox.innerHTML = `🎉 WINNER:<br>${currentCenterName}`;
+
+            spinBtn.disabled = false;
+            return;
+          }
+        }
+
+        setTimeout(spinStep, speed);
+      }
+
+      spinStep();
+    }
+  </script>
 </body>
 </html>

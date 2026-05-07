@@ -281,6 +281,17 @@
     };
   }
 
+  function formatCountdown(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+
+    const days = Math.floor(totalSeconds / (60 * 60 * 24));
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${days}D ${hours}H ${minutes}M ${seconds}S`;
+  }
+
   function getNextCutoffText() {
     const now = new Date();
     const cutoffInfo = getNextCutoffInfo();
@@ -296,7 +307,7 @@
     const diff = cutoffDate - now;
 
     return {
-      text: `⚡ Closing ${label} in <br><span class="big-time">${formatCountdown(diff)}</span><br><small>Order 1 day before, 7PM</small>`,
+      text: `⚡ Closing ${label} in <br><span class="big-time">${formatCountdown(diff)}`,
       urgent: true
     };
   }

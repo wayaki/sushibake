@@ -144,11 +144,32 @@
     </div>
     <div class="top-border">
       <div class="total-box">
-        Total: $<span id="total-price">0</span>
+
+        <div class="price-breakdown">
+
+          <div class="price-line">
+            <span>Subtotal</span>
+            <span>$<span id="subtotal-price">0.00</span></span>
+          </div>
+
+          <div class="price-line" id="delivery-line" style="display:none;">
+            <span>Delivery Fee</span>
+            <span id="delivery-fee-text">$0.00</span>
+          </div>
+
+          <div class="price-line total-line">
+            <span>Total</span>
+            <span>$<span id="total-price">0.00</span></span>
+          </div>
+
+        </div>
+
         <button id="order-btn" onclick="orderWhatsApp()">
           Order via WhatsApp
         </button>
+
       </div>
+    </div>
     </div>
   </div>
 
@@ -308,7 +329,43 @@
     }
 
     function updateTotal() {
-      document.getElementById("total-price").textContent = calculateTotal();
+      const subtotal = calculateSubtotal();
+      const deliveryFee = getDeliveryFee();
+      const total = subtotal + deliveryFee;
+
+      document.getElementById("subtotal-price").textContent =
+        subtotal.toFixed(2);
+
+      document.getElementById("total-price").textContent =
+        total.toFixed(2);
+
+      const deliveryLine = document.getElementById("delivery-line");
+      const deliveryText = document.getElementById("delivery-fee-text");
+
+      if (getSelectedMethod() === "delivery") {
+        deliveryLine.style.display = "flex";
+
+        const area = document.getElementById("area").value;
+        const originalFee = deliveryFees[area] || 0;
+
+        if (deliveryFee === 0 && subtotal >= 50) {
+          deliveryText.textContent = "FREE";
+        } else if (deliveryFee < originalFee) {
+          deliveryText.innerHTML = `
+            <span class="old-delivery">
+              $${originalFee.toFixed(2)}
+            </span>
+            <span class="new-delivery">
+              $${deliveryFee.toFixed(2)}
+            </span>
+          `;
+        } else {
+          deliveryText.textContent = `$${deliveryFee.toFixed(2)}`;
+        }
+
+      } else {
+        deliveryLine.style.display = "none";
+      }
     }
 
     function toggleDelivery() {
