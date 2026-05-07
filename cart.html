@@ -346,7 +346,14 @@
         const originalFee = deliveryFees[area] || 0;
 
         if (deliveryFee === 0 && subtotal >= 50) {
-          deliveryText.textContent = "FREE";
+          deliveryText.innerHTML = `
+            <span class="old-delivery">
+              $${originalFee.toFixed(2)}
+            </span>
+            <span class="free-delivery">
+              FREE
+            </span>
+          `;
         } else if (deliveryFee < originalFee) {
           deliveryText.innerHTML = `
             <span class="old-delivery">
