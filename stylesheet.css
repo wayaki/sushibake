@@ -344,6 +344,13 @@ header {
   color: #4a2a00;
 }
 
+#cart-total {
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #4a2a00;
+}
+
 .checkout-btn {
   background: #fff7ef;
   color: #7a3e00;
@@ -592,7 +599,7 @@ small {
 
 /* === Checkout Area === */
 .total-box {
-  width: 50%;
+  width: 90%;
   padding: 16px 18px;
   color: #4a2a00;
   font-weight: 700;
@@ -654,17 +661,19 @@ small {
 
 #order-btn {
   width: 100%;
-  background: #ff8800;
-  color: #fff;
-  border: none;
-  padding: 10px 0;
+  margin-top: 30px;
+  padding: 10px 0;  
   border-radius: 999px;
+  border: none;
   font-family: 'Baloo 2', cursive;
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 18px #ff8c0080;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #fff2e0;
+  background: #7a3e00;
+  box-shadow: 0 10px 20px #7a3e0080;
+
+  transition: all 0.2s ease;
 }
 
 #order-btn:hover {
@@ -682,6 +691,6 @@ small {
   align-items: center;
   padding-top: 10px;
   border-top: 2px dashed #f8b400;
-  width: 90%;
-  margin: 30px 0;
+  width: 95%;
+  margin-top: 30px;
 }

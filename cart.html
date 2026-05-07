@@ -142,11 +142,9 @@
         </label>
       </div>
     </div>
-    <div class="top-border">
+    <div class="top-border"></div>
       <div class="total-box">
-
         <div class="price-breakdown">
-
           <div class="price-line">
             <span>Subtotal</span>
             <span>$<span id="subtotal-price">0.00</span></span>
@@ -161,17 +159,14 @@
             <span>Total</span>
             <span>$<span id="total-price">0.00</span></span>
           </div>
-
         </div>
-
         <button id="order-btn" onclick="orderWhatsApp()">
           Order via WhatsApp
         </button>
-
       </div>
     </div>
-    </div>
   </div>
+
 
   <script>
     let cart = JSON.parse(localStorage.getItem("sushibakeCart")) || {};
