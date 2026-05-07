@@ -144,8 +144,8 @@ button:disabled {
 }
 
 .spin-card {
-  width: 82%;
-  min-height: 46px;
+  width: 70%;
+  min-height: 30px;
   border-radius: 16px;
   background: #fffaf0;
   border: 2px solid rgba(61, 34, 16, 0.12);
@@ -169,7 +169,7 @@ button:disabled {
 
 .spin-card.winner {
   width: 90%;
-  min-height: 82px;
+  min-height: 60px;
   border-radius: 24px;
   background: linear-gradient(135deg, #ffb347, #ff7417);
   border: 3px solid #3d2210;
@@ -180,17 +180,42 @@ button:disabled {
   opacity: 1;
 }
 
-.winner-box {
-  display: none;
-  background: #fffaf0;
-  border: 3px solid #3d2210;
-  border-radius: 24px;
-  padding: 16px;
-  font-size: 23px;
-  font-weight: 900;
-  color: #ff7417;
-  box-shadow: 6px 6px 0 #3d2210;
-  animation: pop 0.35s ease;
+.overlay{
+  display:none;
+
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(4px);
+
+  z-index:9998;
+}
+
+.winner-box{
+  display:none;
+
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+
+  z-index:9999;
+
+  background:#fffaf0;
+  border:3px solid #3d2210;
+  border-radius:24px;
+  padding:24px 30px;
+
+  font-size:23px;
+  font-weight:900;
+  color:#ff7417;
+
+  text-align:center;
+
+  box-shadow:8px 8px 0 #3d2210;
+
+  animation:pop 0.35s ease;
 }
 
 .note {

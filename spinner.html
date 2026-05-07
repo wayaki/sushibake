@@ -39,6 +39,8 @@
       screen record for IG story 😗
     </p>
   </div>
+  
+  <div class="overlay" id="overlay"></div>
 
   <script>
     let entries = [];
@@ -75,6 +77,7 @@
     const fileInput = document.getElementById("fileInput");
     const entryCount = document.getElementById("entryCount");
     const spinBtn = document.getElementById("spinBtn");
+    const overlay = document.getElementById("overlay");
     const winnerBox = document.getElementById("winnerBox");
     const mainName = document.getElementById("mainName");
 
@@ -218,6 +221,7 @@
           }
 
           if (isEligible(currentCenterName) && extraSpins >= 10) {
+            overlay.style.display = "block";
             winnerBox.style.display = "block";
             winnerBox.innerHTML = `🎉 WINNER:<br>${currentCenterName}`;
 
