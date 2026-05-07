@@ -669,7 +669,7 @@ small {
 
 #order-btn:hover {
   background: #512b00;
-  box-shadow: 0 10px 20px rgba(99, 54, 0, 0.502);
+  box-shadow: 0 10px 20px #512b0080;
 }
 
 #order-btn:active {
