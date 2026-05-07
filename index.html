@@ -37,7 +37,7 @@
 
     <!-- MAIN 1 -->
     <div class="menu-item">
-      <img src="images/salmon-crabstick.png" alt="Salmon Deluxe" onclick="openModal(this)">
+      <img src="images/salmon-deluxe.png" alt="Salmon Deluxe" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Salmon Deluxe</div>
@@ -54,7 +54,24 @@
 
     <!-- MAIN 2 -->
     <div class="menu-item">
-      <img src="images/teriyaki-chicken.png" alt="Chicken Comfort" onclick="openModal(this)">
+      <img src="images/shroom-bliss.png" alt="Shroom Bliss" onclick="openModal(this)">
+
+      <div class="item-info">
+        <div class="item-name">Shroom Bliss</div>
+        <div class="item-desc">Shrooms · Corn · Cheese · Truffle · Japanese Rice </br> <i>( 1 pax )</i></div>
+        <div class="item-price">$11.90</div>
+
+        <div class="quantity">
+          <button onclick="changeQty('shroom', -1)">-</button>
+          <span id="qty-shroom">0</span>
+          <button onclick="changeQty('shroom', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN 3 -->
+    <div class="menu-item">
+      <img src="images/chicken-comfort.png" alt="Chicken Comfort" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Chicken Comfort</div>
@@ -69,9 +86,9 @@
       </div>
     </div>
 
-    <!-- MAIN 3 -->
+    <!-- MAIN 4 -->
     <div class="menu-item">
-      <img src="images/tuna-cucumber.png" alt="Tuna Delight" onclick="openModal(this)">
+      <img src="images/tuna-delight.png" alt="Tuna Delight" onclick="openModal(this)">
 
       <div class="item-info">
         <div class="item-name">Tuna Delight</div>
@@ -85,6 +102,7 @@
         </div>
       </div>
     </div>
+
   </br>
 
     <!-- SIDES -->
@@ -151,6 +169,7 @@
   <script>
     const cart = {
       salmon: { qty: 0, price: 12.9 },
+      shroom: { qty: 0, price: 11.9 },
       chicken: { qty: 0, price: 10.9 },
       tuna: { qty: 0, price: 9.9 },
       seaweed: { qty: 0, price: 1.0 },
@@ -159,6 +178,7 @@
 
     const displayNames = {
       salmon: "Salmon Deluxe",
+      shroom: "Shroom Bliss",
       chicken: "Chicken Comfort",
       tuna: "Tuna Delight",
       seaweed: "Seaweed",

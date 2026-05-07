@@ -173,6 +173,7 @@
 
     const itemImages = {
       salmon: "images/salmon-crabstick.png",
+      shroom: "images/shroom-bliss.png",
       tuna: "images/tuna-cucumber.png",
       chicken: "images/teriyaki-chicken.png",
       seaweed: "images/seaweed.png",
@@ -181,6 +182,7 @@
 
     const displayNames = {
       salmon: "Salmon Deluxe",
+      shroom: "Shroom Bliss",
       tuna: "Tuna Delight",
       chicken: "Chicken Comfort",
       seaweed: "Seaweed",
@@ -488,7 +490,11 @@
         if (cart[item].qty > 0) {
           hasItems = true;
 
-          const isMain = item === "salmon" || item === "chicken" || item === "tuna";
+          const isMain =
+            item === "salmon" ||
+            item === "shroom" ||
+            item === "chicken" ||
+            item === "tuna";
 
           html += `
             <li class="cart-block">
@@ -526,7 +532,7 @@
     function getTotalMainTrays() {
       let total = 0;
 
-      const mains = ["salmon", "tuna", "chicken"];
+      const mains = ["salmon", "shroom", "tuna", "chicken"];
 
       mains.forEach(item => {
         if (cart[item]) {
