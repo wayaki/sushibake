@@ -345,28 +345,22 @@
         const area = document.getElementById("area").value;
         const originalFee = deliveryFees[area] || 0;
 
-        if (deliveryFee === 0 && subtotal >= 50) {
+        if (!area) {
+          deliveryText.textContent = "-";
+        } else if (deliveryFee === 0 && subtotal >= 50 && originalFee > 0) {
           deliveryText.innerHTML = `
-            <span class="old-delivery">
-              $${originalFee.toFixed(2)}
-            </span>
-            <span class="free-delivery">
-              FREE
-            </span>
+            <span class="old-delivery">$${originalFee.toFixed(2)}</span>
+            <span class="free-delivery">FREE</span>
           `;
-        } else if (deliveryFee < originalFee) {
+        } else if (deliveryFee < originalFee && originalFee > 0) {
           deliveryText.innerHTML = `
-            <span class="old-delivery">
-              $${originalFee.toFixed(2)}
-            </span>
-            <span class="new-delivery">
-              $${deliveryFee.toFixed(2)}
-            </span>
+            <span class="old-delivery">$${originalFee.toFixed(2)}</span>
+            <span class="new-delivery">$${deliveryFee.toFixed(2)}</span>
           `;
         } else {
           deliveryText.textContent = `$${deliveryFee.toFixed(2)}`;
         }
-
+    
       } else {
         deliveryLine.style.display = "none";
       }
