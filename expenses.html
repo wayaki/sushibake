@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Expenses - WAYAKI</title>
+  <link rel="stylesheet" href="profit-style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>All Expenses 🧾</h1>
+
+  <button class="back-btn" onclick="window.location.href='profit.html'">
+    ← Back
+  </button>
+</header>
+
+<main>
+  <section class="card">
+    <div class="filter-bar">
+      <label>
+        Select Month
+        <input type="month" id="expenseMonth" onchange="filterExpenses()">
+      </label>
+
+      <button class="filterBtn" onclick="showAllExpenses()">
+        Reset Filters
+      </button>
+    </div>
+    
+    <div class="tag-filter-group">
+      <button class="tag-filter active" onclick="setTagFilter('', event)">All</button>
+    </div>
+
+    <div class="filter-grid">
+      <div class="filter-card">
+        <h4>Salmon Deluxe</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('salmon', event)">Salmon</button>
+          <button class="tag-filter" onclick="setTagFilter('crabstick', event)">Crabstick</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Shroom Bliss</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('kingoyster', event)">King Oyster</button>
+          <button class="tag-filter" onclick="setTagFilter('buttonmushroom', event)">Button</button>
+          <button class="tag-filter" onclick="setTagFilter('corn', event)">Corn</button>
+          <button class="tag-filter" onclick="setTagFilter('truffle', event)">Truffle</button>
+          <button class="tag-filter" onclick="setTagFilter('mozzarella', event)">Mozzarella</button>
+          <button class="tag-filter" onclick="setTagFilter('butter', event)">Butter</button>
+          <button class="tag-filter" onclick="setTagFilter('cookingcream', event)">Cooking Cream</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Chicken Comfort</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('chicken', event)">Chicken</button>
+          <button class="tag-filter" onclick="setTagFilter('egg', event)">Egg</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Tuna Delight</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('tuna', event)">Tuna</button>
+          <button class="tag-filter" onclick="setTagFilter('cucumber', event)">Cucumber</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Sauces / Others</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('mayo', event)">Mayo</button>
+          <button class="tag-filter" onclick="setTagFilter('soysauce', event)">Soy Sauce</button>
+          <button class="tag-filter" onclick="setTagFilter('teriyaki', event)">Teriyaki</button>
+          <button class="tag-filter" onclick="setTagFilter('mentaiko', event)">Mentaiko</button>
+          <button class="tag-filter" onclick="setTagFilter('creamcheese', event)">Cream Cheese</button>
+          <button class="tag-filter" onclick="setTagFilter('cookingoil', event)">Cooking Oil</button>
+          <button class="tag-filter" onclick="setTagFilter('sesameoil', event)">Sesame Oil</button>
+          <button class="tag-filter" onclick="setTagFilter('flour', event)">Flour</button>
+          <button class="tag-filter" onclick="setTagFilter('blackpepper', event)">Black Pepper</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Rice</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('rice', event)">Rice</button>
+          <button class="tag-filter" onclick="setTagFilter('vinegar', event)">Rice Vinegar</button>
+          <button class="tag-filter" onclick="setTagFilter('sugar', event)">Sugar</button>
+          <button class="tag-filter" onclick="setTagFilter('salt', event)">Salt</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Packaging</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('tray', event)">Tray</button>
+          <button class="tag-filter" onclick="setTagFilter('seaweed', event)">Seaweed</button>
+          <button class="tag-filter" onclick="setTagFilter('tea', event)">Tea</button>
+          <button class="tag-filter" onclick="setTagFilter('thermalbag', event)">Thermal Bag</button>
+          <button class="tag-filter" onclick="setTagFilter('logosticker', event)">Logo Sticker</button>
+          <button class="tag-filter" onclick="setTagFilter('namestickertray', event)">Name Sticker / Tray</button>
+          <button class="tag-filter" onclick="setTagFilter('receiptstickerbag', event)">Receipt Sticker / Bag</button>
+          <button class="tag-filter" onclick="setTagFilter('spoon', event)">Disposable Spoon</button>
+        </div>
+      </div>
+      <div class="filter-card">
+        <h4>Others</h4>
+        <div class="tag-filter-group">
+          <button class="tag-filter" onclick="setTagFilter('others', event)">Others</button>
+        </div>
+      </div>
+    </div>
+    <div id="allExpenseList"></div>
+  </section>
+</main>
+
+<!-- Edit Popup -->
+<div id="editModal" class="modal-backdrop hidden">
+  <div class="edit-modal">
+    <h2>Edit Expense ✏️</h2>
+
+    <label>
+      Date
+      <input type="date" id="editDate">
+    </label>
+
+    <label>
+      Tag
+      <select id="editTag">
+        <option value="salmon">Salmon</option>
+        <option value="crabstick">Crabstick</option>
+        <option value="kingoyster">King Oyster Mushroom</option>
+        <option value="buttonmushroom">Button Mushroom</option>
+        <option value="corn">Corn</option>
+        <option value="truffle">Truffle</option>
+        <option value="mozzarella">Mozzarella</option>
+        <option value="butter">Butter</option>
+        <option value="cookingcream">Cooking Cream</option>
+        <option value="chicken">Chicken</option>
+        <option value="egg">Egg</option>
+        <option value="tuna">Tuna</option>
+        <option value="cucumber">Cucumber</option>
+        <option value="mayo">Mayo</option>
+        <option value="soysauce">Soy Sauce</option>
+        <option value="teriyaki">Teriyaki</option>
+        <option value="mentaiko">Mentaiko</option>
+        <option value="rice">Rice</option>
+        <option value="vinegar">Rice Vinegar</option>
+        <option value="sugar">Sugar</option>
+        <option value="salt">Salt</option>
+        <option value="creamcheese">Cream Cheese</option>
+        <option value="cookingoil">Cooking Oil</option>
+        <option value="sesameoil">Sesame Oil</option>
+        <option value="flour">Flour</option>
+        <option value="blackpepper">Black Pepper</option>
+        <option value="tray">Tray</option>
+        <option value="seaweed">Seaweed</option>
+        <option value="tea">Tea</option>
+        <option value="thermalbag">Thermal Bag</option>
+        <option value="logosticker">Logo Sticker</option>
+        <option value="namestickertray">Name Sticker / Tray</option>
+        <option value="receiptstickerbag">Receipt Sticker / Bag</option>
+        <option value="spoon">Disposable Spoon</option>
+        <option value="others">Others</option>
+      </select>
+    </label>
+
+    <label>
+      Item Name
+      <input type="text" id="editName">
+    </label>
+
+    <label>
+      Total Cost ($)
+      <input type="number" id="editCost" step="0.01">
+    </label>
+
+    <label>
+      Total Amount
+      <input type="number" id="editAmount" step="0.01">
+    </label>
+
+    <label>
+      Unit
+      <select id="editUnit">
+        <option value="g">g</option>
+        <option value="ml">ml</option>
+        <option value="pcs">pcs</option>
+      </select>
+    </label>
+
+    <div class="modal-actions">
+      <button class="filter-btn" onclick="saveEditedExpense()">Save</button>
+      <button class="back-btn" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "http://localhost:3000/api";
+
+let allExpenses = [];
+let currentTagFilter = "";
+let editingExpenseId = null;
+
+async function loadExpenses() {
+  const res = await fetch(`${API_URL}/expenses`);
+  allExpenses = await res.json();
+
+  allExpenses.sort((a, b) =>
+    new Date(b.createdAt || b.date) -
+    new Date(a.createdAt || a.date)
+  );
+
+  filterExpenses();
+}
+
+function setTagFilter(tag, event) {
+  currentTagFilter = tag;
+
+  document.querySelectorAll(".tag-filter").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  event.target.classList.add("active");
+
+  filterExpenses();
+}
+
+function filterExpenses() {
+  const selectedMonth = document.getElementById("expenseMonth").value;
+
+  let filteredExpenses = allExpenses;
+
+  if (selectedMonth) {
+    filteredExpenses = filteredExpenses.filter(e =>
+      e.date && e.date.startsWith(selectedMonth)
+    );
+  }
+
+  if (currentTagFilter) {
+    filteredExpenses = filteredExpenses.filter(e =>
+      (e.tag || "").toLowerCase().trim() === currentTagFilter
+    );
+  }
+
+  renderExpenses(filteredExpenses);
+}
+
+function showAllExpenses() {
+  document.getElementById("expenseMonth").value = "";
+  currentTagFilter = "";
+
+  document.querySelectorAll(".tag-filter").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  document.querySelector(".tag-filter").classList.add("active");
+
+  renderExpenses(allExpenses);
+}
+
+function renderExpenses(expenses) {
+  const box = document.getElementById("allExpenseList");
+  box.innerHTML = "";
+
+  if (expenses.length === 0) {
+    box.innerHTML = `
+      <div class="empty-sales">
+        No expenses found 🧾
+      </div>
+    `;
+    return;
+  }
+
+  expenses.forEach((e) => {
+    const cost = parseFloat(e.cost) || 0;
+    const amount = parseFloat(e.amount) || 0;
+    const costPerUnit = amount > 0 ? cost / amount : 0;
+
+    box.innerHTML += `
+      <div class="list-item">
+        <div>
+          <strong>${e.name || "Unnamed Expense"}</strong>
+          <p>
+            ${e.date || "-"} · ${formatTagName(e.tag)} ·
+            ${amount || "-"}${e.unit || ""} ·
+            $${costPerUnit.toFixed(4)}/${e.unit || "unit"}
+          </p>
+        </div>
+
+        <div class="expense-actions">
+          <strong>$${cost.toFixed(2)}</strong>
+          <button class="mini-edit" onclick='openEditModal(${JSON.stringify(e)})'>✏️</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function openEditModal(expense) {
+  editingExpenseId = expense._id;
+
+  document.getElementById("editDate").value = expense.date || "";
+  document.getElementById("editTag").value = (expense.tag || "others").toLowerCase().trim();
+  document.getElementById("editName").value = expense.name || "";
+  document.getElementById("editCost").value = expense.cost || "";
+  document.getElementById("editAmount").value = expense.amount || "";
+  document.getElementById("editUnit").value = expense.unit || "g";
+
+  document.getElementById("editModal").classList.remove("hidden");
+}
+
+function closeEditModal() {
+  editingExpenseId = null;
+  document.getElementById("editModal").classList.add("hidden");
+}
+
+async function saveEditedExpense() {
+  if (!editingExpenseId) return;
+
+  const updatedExpense = {
+    date: document.getElementById("editDate").value,
+    tag: document.getElementById("editTag").value,
+    name: document.getElementById("editName").value,
+    cost: parseFloat(document.getElementById("editCost").value),
+    amount: parseFloat(document.getElementById("editAmount").value),
+    unit: document.getElementById("editUnit").value
+  };
+
+  if (
+    !updatedExpense.date ||
+    !updatedExpense.tag ||
+    !updatedExpense.name ||
+    isNaN(updatedExpense.cost) ||
+    isNaN(updatedExpense.amount)
+  ) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  await fetch(`${API_URL}/expenses/${editingExpenseId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedExpense)
+  });
+
+  closeEditModal();
+  loadExpenses();
+}
+
+function formatTagName(tag) {
+  const tagMap = {
+    salmon: "Salmon",
+    crabstick: "Crabstick",
+    kingoyster: "King Oyster Mushroom",
+    buttonmushroom: "Button Mushroom",
+    corn: "Corn",
+    truffle: "Truffle",
+    mozzarella: "Mozzarella",
+    butter: "Butter",
+    cookingcream: "Cooking Cream",
+    chicken: "Chicken",
+    egg: "Egg",
+    tuna: "Tuna",
+    cucumber: "Cucumber",
+    mayo: "Mayo",
+    soysauce: "Soy Sauce",
+    teriyaki: "Teriyaki",
+    mentaiko: "Mentaiko",
+    rice: "Rice",
+    vinegar: "Rice Vinegar",
+    sugar: "Sugar",
+    salt: "Salt",
+    creamcheese: "Cream Cheese",
+    cookingoil: "Cooking Oil",
+    sesameoil: "Sesame Oil",
+    flour: "Flour",
+    blackpepper: "Black Pepper",
+    tray: "Tray",
+    seaweed: "Seaweed",
+    tea: "Tea",
+    thermalbag: "Thermal Bag",
+    logosticker: "Logo Sticker",
+    namestickertray: "Name Sticker / Tray",
+    receiptstickerbag: "Receipt Sticker / Bag",
+    spoon: "Disposable Spoon",
+    others: "Others"
+  };
+
+  const key = (tag || "others").toLowerCase().trim();
+  return tagMap[key] || tag || "Others";
+}
+
+loadExpenses();
+</script>
+
+</body>
+</html>

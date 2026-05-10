@@ -50,34 +50,65 @@
     </div>
     <div class="form-grid-2">
       <label>
-        Tuna Qty
-        <input type="number" id="qtyTuna" min="0" value="0">
-      </label>
-
-      <label>
-        Tuna Price / Tray ($)
-        <input type="number" id="priceTuna" step="0.01" value="9.90">
-      </label>
-
-      <label>
-        Salmon Qty
+        Salmon Deluxe Qty
         <input type="number" id="qtySalmon" min="0" value="0">
       </label>
 
       <label>
-        Salmon Price / Tray ($)
+        Salmon Deluxe Price / Tray ($)
         <input type="number" id="priceSalmon" step="0.01" value="12.90">
       </label>
 
       <label>
-        Chicken Qty
+        Shroom Bliss Qty
+        <input type="number" id="qtyShroom" min="0" value="0">
+      </label>
+
+      <label>
+        Shroom Bliss Price / Tray ($)
+        <input type="number" id="priceShroom" step="0.01" value="11.90">
+      </label>  
+
+      <label>
+        Chicken Comfort Qty
         <input type="number" id="qtyChicken" min="0" value="0">
       </label>
 
       <label>
-        Chicken Price / Tray ($)
+        Chicken Comfort Price / Tray ($)
         <input type="number" id="priceChicken" step="0.01" value="10.90">
       </label>
+      
+      <label>
+        Tuna Delight Qty
+        <input type="number" id="qtyTuna" min="0" value="0">
+      </label>
+
+      <label>
+        Tuna Delight Price / Tray ($)
+        <input type="number" id="priceTuna" step="0.01" value="9.90">
+      </label>
+
+      <label>
+        Seaweed Qty
+        <input type="number" id="qtySeaweed" min="0" value="0">
+      </label>
+
+      <label>
+        Seaweed Price ($)
+        <input type="number" id="priceSeaweed" step="0.01" value="1.00">
+      </label>
+
+      <label>
+        Tea Bag Qty
+        <input type="number" id="qtyTea" min="0" value="0">
+      </label>
+
+      <label>
+        Tea Bag Price ($)
+        <input type="number" id="priceTea" step="0.01" value="0.50">
+      </label>
+
     </div>
 
     <div class="form-grid-4">
@@ -115,7 +146,14 @@
     <button onclick="addSale()">Add Sale</button>
 
     <div class="list-box">
-      <h3>All Sales</h3>
+      <div class="list-header">
+        <h3>Latest Sales</h3>
+
+        <button class="view-all-btn" onclick="window.location.href='sales.html'">
+          Show All Sales
+        </button>
+      </div>
+
       <div id="salesList"></div>
     </div>
   </section>
@@ -135,6 +173,14 @@
           <option value="salmon">Salmon</option>
           <option value="crabstick">Crabstick</option>
 
+          <option value="kingOyster">King Oyster Mushroom</option>
+          <option value="buttonMushroom">Button Mushroom</option>
+          <option value="corn">Corn</option>
+          <option value="truffle">Truffle Oil</option>
+          <option value="mozzarella">Mozzarella Cheese</option>
+          <option value="butter">Butter</option>
+          <option value="cookingcream">Cooking Cream</option>
+
           <option value="chicken">Chicken</option>
           <option value="egg">Egg</option>
 
@@ -152,13 +198,16 @@
           <option value="salt">Salt</option>
 
           <option value="creamCheese">Cream Cheese</option>
+          <option value="cookingOil">Cooking Oil</option>
           <option value="sesameOil">Sesame Oil</option>
           <option value="flour">Flour</option>
           <option value="blackPepper">Black Pepper</option>
 
           <option value="tray">Aluminium Tray</option>
+          <option value="furikake">Furikake</option>
           <option value="seaweed">Seaweed</option>
-          <option value="thermalBag">Thermal Bag</option>
+          <option value="tea">Tea Bag</option>
+          <option value="thermalbag">Thermal Bag</option>
           <option value="logosticker">Logo Sticker</option>
           <option value="nameStickerTray">Name Sticker / Tray</option>
           <option value="receiptStickerBag">Receipt Sticker / Bag</option>
@@ -195,7 +244,14 @@
     <button onclick="addExpense()">Add Expense</button>
 
     <div class="list-box">
-      <h3>All Expenses</h3>
+      <div class="list-header">
+        <h3>Latest Expenses</h3>
+
+        <button class="view-all-btn" onclick="window.location.href='expenses.html'">
+          Show All Expenses
+        </button>
+      </div>
+
       <div id="expenseList"></div>
     </div>
   </section>
@@ -209,19 +265,27 @@
 
     <div class="summary-grid">
       <div>
-        <span>Tuna Delight Cost</span>
-        <strong id="tunaCostPreview">$0.00</strong>
+        <span>Salmon Deluxe Cost</span>
+        <strong id="salmonCostPreview">$0.00</strong>
       </div>
 
       <div>
-        <span>Salmon Deluxe Cost</span>
-        <strong id="salmonCostPreview">$0.00</strong>
+        <span>Shroom Bliss Cost</span>
+        <strong id="shroomCostPreview">$0.00</strong>
       </div>
 
       <div>
         <span>Chicken Comfort Cost</span>
         <strong id="chickenCostPreview">$0.00</strong>
       </div>
+      
+      <div>
+        <span>Tuna Delight Cost</span>
+        <strong id="tunaCostPreview">$0.00</strong>
+      </div>
+
+
+
     </div>
   </section>
 
@@ -281,6 +345,7 @@
 
     return (
       (c("tray") * 1) +
+      (c("furikake") * 2) +
       (c("seaweed") * 1) +
       (c("thermalbag") * 1) +
       (c("logosticker") * 1) +
@@ -294,10 +359,57 @@
     const c = getCost;
 
     return (
-      (180 * c("rice")) +
-      (10 * c("vinegar")) +
-      (5 * c("sugar")) +
-      (2 * c("salt"))
+      (90 * c("rice")) +
+      (5 * c("vinegar")) +
+      (2.5 * c("sugar")) +
+      (1 * c("salt"))
+    );
+  }
+
+  function getSalmonCost() {
+    const c = getCost;
+
+    return (
+      (55 * c("salmon")) +
+      (30 * c("crabstick")) +
+      (15 * c("mayo")) +
+      (5 * c("creamcheese")) +
+      (2.5 * c("soysauce")) +
+      (10 * c("mentaiko")) +
+      getRiceCost() +
+      getPackagingCost()
+    );
+  }
+
+  function getShroomCost() {
+    const c = getCost;
+
+    return (
+      (100 * c("kingoyster")) +
+      (70 * c("buttonmushroom")) +
+      (50 * c("corn")) +
+      (10 * c("truffle")) +
+      (25 * c("mayo")) +
+      (18 * c("creamcheese")) +
+      (5 * c("butter")) +
+      (30 * c("cookingcream")) +
+      (30 * c("mozzarella")) +
+      getRiceCost() +
+      getPackagingCost()
+    );
+  }
+
+  function getChickenCost() {
+    const c = getCost;
+
+    return (
+      (100 * c("chicken")) +
+      (5 * c("flour")) +
+      (5 * c("sesameoil")) +
+      (20 * c("teriyaki")) +
+      (1 * c("egg")) +
+      getRiceCost() +
+      getPackagingCost()
     );
   }
 
@@ -318,39 +430,24 @@
     );
   }
 
-  function getSalmonCost() {
+  function getSeaweedCost() {
     const c = getCost;
-
-    return (
-      (55 * c("salmon")) +
-      (30 * c("crabstick")) +
-      (15 * c("mayo")) +
-      (5 * c("creamcheese")) +
-      (2.5 * c("soysauce")) +
-      (10 * c("mentaiko")) +
-      getRiceCost() +
-      getPackagingCost()
-    );
+    return (1 * c("seaweed"));
   }
 
-  function getChickenCost() {
+  function getTeaCost() {
     const c = getCost;
-
-    return (
-      (100 * c("chicken")) +
-      (5 * c("flour")) +
-      (5 * c("sesameoil")) +
-      (20 * c("teriyaki")) +
-      (1 * c("egg")) +
-      getRiceCost() +
-      getPackagingCost()
-    );
+    return (1 * c("tea"));
   }
 
   function getProductCost(item) {
-    if (item === "tuna") return getTunaCost();
     if (item === "salmon") return getSalmonCost();
+    if (item === "shroom") return getShroomCost();
     if (item === "chicken") return getChickenCost();
+    if (item === "tuna") return getTunaCost();
+
+    if (item === "seaweed") return getSeaweedCost();
+    if (item === "tea") return getTeaCost();
     return 0;
   }
 
@@ -358,6 +455,7 @@
     document.getElementById("tunaCostPreview").textContent = money(getTunaCost());
     document.getElementById("salmonCostPreview").textContent = money(getSalmonCost());
     document.getElementById("chickenCostPreview").textContent = money(getChickenCost());
+    document.getElementById("shroomCostPreview").textContent = money(getShroomCost());
   }
 
   window.onload = function () {
@@ -431,10 +529,16 @@
     const qtyTuna = parseInt(document.getElementById("qtyTuna").value) || 0;
     const qtySalmon = parseInt(document.getElementById("qtySalmon").value) || 0;
     const qtyChicken = parseInt(document.getElementById("qtyChicken").value) || 0;
+    const qtyShroom = parseInt(document.getElementById("qtyShroom").value) || 0;
+    const qtySeaweed = parseInt(document.getElementById("qtySeaweed").value) || 0;
+    const qtyTea = parseInt(document.getElementById("qtyTea").value) || 0;
 
     const priceTuna = parseFloat(document.getElementById("priceTuna").value) || 0;
     const priceSalmon = parseFloat(document.getElementById("priceSalmon").value) || 0;
     const priceChicken = parseFloat(document.getElementById("priceChicken").value) || 0;
+    const priceShroom = parseFloat(document.getElementById("priceShroom").value) || 0;
+    const priceSeaweed = parseFloat(document.getElementById("priceSeaweed").value) || 0;
+    const priceTea = parseFloat(document.getElementById("priceTea").value) || 0;
 
     const method = document.getElementById("collectionMethod").value;
 
@@ -446,8 +550,16 @@
       driverPaid = parseFloat(document.getElementById("driverPaid").value) || 0;
     }
 
-    if (!date || qtyTuna + qtySalmon + qtyChicken === 0) {
-      alert("Please enter date and at least 1 tray.");
+    if (
+      !date ||
+      qtyTuna +
+      qtySalmon +
+      qtyChicken +
+      qtyShroom +
+      qtySeaweed +
+      qtyTea === 0
+    ) {
+      alert("Please enter date and at least 1 item.");
       return;
     }
 
@@ -461,9 +573,13 @@
         customerName,
         createdAt: new Date().toISOString(),
         items: {
-          tuna: { qty: qtyTuna, price: priceTuna },
           salmon: { qty: qtySalmon, price: priceSalmon },
-          chicken: { qty: qtyChicken, price: priceChicken }
+          shroom: { qty: qtyShroom, price: priceShroom },
+          chicken: { qty: qtyChicken, price: priceChicken },
+          tuna: { qty: qtyTuna, price: priceTuna },
+
+          seaweed: { qty: qtySeaweed, price: priceSeaweed },
+          tea: { qty: qtyTea, price: priceTea }
         },
         method,
         customerDeliveryPaid,
@@ -472,9 +588,14 @@
     });
 
     document.getElementById("customerName").value = "";
-    document.getElementById("qtyTuna").value = 0;
     document.getElementById("qtySalmon").value = 0;
+    document.getElementById("qtyShroom").value = 0;
     document.getElementById("qtyChicken").value = 0;
+    document.getElementById("qtyTuna").value = 0;
+
+    document.getElementById("qtySeaweed").value = 0;
+    document.getElementById("qtyTea").value = 0;
+
     document.getElementById("customerDeliveryPaid").value = 0;
     document.getElementById("driverPaid").value = 0;
 
@@ -511,7 +632,7 @@
 
     expenses.sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
 
-    expenses.forEach((e, index) => {
+    expenses.slice(0, 5).forEach((e, index) => {
       const costPerUnit = e.amount > 0 ? e.cost / e.amount : 0;
 
       box.innerHTML += `
@@ -539,7 +660,7 @@
 
     sales.sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
 
-    sales.forEach((s) => {
+    sales.slice(0, 5).forEach((s) => {
       const items = s.items || {};
       let orderText = "";
       let orderTotal = 0;
@@ -656,9 +777,12 @@
   }
 
   function formatItemName(item) {
-    if (item === "tuna") return "Tuna Delight";
     if (item === "salmon") return "Salmon Deluxe";
+    if (item === "shroom") return "Shroom Bliss";
     if (item === "chicken") return "Chicken Comfort";
+    if (item === "tuna") return "Tuna Delight";
+    if (item === "seaweed") return "Seaweed Pack";
+    if (item === "tea") return "Tea Bag";
     return item;
   }
 
