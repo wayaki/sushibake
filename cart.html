@@ -262,6 +262,7 @@
       shroom: "images/shroom-bliss.png",
       tuna: "images/tuna-delight.png",
       chicken: "images/chicken-comfort.png",
+      luncheon: "images/luncheon-melt.png",
       seaweed: "images/seaweed.png",
       tea: "images/tea-bag.png"
     };
@@ -272,6 +273,7 @@
       shroom: "Shroom Bliss",
       tuna: "Tuna Delight",
       chicken: "Chicken Comfort",
+      luncheon: "Luncheon Melt",
       seaweed: "Seaweed",
       tea: "Tea"
     };
@@ -696,6 +698,7 @@
             item === "salmon" ||
             item === "shroom" ||
             item === "chicken" ||
+            item === "luncheon" ||
             item === "tuna";
 
           // build cart item html
@@ -750,7 +753,7 @@
       let total = 0;
 
       // main tray items only
-      const mains = ["salmon", "shroom", "tuna", "chicken"];
+      const mains = ["salmon", "shroom", "tuna", "chicken", "luncheon"];
 
       // add quantity of each main tray
       mains.forEach(item => {

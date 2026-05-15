@@ -103,6 +103,22 @@
       </div>
     </div>
 
+    <!-- MAIN 5 -->
+    <div class="menu-item">
+      <img src="images/luncheon-melt.png" alt="Luncheon Melt" onclick="openModal(this)">
+
+      <div class="item-info">
+        <div class="item-name">Luncheon Melt</div>
+        <div class="item-desc">Mayo · Luncheon Meat · Egg · Japanese Rice </br> <i>( 1 pax )</i></div>
+        <div class="item-price">$5.90</div>
+
+        <div class="quantity">
+          <button onclick="changeQty('luncheon', -1)">-</button>
+          <span id="qty-luncheon">0</span>
+          <button onclick="changeQty('luncheon', 1)">+</button>
+        </div>
+      </div>
+    </div>
   </br>
 
     <!-- SIDES -->
@@ -172,6 +188,7 @@
       shroom: { qty: 0, price: 11.9 },
       chicken: { qty: 0, price: 10.9 },
       tuna: { qty: 0, price: 9.9 },
+      luncheon: { qty: 0, price: 5.9 },
       seaweed: { qty: 0, price: 1.0 },
       tea: { qty: 0, price: 0.5 }
     };
@@ -182,6 +199,7 @@
       shroom: "Shroom Bliss",
       chicken: "Chicken Comfort",
       tuna: "Tuna Delight",
+      luncheon: "Luncheon Melt",
       seaweed: "Seaweed",
       tea: "Tea"
     };
