@@ -90,6 +90,16 @@
       </label>
 
       <label>
+        Luncheon Melt Qty
+        <input type="number" id="qtyLuncheon" min="0" value="0">
+      </label>
+
+      <label>
+        Luncheon Melt Price / Tray ($)
+        <input type="number" id="priceLuncheon" step="0.01" value="5.90">
+      </label>
+
+      <label>
         Seaweed Qty
         <input type="number" id="qtySeaweed" min="0" value="0">
       </label>
@@ -187,6 +197,8 @@
           <option value="tuna">Tuna</option>
           <option value="cucumber">Cucumber</option>
 
+          <option value="luncheon">Luncheon Meat</option>
+
           <option value="mayo">Mayo Sauce</option>
           <option value="soySauce">Soy Sauce</option>
           <option value="teriyaki">Teriyaki Sauce</option>
@@ -283,7 +295,10 @@
         <span>Tuna Delight Cost</span>
         <strong id="tunaCostPreview">$0.00</strong>
       </div>
-
+      <div>
+        <span>Luncheon Melt Delight Cost</span>
+        <strong id="luncheonCostPreview">$5.90</strong>
+      </div>
 
 
     </div>
@@ -347,7 +362,6 @@
       (c("tray") * 1) +
       (c("furikake") * 2) +
       (c("seaweed") * 1) +
-      (c("thermalbag") * 1) +
       (c("logosticker") * 1) +
       (c("namestickertray") * 1) +
       (c("receiptstickerbag") * 1) +
@@ -372,9 +386,9 @@
     return (
       (55 * c("salmon")) +
       (30 * c("crabstick")) +
-      (15 * c("mayo")) +
+      (7.5 * c("mayo")) +
+      (7.5 * c("mentaiko")) +
       (5 * c("creamcheese")) +
-      (2.5 * c("soysauce")) +
       (10 * c("mentaiko")) +
       getRiceCost() +
       getPackagingCost()
@@ -385,15 +399,14 @@
     const c = getCost;
 
     return (
-      (100 * c("kingoyster")) +
+      (50 * c("kingoyster")) +
       (70 * c("buttonmushroom")) +
       (50 * c("corn")) +
-      (10 * c("truffle")) +
-      (25 * c("mayo")) +
-      (18 * c("creamcheese")) +
-      (5 * c("butter")) +
-      (30 * c("cookingcream")) +
-      (30 * c("mozzarella")) +
+      (5 * c("truffle")) +
+      (30 * c("mayo")) +
+      (15 * c("creamcheese")) +
+      (5 * c("cookingcream")) +
+      (15 * c("mozzarella")) +
       getRiceCost() +
       getPackagingCost()
     );
@@ -403,9 +416,9 @@
     const c = getCost;
 
     return (
-      (100 * c("chicken")) +
-      (5 * c("flour")) +
-      (5 * c("sesameoil")) +
+      (110 * c("chicken")) +
+      (10 * c("flour")) +
+      (10 * c("sesameoil")) +
       (20 * c("teriyaki")) +
       (1 * c("egg")) +
       getRiceCost() +
@@ -421,10 +434,22 @@
       (15 * c("mayo")) +
       (15 * c("creamcheese")) +
       (2.5 * c("soysauce")) +
-      (2.5 * c("sugar")) +
-      (2.5 * c("sesameoil")) +
+      (1.25 * c("sugar")) +
+      (1.25 * c("sesameoil")) +
       (30 * c("cucumber")) +
       (10 * c("mayo")) +
+      getRiceCost() +
+      getPackagingCost()
+    );
+  }
+
+  function getLuncheonCost() {
+    const c = getCost;
+
+    return (
+      (100 * c("luncheon")) +
+      (15 * c("mayo")) +
+      (1 * c("egg")) +
       getRiceCost() +
       getPackagingCost()
     );
@@ -445,6 +470,7 @@
     if (item === "shroom") return getShroomCost();
     if (item === "chicken") return getChickenCost();
     if (item === "tuna") return getTunaCost();
+    if (item === "luncheon") return getLuncheonCost();
 
     if (item === "seaweed") return getSeaweedCost();
     if (item === "tea") return getTeaCost();
@@ -456,6 +482,7 @@
     document.getElementById("salmonCostPreview").textContent = money(getSalmonCost());
     document.getElementById("chickenCostPreview").textContent = money(getChickenCost());
     document.getElementById("shroomCostPreview").textContent = money(getShroomCost());
+    document.getElementById("luncheonCostPreview").textContent = money(getLuncheonCost());
   }
 
   window.onload = function () {
@@ -530,6 +557,7 @@
     const qtySalmon = parseInt(document.getElementById("qtySalmon").value) || 0;
     const qtyChicken = parseInt(document.getElementById("qtyChicken").value) || 0;
     const qtyShroom = parseInt(document.getElementById("qtyShroom").value) || 0;
+    const qtyLuncheon = parseInt(document.getElementById("qtyLuncheon").value) || 0;
     const qtySeaweed = parseInt(document.getElementById("qtySeaweed").value) || 0;
     const qtyTea = parseInt(document.getElementById("qtyTea").value) || 0;
 
@@ -537,6 +565,7 @@
     const priceSalmon = parseFloat(document.getElementById("priceSalmon").value) || 0;
     const priceChicken = parseFloat(document.getElementById("priceChicken").value) || 0;
     const priceShroom = parseFloat(document.getElementById("priceShroom").value) || 0;
+    const priceLuncheon = parseFloat(document.getElementById("priceLuncheon").value) || 0;
     const priceSeaweed = parseFloat(document.getElementById("priceSeaweed").value) || 0;
     const priceTea = parseFloat(document.getElementById("priceTea").value) || 0;
 
@@ -556,6 +585,7 @@
       qtySalmon +
       qtyChicken +
       qtyShroom +
+      qtyLuncheon +
       qtySeaweed +
       qtyTea === 0
     ) {
@@ -577,6 +607,7 @@
           shroom: { qty: qtyShroom, price: priceShroom },
           chicken: { qty: qtyChicken, price: priceChicken },
           tuna: { qty: qtyTuna, price: priceTuna },
+          luncheon: { qty: qtyLuncheon, price: priceLuncheon },
 
           seaweed: { qty: qtySeaweed, price: priceSeaweed },
           tea: { qty: qtyTea, price: priceTea }
@@ -592,6 +623,7 @@
     document.getElementById("qtyShroom").value = 0;
     document.getElementById("qtyChicken").value = 0;
     document.getElementById("qtyTuna").value = 0;
+    document.getElementById("qtyLuncheon").value = 0;
 
     document.getElementById("qtySeaweed").value = 0;
     document.getElementById("qtyTea").value = 0;
@@ -705,13 +737,29 @@
     monthlySales.forEach(s => {
       const items = s.items || {};
 
+      let totalTraysInOrder = 0;
+
       Object.keys(items).forEach(item => {
         const qty = items[item].qty || 0;
         const price = items[item].price || 0;
 
         totalFoodSales += qty * price;
         totalProductCost += qty * getProductCost(item);
+
+        if (
+          item === "salmon" ||
+          item === "shroom" ||
+          item === "chicken" ||
+          item === "tuna" ||
+          item === "luncheon"
+        ) {
+          totalTraysInOrder += qty;
+        }
       });
+
+      // 1 thermal bag can fit up to 4 trays
+      const thermalBagsNeeded = Math.ceil(totalTraysInOrder / 4);
+      totalProductCost += thermalBagsNeeded * getCost("thermalbag");
 
       deliveryCollected += s.customerDeliveryPaid || 0;
       deliveryPaid += s.driverPaid || 0;
@@ -781,6 +829,7 @@
     if (item === "shroom") return "Shroom Bliss";
     if (item === "chicken") return "Chicken Comfort";
     if (item === "tuna") return "Tuna Delight";
+    if (item === "luncheon") return "Luncheon Melt";
     if (item === "seaweed") return "Seaweed Pack";
     if (item === "tea") return "Tea Bag";
     return item;
