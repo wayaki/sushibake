@@ -789,8 +789,8 @@
       // cutoff is 1 day before order date
       cutoff.setDate(orderDate.getDate() - 1);
 
-      // cutoff time is 7PM
-      cutoff.setHours(19, 0, 0, 0);
+      // cutoff time is 8PM
+      cutoff.setHours(20, 0, 0, 0);
       return cutoff;
     }
 
@@ -805,9 +805,9 @@
       select.innerHTML = `<option value="">Select a date</option>`;
 
       // date when May Drops open
-      const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0); 
+      const orderOpenDate = new Date(2026, 4, 31, 0, 0, 0, 0); 
       // first delivery date
-      const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0);
+      const firstDeliveryDate = new Date(2026, 5, 1, 0, 0, 0, 0);
 
       // dates that are sold out
       const soldOutDates = [
@@ -819,7 +819,7 @@
         const option = document.createElement("option");
 
         option.value = "";
-        option.textContent = "May Drops open on 8 May";
+        option.textContent = "June Drops open on 31 May";
         option.disabled = true;
 
         select.appendChild(option);
@@ -832,7 +832,7 @@
         date.setDate(firstDeliveryDate.getDate() + i);
         // STOP if month is no longer May
 
-        if (date.getMonth() !== 4) break;
+        if (date.getMonth() !== 5) break;
   
         // get day of week
         const dayOfWeek = date.getDay();
