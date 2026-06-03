@@ -38,73 +38,71 @@
     // removable ingredients
     const removeContainer = document.getElementById("remove-options");
 
-    product.removable.forEach(item => {
-
-      removeContainer.innerHTML += `
-        <div class="option">
-          <label>
-            <input type="checkbox" value="${item}" checked>
-            ${item}
-          </label>
-        </div>
-      `;
-    });
+    if (product.removable && product.removable.length > 0) {
+      product.removable.forEach(item => {
+        removeContainer.innerHTML += `
+          <div class="option">
+            <label>
+              <input type="checkbox" value="${item}" checked>
+              ${item}
+            </label>
+          </div>
+        `;
+      });
+    } else {
+      removeContainer.parentElement.style.display = "none";
+    }
 
     // rice options
     const riceContainer = document.getElementById("rice-options");
 
-    product.riceOptions.forEach((option, index) => {
+    if (product.riceOptions && product.riceOptions.length > 0) {
+      product.riceOptions.forEach((option, index) => {
+        riceContainer.innerHTML += `
+          <div class="option">
+            <label>
+              <input 
+                type="radio"
+                name="rice"
+                value="${option.price}"
+                ${index === 0 ? "checked" : ""}
+                onchange="updatePrice()"
+              >
+              ${option.name}
+            </label>
 
-      riceContainer.innerHTML += `
-        <div class="option">
-
-          <label>
-            <input 
-              type="radio"
-              name="rice"
-              value="${option.price}"
-              ${index === 0 ? "checked" : ""}
-              onchange="updatePrice()"
-            >
-
-            ${option.name}
-
-          </label>
-
-          <span>
-            ${option.price > 0 ? `+$${option.price}` : ""}
-          </span>
-
-        </div>
-      `;
-    });
+            <span>${option.price > 0 ? `+$${option.price}` : ""}</span>
+          </div>
+        `;
+      });
+    } else {
+      riceContainer.parentElement.style.display = "none";
+    }
 
     // addons
     const addonContainer = document.getElementById("addon-options");
 
-    product.addons.forEach(addon => {
+    if (product.addons && product.addons.length > 0) {
+      product.addons.forEach(addon => {
+        addonContainer.innerHTML += `
+          <div class="option">
+            <label>
+              <input 
+                type="checkbox"
+                value="${addon.price}"
+                onchange="updatePrice()"
+                class="addon-checkbox"
+              >
+              ${addon.name}
+            </label>
 
-      addonContainer.innerHTML += `
-        <div class="option">
-
-          <label>
-
-            <input 
-              type="checkbox"
-              value="${addon.price}"
-              onchange="updatePrice()"
-              class="addon-checkbox"
-            >
-
-            ${addon.name}
-
-          </label>
-
-          <span>+$${addon.price.toFixed(2)}</span>
-
-        </div>
-      `;
-    });
+            <span>+$${addon.price.toFixed(2)}</span>
+          </div>
+        `;
+      });
+    } else {
+      addonContainer.parentElement.style.display = "none";
+    }
 
     function restoreEditSelections() {
       if (!editingItem) return;
@@ -225,9 +223,11 @@
       });
 
       // selected rice
-      const rice =
-        document.querySelector('input[name="rice"]:checked')
-        .parentElement.innerText.trim();
+      const selectedRice = document.querySelector('input[name="rice"]:checked');
+
+      const rice = selectedRice
+        ? selectedRice.parentElement.innerText.trim()
+        : "";
 
       // addons
       const addons = [];

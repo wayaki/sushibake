@@ -283,6 +283,6 @@ const products = {
     price: 1.0,
     image: "images/tea-bag.png",
 
-    description: "Crispy roasted seaweed",
+    description: "Green tea bag",
   }
 };
