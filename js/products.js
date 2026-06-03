@@ -3,7 +3,7 @@ const products = {
     id: "salmon",
     name: "Salmon Deluxe",
     price: 12.90,
-    image: "images/salmon-deluxe.png",
+    image: "images/salmon-deluxe.jpg",
 
     description: "Mentaiko · Salmon · Crabstick · Japanese Rice",
 
@@ -56,7 +56,7 @@ const products = {
     id: "shroom",
     name: "Shroom Bliss",
     price: 11.90,
-    image: "images/shroom-bliss.png",
+    image: "images/shroom-bliss.jpg",
 
     description: "Shrooms · Corn · Cheese · Truffle · Japanese Rice",
 
@@ -113,7 +113,7 @@ const products = {
     id: "chicken",
     name: "Chicken Comfort",
     price: 10.90,
-    image: "images/chicken-comfort.png",
+    image: "images/chicken-comfort.jpg",
 
     description: "Mayo · Teriyaki · Chicken · Egg · Japanese Rice",
 
@@ -170,7 +170,7 @@ const products = {
     id: "tuna",
     name: "Tuna Delight",
     price: 9.90,
-    image: "images/tuna-delight.png",
+    image: "images/tuna-delight.jpg",
 
     description: "Mayo · Tuna · Cucumber · Japanese Rice",
 
@@ -222,7 +222,7 @@ const products = {
     id: "luncheon",
     name: "Luncheon Melt",
     price: 5.90,
-    image: "images/luncheon-melt.png",
+    image: "images/luncheon-melt.jpg",
 
     description: "Mayo · Tuna · Cucumber · Japanese Rice",
 
@@ -268,5 +268,21 @@ const products = {
         price: 0.5
       },
     ]
+  },
+  seaweed: {
+    id: "seaweed",
+    name: "Seaweed",
+    price: 1.0,
+    image: "images/seaweed.png",
+
+    description: "Crispy roasted seaweed",
+  },
+  tea: {
+    id: "tea",
+    name: "Tea bag",
+    price: 1.0,
+    image: "images/tea-bag.png",
+
+    description: "Crispy roasted seaweed",
   }
 };
