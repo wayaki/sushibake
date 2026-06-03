@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAYAKI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+  <header>
+    <a href="https://wayaki.github.io/sushibake/">
+      <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
+    </a>
+
+    <nav class="nav-links">
+      <a href="https://wayaki.github.io/sushibake/" class="linked">Menu</a>
+      <a href="https://wayaki.github.io/sushibake/cart">Cart</a>
+    </nav>
+  </header>
+
+  <div class="cutoff-banner" id="cutoff-banner">
+    <span class="cutoff-icon"></span>
+    <span class="cutoff-text" id="cutoff-text">Loading...</span>
+  </div>
+
+  <div class="home-container">
+    <!-- BUNDLE  DEALS -->
+    <div class="section-title">
+      <h2>Bundle Deals</h2>
+    </div>
+
+    <!-- BUNDLE 1 -->
+    <div class="menu-container">
+      <div class="menu-item">
+        <img src="images/wayaki-trio.png" alt="Wayaki Trio" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Wayaki Trio</div>
+          <div class="item-price">$31.90</div>
+
+          <div class="quantity">
+            <button onclick="changeQty('salmon', -1)">-</button>
+            <span id="qty-salmon">0</span>
+            <button onclick="changeQty('salmon', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-container">
+    <!-- MAINS -->
+    <div class="section-title">
+      <h2>Mains</h2>
+    </div>
+
+    <!-- MAIN 1 -->
+    <div class="menu-container">
+      <div class="menu-item">
+        <img src="images/salmon-deluxe.png" alt="Salmon Deluxe" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Salmon Deluxe</div>
+          <div class="item-price">$12.90</div>
+
+          <div class="quantity">
+            <button onclick="goToProduct('salmon')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN 2 -->
+      <div class="menu-item">
+        <img src="images/shroom-bliss.png" alt="Shroom Bliss" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Shroom Bliss</div>
+          <div class="item-price">$12.90</div>
+
+  <div class="quantity" id="shroom-qty-container"></div>
+        </div>
+      </div>
+
+      <!-- MAIN 3 -->
+      <div class="menu-item">
+        <img src="images/chicken-comfort.png" alt="Chicken Comfort" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Chicken Comfort</div>
+          <div class="item-price">$10.90</div>
+
+          <div class="quantity">
+            <button onclick="goToProduct('chicken')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN 4 -->
+      <div class="menu-item">
+        <img src="images/tuna-delight.png" alt="Tuna Delight" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Tuna Delight</div>
+          <div class="item-price">$9.90</div>
+
+          <div class="quantity">
+            <button onclick="goToProduct('tuna')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN 5 -->
+      <div class="menu-item">
+        <img src="images/luncheon-melt.png" alt="Luncheon Melt" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Luncheon Melt</div>
+          <div class="item-price">$5.90</div>
+
+          <div class="quantity">
+            <button onclick="goToProduct('luncheon')">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </br>
+
+    <!-- SIDES -->
+    <div class="section-title">
+      <h2>Sides</h2>
+    </div>
+
+    <!-- SIDE 1 -->
+    <div class="menu-container">
+      <div class="menu-item">
+        <img src="images/seaweed.png" alt="Seaweed" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Seaweed</div>
+          <div class="item-desc">Crispy roasted seaweed</div>
+          <div class="item-price">$1.00</div>
+
+          <div class="quantity">
+            <button onclick="changeQty('seaweed', -1)">-</button>
+            <span id="qty-seaweed">0</span>
+            <button onclick="changeQty('seaweed', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDE 2 -->
+      <div class="menu-item">
+        <img src="images/tea-bag.png" alt="Tea Bag" onclick="openModal(this)">
+
+        <div class="item-info">
+          <div class="item-name">Tea</div>
+          <div class="item-desc">tea bag</div>
+          <div class="item-price">$0.50</div>
+
+          <div class="quantity">
+            <button onclick="changeQty('tea', -1)">-</button>
+            <span id="qty-tea">0</span>
+            <button onclick="changeQty('tea', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <!-- Cart Bar -->
+    <div class="cart-bar" id="cartBar" onclick="goToCart()">
+      <div class="cart-left">
+        <img class="cart-mascot" src="images/cart-mascot.png" alt="Cart mascot">
+
+        <div class="cart-info">
+          <span id="cart-count">0 items in cart</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+      </div>
+
+      <button class="checkout-btn" type="button">View Cart</button>
+    </div>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="image-modal">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  
+  <!-- JavaScript -->
+  <script src="js/index.js"></script>
+
+</body>
+</html>

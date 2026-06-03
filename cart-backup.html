@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAYAKI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+  <header>
+    <a href="https://wayaki.github.io/sushibake/">
+      <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
+    </a>
+    
+    <nav class="nav-links">
+      <a href="https://wayaki.github.io/sushibake/">Menu</a>
+      <a href="https://wayaki.github.io/sushibake/cart" class="linked">Cart</a>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+
+    <!-- ORDER DETAILS -->
+    <!-- Shows all selected items from cart -->
+    <div class="section-title">
+      <h2>Order Details</h2>
+    </div>
+
+    <div class="cart-item">
+      <ul id="cart-list"></ul>
+    </div>
+
+
+    <!-- CUSTOMER DETAILS -->
+    <!-- Customer name and contact -->
+    <div class="section-title">
+      <h2>Customer Details</h2>
+    </div>
+
+    <div class="cart-item">
+      <div class="checkout-section">
+
+        <!-- Customer name input -->
+        <label>
+          Full Name
+          <input type="text" id="name" placeholder="e.g. Charlie" required>
+        </label>
+
+        <!-- Customer phone number -->
+        <label>
+          Phone Number
+          <input type="tel" id="phone" placeholder="e.g. 9123 4567" required>
+        </label>
+
+      </div>
+    </div>
+
+
+    <!-- COLLECTION METHOD -->
+    <!-- Customer chooses self collect or delivery -->
+    <div class="section-title">
+      <h2>Collection Method</h2>
+    </div>
+
+    <div class="cart-item">
+      <div class="checkout-section">
+
+        <!-- SELF COLLECTION -->
+        <div class="collect-methods">
+
+          <!-- Self collect radio -->
+          <label class="radio">
+            <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
+            Self Collect (Free)
+          </label>
+
+          <!-- Pick-up information -->
+          <div id="self-options" style="display:block;">
+            <div class="pickup-box">
+
+              <div class="pickup-title">
+                Pick-up Location
+              </div>
+
+              <div class="pickup-value">
+                <span id="pickup-location">
+                  Woodlands, Singapore 730877
+                </span><br>
+
+                <small>
+                  Exact unit number will be shared via WhatsApp after ordering.
+                </small>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- DELIVERY -->
+        <div class="collect-methods">
+
+          <!-- Delivery radio -->
+          <label class="radio">
+            <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
+            Delivery
+          </label>
+
+          <!-- Delivery fields -->
+          <div id="delivery-options" style="display:none;">
+
+            <!-- Delivery area -->
+            <label class="area-field">
+
+              <div class="area-label-row">
+
+                <span>Delivery Area</span>
+
+                <!-- Delivery area info -->
+                <span class="info-wrap">
+                  <span class="info-icon">i</span>
+
+                  <div class="area-info-box">
+                    🧡 North – Woodlands, Yishun, Sembawang<br>
+                    🧡 West – Jurong, CCK, Bukit Batok<br>
+                    🧡 North-East – Punggol, Sengkang<br>
+                    🧡 Central – Orchard, Bishan, Toa Payoh<br>
+                    🧡 East – Bedok, Tampines, Pasir Ris
+                  </div>
+
+                </span>
+              </div>
+
+              <!-- Area selection -->
+              <select id="area" onchange="updateTotal()" disabled>
+                <option value="">Select area</option>
+                <option value="north">North (+$8)</option>
+                <option value="west">West (+$12)</option>
+                <option value="northeast">North-East (+$12)</option>
+                <option value="central">Central (+$15)</option>
+                <option value="east">East (+$15)</option>
+              </select>
+
+            </label>
+
+            <!-- Delivery address -->
+            <label>
+              Address
+              <input type="text" id="address" placeholder="Block / Street Name" disabled>
+            </label>
+
+            <!-- Postal code -->
+            <label>
+              Postal Code
+              <input type="text" id="postal" placeholder="e.g. 560123" disabled>
+            </label>
+
+            <!-- Unit number -->
+            <label>
+              Unit Number
+              <input type="text" id="unit" placeholder="01-23" disabled>
+            </label>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ORDER SCHEDULE -->
+    <!-- Customer selects date and time -->
+    <div class="section-title">
+      <h2>Order Schedule</h2>
+    </div>
+
+    <div class="cart-item">
+      <div class="checkout-section">
+
+        <!-- Order date dropdown -->
+        <label>
+          Choose Your Slot
+
+          <select id="order-date" required>
+            <option value="">Select a date</option>
+          </select>
+
+        </label>
+
+        <!-- Time slot dropdown -->
+        <label>
+          Choose Your Time
+
+          <select id="pickup-time">
+            <option value="">Select time</option>
+
+            <option value="12:00 - 14:00">
+              12:00pm - 2:00pm
+            </option>
+
+            <option value="15:00 - 17:00">
+              3:00pm - 5:00pm
+            </option>
+
+            <!-- Self collect only timing -->
+            <option id="late-slot" value="18:00 - 20:00">
+              6:00pm - 8:00pm (Self-Collection Only)
+            </option>
+
+          </select>
+        </label>
+
+      </div>
+    </div>
+
+
+    <!-- TOTAL SECTION -->
+    <div class="top-border"></div>
+
+    <div class="total-box">
+
+      <!-- Price breakdown -->
+      <div class="price-breakdown">
+
+        <!-- Subtotal -->
+        <div class="price-line">
+          <span>Subtotal</span>
+          <span>$<span id="subtotal-price">0.00</span></span>
+        </div>
+
+        <!-- Delivery fee -->
+        <div class="price-line" id="delivery-line" style="display:none;">
+          <span>Delivery Fee</span>
+          <span id="delivery-fee-text">$0.00</span>
+        </div>
+
+        <!-- Final total -->
+        <div class="price-line total-line">
+          <span>Total</span>
+          <span>$<span id="total-price">0.00</span></span>
+        </div>
+
+      </div>
+
+      <!-- WhatsApp order button -->
+      <button id="order-btn" onclick="orderWhatsApp()">
+        Order via WhatsApp
+      </button>
+
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/cart.js"></script>
+
+</body>
+</html>

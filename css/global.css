@@ -1,0 +1,122 @@
+/* === Global Styles === */
+body {
+  font-family: 'Baloo 2', cursive;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 120px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #3c2415;
+}
+
+h2 {
+  margin: 10px 0 5px;
+  color: #a6480d;
+  font-size: 20px;
+}
+
+/* === Header === */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 24px;
+  height: 90px;
+
+  background-image: linear-gradient(to bottom, #faa74a, #ffe3a6);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Logo */
+.logo {
+  height: 60px;
+}
+
+/* Nav container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Nav buttons */
+.nav-links a {
+  text-decoration: none;
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: bold;
+
+  color: #7a3e00;
+  background: #fff3e0;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+  background: #ffe0b2;
+  transform: translateY(-2px);
+}
+
+/* Highlight linked button */
+.linked {
+  background: #7a3e00 !important;
+  color: white !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+/* === Section title === */
+.section-title {
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.section-title h2 {
+  margin: 0;
+  text-align: left;
+  color: #a6480d;
+  font-size: 20px;
+}
+
+
+/* Modal background */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Image inside modal */
+.modal-content {
+  display: block;
+  margin: auto;
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 12px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}

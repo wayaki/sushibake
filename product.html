@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAYAKI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/cart.css">
+
+  <style>
+    body {
+      font-family: 'Baloo 2', cursive;
+      background: #fff8ef;
+      margin: 0;
+      padding: 0;
+      color: #3d2210;
+    }
+
+    .product-container {
+      width: 90%;
+      max-width: 500px;
+      margin: auto;
+      padding-bottom: 120px;
+    }
+
+    .product-image {
+      width: 100%;
+      border-radius: 24px;
+      margin-top: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    .product-name {
+      font-size: 2rem;
+      margin-top: 15px;
+      font-weight: 700;
+    }
+
+    .product-desc {
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+
+    .product-price {
+      font-size: 1.6rem;
+      margin-top: 10px;
+      color: #f08a24;
+      font-weight: bold;
+    }
+
+    .section {
+      background: white;
+      padding: 18px;
+      border-radius: 20px;
+      margin-top: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .section h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .option {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .option label {
+      flex: 1;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      border-radius: 14px;
+      border: 2px solid #eee;
+      padding: 12px;
+      font-family: 'Baloo 2', cursive;
+      resize: none;
+      box-sizing: border-box;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      padding: 15px;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.08);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .add-cart-btn {
+      background: linear-gradient(to right, #faa74a, #f08a24);
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      padding: 16px 24px;
+      border-radius: 999px;
+      width: 90%;
+      max-width: 500px;
+      cursor: pointer;
+      font-family: 'Baloo 2', cursive;
+      font-weight: bold;
+      box-shadow: 0 6px 12px rgba(240,138,36,0.25);
+    }
+
+    .qty-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #f08a24;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .qty-number {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="product-container">
+
+    <button
+      type="button"
+      class="close-btn"
+      onclick="closeProductPage()"
+    >
+      ✕
+    </button>
+
+    <img id="product-image" class="product-image">
+
+    <div class="product-name" id="product-name"></div>
+
+    <div class="product-desc" id="product-desc"></div>
+
+    <div class="product-price" id="product-price"></div>
+
+    <!-- Remove Ingredients -->
+    <div class="section">
+      <h3>Remove Ingredients</h3>
+
+      <div id="remove-options"></div>
+    </div>
+
+    <!-- Rice Options -->
+    <div class="section">
+      <h3>Rice Preference</h3>
+
+      <div id="rice-options"></div>
+    </div>
+
+    <!-- Addons -->
+    <div class="section">
+      <h3>Add-ons</h3>
+
+      <div id="addon-options"></div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="section">
+      <h3>Special Instructions</h3>
+
+      <textarea id="instructions" placeholder="Anything we should know? 👀"></textarea>
+    </div>
+
+    <!-- Quantity -->
+    <div class="section">
+      <h3>Quantity</h3>
+
+      <div class="qty-wrapper">
+        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+
+        <span class="qty-number" id="qty">1</span>
+
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+
+    <button
+      id="cart-action-btn"
+      class="add-cart-btn"
+      onclick="addToCart()"
+    >
+      Add To Cart — <span id="final-price">$0.00</span>
+    </button>
+
+  </div>
+
+  <!-- JavaScript -->
+  <!-- PRODUCTS -->
+  <script src="js/products.js"></script>
+  <!-- PRODUCT -->
+  <script src="js/product.js"></script>
+
+</body>
+</html>
