@@ -268,8 +268,11 @@
     // add to cart
     function addToCart() {
 
-      const cart =
-        JSON.parse(localStorage.getItem("sushibakeCart")) || [];
+      let cart = JSON.parse(localStorage.getItem("sushibakeCart"));
+
+      if (!Array.isArray(cart)) {
+        cart = [];
+      }
 
       const selectedFlavours =
         [...document.querySelectorAll(".trio-flavour")]
@@ -336,5 +339,5 @@
       );
 
       // redirect
-      window.location.href = "https://wayaki.github.io/sushibake/cart.html";
+      window.location.href = "./cart.html";
     }
