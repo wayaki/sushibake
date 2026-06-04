@@ -18,8 +18,13 @@
 
     const product = products[itemId];
 
-    const cart = JSON.parse(localStorage.getItem("sushibakeCart")) || [];
-    const editingItem = editIndex !== null ? cart[Number(editIndex)] : null;
+    let savedCart = JSON.parse(localStorage.getItem("sushibakeCart"));
+
+    if (!Array.isArray(savedCart)) {
+      savedCart = [];
+    }
+
+    const editingItem = editIndex !== null ? savedCart[Number(editIndex)] : null;
 
     let quantity = 1;
 

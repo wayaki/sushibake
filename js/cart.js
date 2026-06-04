@@ -385,7 +385,8 @@ function orderWhatsApp() {
 
   // clear cart after order is sent
   setTimeout(() => {
-    localStorage.removeItem("sushibakeCart");
+    localStorage.setItem("sushibakeCart", JSON.stringify([]));
+
     cart = [];
     renderCart();
     updateTotal();

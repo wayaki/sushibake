@@ -34,6 +34,13 @@ function goToCart() {
   window.location.href = "./cart.html";
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  ["salmon", "shroom", "chicken", "tuna", "luncheon", "trio", "seaweed", "tea"].forEach(id => {
+    updateMenuQuantities();
+    updateMenuItem(id);
+  });
+});
+
 // open image modal
 function openModal(img) {
   // modal container
@@ -65,22 +72,18 @@ function getCartQty(productId) {
 function updateMenuItem(productId) {
   const qty = getCartQty(productId);
 
-  const container =
-    document.getElementById(`${productId}-qty-container`);
+  const count = document.getElementById(`${productId}-count`);
+  const button = document.querySelector(
+    `#${productId}-qty-container button`
+  );
 
-  if (!container) return;
+  if (!count || !button) return;
 
-  if (qty === 0) {
-    container.innerHTML = `
-      <button onclick="goToProduct('${productId}')">+</button>
-    `;
-  } else {
-    container.innerHTML = `
-      <button onclick="goToCart()">−</button>
-      <span>${qty}</span>
-      <button onclick="goToProduct('${productId}')">+</button>
-    `;
-  }
+  count.textContent = qty;
+
+  button.onclick = function () {
+    goToProduct(productId);
+  };
 }
 
 function updateMenuQuantities() {
