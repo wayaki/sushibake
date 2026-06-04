@@ -336,5 +336,5 @@
       );
 
       // redirect
-      window.location.href = "cart.html";
+      window.location.href = "https://wayaki.github.io/sushibake/cart.html";
     }

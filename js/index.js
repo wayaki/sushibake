@@ -31,7 +31,7 @@ function updateCartBar() {
 
 // go to cart page
 function goToCart() {
-  window.location.href = "cart.html";
+  window.location.href = "https://wayaki.github.io/sushibake/cart.html";
 }
 
 // open image modal
