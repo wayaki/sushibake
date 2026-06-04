@@ -76,7 +76,7 @@ function updateMenuItem(productId) {
     `;
   } else {
     container.innerHTML = `
-      <button onclick="decreaseQty('${productId}')">−</button>
+      <button onclick="goToCart()">−</button>
       <span>${qty}</span>
       <button onclick="goToProduct('${productId}')">+</button>
     `;
@@ -118,7 +118,7 @@ function getNextCutoffInfo() {
   // first delivery date
   const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0); // 11 May
   // cutoff time is 7PM
-  const cutoffHour = 19; // 7PM
+  const cutoffHour = 20; // 7PM
 
   // before orders open
   if (now < orderOpenDate) {

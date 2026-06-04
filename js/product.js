@@ -35,6 +35,42 @@
     document.getElementById("product-price").textContent =
       `$${product.price.toFixed(2)}`;
 
+    // trio flavour options
+    const flavourSection = document.getElementById("flavour-section");
+    const flavourContainer = document.getElementById("flavour-options");
+
+    if (product.id === "trio") {
+      flavourSection.style.display = "block";
+
+      flavourContainer.innerHTML = "";
+
+      for (let i = 1; i <= 3; i++) {
+
+        flavourContainer.innerHTML += `
+          <div class="option">
+
+            <label>Flavour ${i}</label>
+
+            <select class="trio-flavour" onchange="updateTrioOptions(); validateTrioSelection();">
+
+              <option value="">Choose flavour</option>
+
+              ${product.flavourOptions.map(flavour => `
+                <option value="${flavour.name}" data-price="${flavour.price}">
+                  ${flavour.name}
+                </option>
+              `).join("")}
+
+            </select>
+
+          </div>
+        `;
+      }
+    document.getElementById("cart-action-btn").disabled = true;
+    
+    validateTrioSelection();
+    }
+
     // removable ingredients
     const removeContainer = document.getElementById("remove-options");
 
@@ -79,31 +115,6 @@
       riceContainer.parentElement.style.display = "none";
     }
 
-    // addons
-    const addonContainer = document.getElementById("addon-options");
-
-    if (product.addons && product.addons.length > 0) {
-      product.addons.forEach(addon => {
-        addonContainer.innerHTML += `
-          <div class="option">
-            <label>
-              <input 
-                type="checkbox"
-                value="${addon.price}"
-                onchange="updatePrice()"
-                class="addon-checkbox"
-              >
-              ${addon.name}
-            </label>
-
-            <span>+$${addon.price.toFixed(2)}</span>
-          </div>
-        `;
-      });
-    } else {
-      addonContainer.parentElement.style.display = "none";
-    }
-
     function restoreEditSelections() {
       if (!editingItem) return;
 
@@ -133,17 +144,6 @@
         }
       });
 
-      // add-ons
-      const addonBoxes = document.querySelectorAll(".addon-checkbox");
-
-      addonBoxes.forEach(box => {
-        const labelText = box.parentElement.innerText.trim();
-
-        if (editingItem.addons?.some(addon => addon.includes(labelText))) {
-          box.checked = true;
-        }
-      });
-
       // instructions
       document.getElementById("instructions").value =
         editingItem.instructions || "";
@@ -152,6 +152,28 @@
     }
 
     restoreEditSelections();
+
+    function validateTrioSelection() {
+        if (product.id !== "trio") return;
+
+        const selects =
+          document.querySelectorAll(".trio-flavour");
+
+        const allSelected =
+          [...selects].every(select => select.value !== "");
+
+        const button =
+          document.getElementById("cart-action-btn");
+
+        button.disabled = !allSelected;
+
+        if (!allSelected) {
+          button.innerHTML =
+            `Choose 3 Flavours First`;
+        } else {
+          updatePrice();
+        }
+      }
 
     function closeProductPage() {
       history.back();
@@ -184,14 +206,6 @@
         total += parseFloat(riceOption.value);
       }
 
-      // addons
-      const addons =
-        document.querySelectorAll(".addon-checkbox:checked");
-
-      addons.forEach(addon => {
-        total += parseFloat(addon.value);
-      });
-
       total *= quantity;
 
       const actionText =
@@ -203,11 +217,64 @@
 
     updatePrice();
 
+    function updateTrioOptions() {
+      const selects = document.querySelectorAll(".trio-flavour");
+
+      const selectedValues = [...selects]
+        .map(select => select.value)
+        .filter(value => value !== "");
+
+      selects.forEach(select => {
+        const currentValue = select.value;
+
+        [...select.options].forEach(option => {
+          if (option.value === "") return;
+
+          option.disabled =
+            selectedValues.includes(option.value) &&
+            option.value !== currentValue;
+        });
+      });
+
+      updateTrioSaving();
+    }
+
+    function updateTrioSaving() {
+      const selects = document.querySelectorAll(".trio-flavour");
+
+      let originalTotal = 0;
+      let selectedCount = 0;
+
+      selects.forEach(select => {
+        const selectedOption = select.options[select.selectedIndex];
+
+        if (selectedOption && selectedOption.dataset.price) {
+          originalTotal += parseFloat(selectedOption.dataset.price);
+          selectedCount++;
+        }
+      });
+
+      const originalPriceBox = document.getElementById("original-price");
+
+      if (selectedCount === 3) {
+        originalPriceBox.textContent = `$${originalTotal.toFixed(2)}`;
+        originalPriceBox.style.display = "inline";
+      } else {
+        originalPriceBox.textContent = "";
+        originalPriceBox.style.display = "none";
+      }
+    }
+
     // add to cart
     function addToCart() {
 
       const cart =
         JSON.parse(localStorage.getItem("sushibakeCart")) || [];
+
+      const selectedFlavours =
+        [...document.querySelectorAll(".trio-flavour")]
+        .map(select => select.value)
+        .filter(value => value);
 
       // removed ingredients
       const removed = [];
@@ -229,19 +296,6 @@
         ? selectedRice.parentElement.innerText.trim()
         : "";
 
-      // addons
-      const addons = [];
-
-      const addonCheckboxes =
-        document.querySelectorAll(".addon-checkbox:checked");
-
-      addonCheckboxes.forEach(box => {
-
-        addons.push(
-          box.parentElement.innerText.trim()
-        );
-      });
-
       // instructions
       const instructions =
         document.getElementById("instructions").value;
@@ -262,9 +316,10 @@
         basePrice: product.price,
         finalPrice,
 
+        selectedFlavours,
+
         removed,
         rice,
-        addons,
         instructions
       };
 
@@ -281,5 +336,5 @@
       );
 
       // redirect
-      window.location.href = "cart-backup.html";
+      window.location.href = "cart.html";
     }

@@ -413,8 +413,12 @@ function renderCart() {
               <img src="${item.image}" class="cart-item-img" alt="${item.name}">
 
               <div class="cart-item-info">
-
                 <div class="cart-item-name">${item.name}</div>
+
+                ${item.selectedFlavours?.length 
+                  ? `<div class="cart-note">Flavours: ${item.selectedFlavours.join(", ")}</div>` 
+                  : ""
+                }
 
                 ${item.rice ? `<div class="cart-note">${item.rice}</div>` : ""}
                 ${item.addons?.length ? `<div class="cart-note">+ ${item.addons.join(", ")}</div>` : ""}
@@ -422,9 +426,11 @@ function renderCart() {
                 ${item.instructions ? `<div class="cart-note">${item.instructions}</div>` : ""}
 
                 ${
-                  ["salmon","shroom","chicken","tuna","luncheon","trio"].includes(item.id)
-                  ? `<div class="free-seaweed-line">🎁 Free ${item.qty} seaweed</div>`
-                  : ``
+                  item.id === "trio"
+                    ? `<div class="free-seaweed-line">🎁 Free ${item.qty * 3} seaweed</div>`
+                    : ["salmon","shroom","chicken","tuna","luncheon"].includes(item.id)
+                      ? `<div class="free-seaweed-line">🎁 Free ${item.qty} seaweed</div>`
+                      : ``
                 }
 
                 <div class="cart-actions">
@@ -451,7 +457,14 @@ function renderCart() {
           </li>
         `;
   });
-
+  html += `
+    <li class="cart-block add-more-block">
+      <a href="index.html" class="add-more-link">
+        + Add More Items
+      </a>
+    </li>
+  `;
+  
   cartList.innerHTML = html;
   updateTotal();
 }
@@ -519,8 +532,8 @@ function getCutoffDate(orderDate) {
   // cutoff is 1 day before order date
   cutoff.setDate(orderDate.getDate() - 1);
 
-  // cutoff time is 7PM
-  cutoff.setHours(19, 0, 0, 0);
+  // cutoff time is 8PM
+  cutoff.setHours(20, 0, 0, 0);
   return cutoff;
 }
 
@@ -535,13 +548,13 @@ function populateOrderDates() {
   select.innerHTML = `<option value="">Select a date</option>`;
 
   // date when May Drops open
-  const orderOpenDate = new Date(2026, 4, 8, 0, 0, 0, 0);
+  const orderOpenDate = new Date(2026, 4, 31, 0, 0, 0, 0);
   // first delivery date
-  const firstDeliveryDate = new Date(2026, 4, 11, 0, 0, 0, 0);
+  const firstDeliveryDate = new Date(2026, 5, 1, 0, 0, 0, 0);
 
   // dates that are sold out
   const soldOutDates = [
-    "2026-05-22", // 22 May sold out
+    "2026-06-05", // 22 May sold out
   ];
 
   // if customers visit before order opening date
@@ -549,7 +562,7 @@ function populateOrderDates() {
     const option = document.createElement("option");
 
     option.value = "";
-    option.textContent = "May Drops open on 8 May";
+    option.textContent = "July Drops open on 29 June";
     option.disabled = true;
 
     select.appendChild(option);

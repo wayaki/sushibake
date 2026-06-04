@@ -1,9 +1,4 @@
 node_modules
 backend/.env
-# index-backup.html
-# stylesheet-backup.css
-# cart-backup.html
-# products.js
-# product.html
-# js
-# css
+index-backup.html
+cart-backup.html

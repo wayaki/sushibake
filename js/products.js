@@ -1,4 +1,35 @@
 const products = {
+  trio: {
+    id: "trio",
+    name: "Wayaki Trio",
+    price: 31.90,
+    image: "images/wayaki-trio.jpg",
+
+    description: "Choose any 3 different flavours from Salmon Deluxe, Shroom Bliss, Chicken comfort and Tuna Delight",
+
+    flavourOptions: [
+      { name: "Salmon Deluxe", price: 12.90 },
+      { name: "Shroom Bliss", price: 11.90 },
+      { name: "Chicken Comfort", price: 10.90 },
+      { name: "Tuna Delight", price: 9.90 }
+    ],
+
+    riceOptions: [
+      {
+        name: "Normal Rice",
+        price: 0
+      },
+      {
+        name: "Less Rice",
+        price: 0
+      },
+      {
+        name: "More Rice",
+        price: 0
+      }
+    ]
+  },
+
   salmon: {
     id: "salmon",
     name: "Salmon Deluxe",
@@ -33,22 +64,6 @@ const products = {
         name: "More Rice",
         price: 0
       }
-    ],
-
-    addons: [
-      {
-        name: "Extra Salmon",
-        price: 2
-      },
-      {
-        name: "Extra Crabstick",
-        price: 1
-      },
-      {
-        name: "Extra Mentaiko",
-        price: 1.50
-      }
-
     ]
   },
 
@@ -86,25 +101,6 @@ const products = {
       {
         name: "More Rice",
         price: 0
-      }
-    ],
-
-    addons: [
-      {
-        name: "Extra Corn",
-        price: 0.50
-      },
-      {
-        name: "Extra Shroom",
-        price: 1
-      },
-      {
-        name: "Extra Cheese",
-        price: 1
-      },
-      {
-        name: "Extra Truffle",
-        price: 1.50
       }
     ]
   },
@@ -144,25 +140,6 @@ const products = {
         name: "More Rice",
         price: 0
       }
-    ],
-
-    addons: [
-      {
-        name: "Extra Chicken",
-        price: 1
-      },
-      {
-        name: "Extra Egg",
-        price: 1
-      },
-      {
-        name: "Extra Teriyaki",
-        price: 0.50
-      },
-      {
-        name: "Extra Mayo",
-        price: 0.50
-      }
     ]
   },
 
@@ -200,21 +177,6 @@ const products = {
         name: "More Rice",
         price: 0
       }
-    ],
-
-    addons: [
-      {
-        name: "Extra Tuna",
-        price: 1.50
-      },
-      {
-        name: "Extra Cucumber",
-        price: 0.50
-      },
-      {
-        name: "Extra Mayo",
-        price: 0.50
-      },
     ]
   },
 
@@ -252,23 +214,9 @@ const products = {
         name: "More Rice",
         price: 0
       }
-    ],
-
-    addons: [
-      {
-        name: "Extra Luncheon Meat",
-        price: 1
-      },
-      {
-        name: "Extra Egg",
-        price: 0.5
-      },
-      {
-        name: "Extra Mayo",
-        price: 0.5
-      },
     ]
   },
+
   seaweed: {
     id: "seaweed",
     name: "Seaweed",
@@ -277,6 +225,7 @@ const products = {
 
     description: "Crispy roasted seaweed",
   },
+  
   tea: {
     id: "tea",
     name: "Tea bag",

@@ -2,13 +2,15 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
   padding: 25px 10px;
   width: 90%;
+  max-width: 430px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.home-container img{
+.home-container img {
   width: 100%;
 }
 
@@ -19,7 +21,7 @@
   border-radius: 20px;
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   color: #4a2a00;
   display: flex;
   justify-content: center;
@@ -60,7 +62,7 @@
   border-radius: 20px;
   width: 90%;
   padding: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 
   display: flex;
   align-items: center;
@@ -76,22 +78,23 @@
 .menu-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  gap: 18px;
   margin: auto;
+  justify-items: center;
 }
 
 .menu-item {
   background: #fff3e0;
   border-radius: 20px;
-  width: 90%;
-  padding: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  transition: transform 0.2s;
+  gap: 12px;
 }
 
 .menu-item:hover {
@@ -99,15 +102,17 @@
 }
 
 .menu-item img {
-  width: 200px;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
   object-fit: cover;
   border-radius: 16px;
-  flex-shrink: 0;
 }
 
 .item-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
   flex: 1;
   min-width: 0;
@@ -117,11 +122,6 @@
   font-size: 20px;
   font-weight: bold;
   color: #a6480d;
-}
-
-.item-desc {
-  font-size: 14px;
-  color: #464646;
 }
 
 .item-price {
@@ -146,7 +146,7 @@
   font-size: 18px;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.1s;
 }
 
@@ -173,7 +173,7 @@
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
 }
 
@@ -277,19 +277,18 @@
   border: none;
   border-radius: 999px;
   padding: 10px 16px;
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
   font-size: 16px;
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
-  .menu-item img {
-    width: 120px;
-    height: 90px;
+  .item-name {
+    font-size: 18px;
+    text-align: center;
   }
 }
