@@ -505,12 +505,17 @@ function removeCartItem(index) {
 
 // count total main trays in cart
 function getTotalMainTrays() {
-  const mains = ["salmon", "shroom", "tuna", "chicken", "luncheon", "trio"];
-
   return cart.reduce((total, item) => {
+    if (item.id === "trio") {
+      return total + item.qty * 3;
+    }
+
+    const mains = ["salmon", "shroom", "tuna", "chicken", "luncheon"];
+
     if (mains.includes(item.id)) {
       return total + item.qty;
     }
+
     return total;
   }, 0);
 }
