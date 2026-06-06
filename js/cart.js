@@ -300,6 +300,12 @@ function buildOrderMessage(data) {
     if (item.removed?.length) {
       message += `  No: ${item.removed.join(", ")}\n`;
     }
+    
+    if (item.selectedFlavours && item.selectedFlavours.length > 0) {
+
+      message += `  Flavours: ${item.selectedFlavours.join(", ")}\n`;
+    
+    }
 
     if (item.rice) {
       message += `  Rice: ${item.rice}\n`;
