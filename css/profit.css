@@ -361,6 +361,46 @@ button:hover,
   opacity: 0.7;
 }
 
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.trio-section {
+  width: 100%;
+  margin: 12px 0 18px;
+}
+
+.trio-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.trio-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.trio-item {
+  background: #fff8ef;
+  border: 2px solid #f4b34f;
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.trio-item label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.trio-item input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Animation */
 
 @keyframes popup {
