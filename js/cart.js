@@ -566,7 +566,7 @@ function populateOrderDates() {
 
   // dates that are sold out
   const soldOutDates = [
-    "2026-06-05", // 22 May sold out
+    "2026-06-16", // 22 May sold out
   ];
 
   // if customers visit before order opening date
