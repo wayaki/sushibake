@@ -43,9 +43,9 @@ function getSalmonCost() {
   return (
     55 * c("salmon") +
     30 * c("crabstick") +
-    7.5 * c("mayo") +
-    7.5 * c("mentaiko") +
-    5 * c("creamcheese") +
+    22.5 * c("mayo") +
+    10 * c("mentaiko") +
+    2.5 * c("creamcheese") +
     10 * c("mentaiko") +
     getRiceCost() +
     getPackagingCost()
@@ -74,9 +74,10 @@ function getChickenCost() {
 
   return (
     110 * c("chicken") +
-    10 * c("flour") +
-    10 * c("sesameoil") +
-    20 * c("teriyaki") +
+    8 * c("flour") +
+    2 * c("sesameoil") +
+    40 * c("teriyaki") +
+    20 * c("mayo") +
     1 * c("egg") +
     getRiceCost() +
     getPackagingCost()
@@ -89,7 +90,7 @@ function getTunaCost() {
   return (
     75 * c("tuna") +
     15 * c("mayo") +
-    15 * c("creamcheese") +
+    10 * c("creamcheese") +
     2.5 * c("soysauce") +
     1.25 * c("sugar") +
     1.25 * c("sesameoil") +
