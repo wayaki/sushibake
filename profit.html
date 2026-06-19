@@ -178,6 +178,17 @@
             Tea Bag Price ($)
             <input type="number" id="priceTea" step="0.01" value="0.50" />
           </label>
+
+          <label>
+            Upgrade Set Qty
+            <input type="number" id="qtyUpgrade" min="0" value="0" />
+          </label>
+
+          <label>
+            Upgrade Set Price ($)
+            <input type="number" id="priceUpgrade" step="0.01" value="3.90" />
+          </label>
+
         </div>
 
         <div class="form-grid-4">
@@ -250,8 +261,8 @@
               <option value="salmon">Salmon</option>
               <option value="crabstick">Crabstick</option>
 
-              <option value="kingOyster">King Oyster Mushroom</option>
-              <option value="buttonMushroom">Button Mushroom</option>
+              <option value="kingoyster">King Oyster Mushroom</option>
+              <option value="buttonmushroom">Button Mushroom</option>
               <option value="corn">Corn</option>
               <option value="truffle">Truffle Oil</option>
               <option value="mozzarella">Mozzarella Cheese</option>
@@ -267,7 +278,7 @@
               <option value="luncheon">Luncheon Meat</option>
 
               <option value="mayo">Mayo Sauce</option>
-              <option value="soySauce">Soy Sauce</option>
+              <option value="soysauce">Soy Sauce</option>
               <option value="teriyaki">Teriyaki Sauce</option>
               <option value="mentaiko">Mentaiko Sauce</option>
 
@@ -276,20 +287,26 @@
               <option value="sugar">Sugar</option>
               <option value="salt">Salt</option>
 
-              <option value="creamCheese">Cream Cheese</option>
-              <option value="cookingOil">Cooking Oil</option>
-              <option value="sesameOil">Sesame Oil</option>
+              <option value="creamcheese">Cream Cheese</option>
+              <option value="cookingoil">Cooking Oil</option>
+              <option value="sesameoil">Sesame Oil</option>
               <option value="flour">Flour</option>
-              <option value="blackPepper">Black Pepper</option>
+              <option value="blackpepper">Black Pepper</option>
 
               <option value="tray">Aluminium Tray</option>
               <option value="furikake">Furikake</option>
               <option value="seaweed">Seaweed</option>
               <option value="tea">Tea Bag</option>
+
+              <option value="edamame">Edamame</option>
+              <option value="yuzu">Yuzu Syrup</option>
+              <option value="bottle">Bottle</option>
+
               <option value="thermalbag">Thermal Bag</option>
+              <option value="bottlesticker">Bottle Sticker</option>
               <option value="logosticker">Logo Sticker</option>
-              <option value="nameStickerTray">Name Sticker / Tray</option>
-              <option value="receiptStickerBag">Receipt Sticker / Bag</option>
+              <option value="namestickertray">Name Sticker / Tray</option>
+              <option value="receiptstickerbag">Receipt Sticker / Bag</option>
               <option value="spoon">Disposable Spoon</option>
               <option value="others">Others</option>
             </select>
@@ -361,6 +378,11 @@
 
         <div class="summary-grid">
           <div>
+            <span>WAYAKI Trio Cost</span>
+            <strong id="trioCostPreview">$0.00</strong>
+          </div>
+
+          <div>
             <span>Salmon Deluxe Cost</span>
             <strong id="salmonCostPreview">$0.00</strong>
           </div>
@@ -380,8 +402,12 @@
             <strong id="tunaCostPreview">$0.00</strong>
           </div>
           <div>
-            <span>Luncheon Melt Delight Cost</span>
-            <strong id="luncheonCostPreview">$5.90</strong>
+            <span>Luncheon Melt Cost</span>
+            <strong id="luncheonCostPreview">$0.00</strong>
+          </div>
+          <div>
+            <span>Upgrade Set Cost</span>
+            <strong id="upgradeCostPreview">$0.00</strong>
           </div>
         </div>
       </section>

@@ -37,6 +37,29 @@
 
     document.getElementById("product-desc").textContent = product.description;
 
+    const includeContainer =
+      document.getElementById("include-options");
+
+    if (product.id === "upgrade") {
+      includeContainer.innerHTML = `
+        <div class="option">
+          <label>
+            <input type="radio" checked disabled>
+            100g Edamame
+          </label>
+        </div>
+
+        <div class="option">
+          <label>
+            <input type="radio" checked disabled>
+            350ml Yuzu Jasmine Tea
+          </label>
+        </div>
+      `;
+
+      includeContainer.parentElement.style.display = "block";
+    }
+
     document.getElementById("product-price").textContent =
       `$${product.price.toFixed(2)}`;
 

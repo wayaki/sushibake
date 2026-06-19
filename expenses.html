@@ -32,6 +32,7 @@
     
     <div class="tag-filter-group">
       <button class="tag-filter active" onclick="setTagFilter('', event)">All</button>
+      <button class="tag-filter" onclick="setTagFilter('others', event)">Others</button>
     </div>
 
     <div class="filter-grid">
@@ -106,9 +107,12 @@
         </div>
       </div>
       <div class="filter-card">
-        <h4>Others</h4>
+        <h4>Upgrade Set</h4>
         <div class="tag-filter-group">
-          <button class="tag-filter" onclick="setTagFilter('others', event)">Others</button>
+          <button class="tag-filter" onclick="setTagFilter('edamame', event)">Edamame</button>
+          <button class="tag-filter" onclick="setTagFilter('yuzu', event)">Yuzu</button>
+          <button class="tag-filter" onclick="setTagFilter('bottle', event)">Bottle</button>
+          <button class="tag-filter" onclick="setTagFilter('bottlesticker', event)">Bottle Sticker</button>
         </div>
       </div>
     </div>
@@ -156,6 +160,10 @@
         <option value="sesameoil">Sesame Oil</option>
         <option value="flour">Flour</option>
         <option value="blackpepper">Black Pepper</option>
+        <option value="edamame">Edamame</option>
+        <option value="yuzu">Yuzu</option>
+        <option value="bottle">Bottle</option>
+        <option value="bottlesticker">Bottle Sticker</option>
         <option value="tray">Tray</option>
         <option value="seaweed">Seaweed</option>
         <option value="tea">Tea</option>
@@ -382,6 +390,10 @@ function formatTagName(tag) {
     sesameoil: "Sesame Oil",
     flour: "Flour",
     blackpepper: "Black Pepper",
+    edamame: "Edamame",
+    yuzu: "Yuzu Syrup",
+    bottle: "Bottle",
+    bottlesticker: "Bottle Sticker",
     tray: "Tray",
     seaweed: "Seaweed",
     tea: "Tea",

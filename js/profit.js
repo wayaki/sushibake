@@ -11,547 +11,670 @@ const deliveryFees = {
   east: 15,
 };
 
-function getCost(tag) {
-  const costPerUnit = getCostPerUnit();
-  return costPerUnit[tag] || 0;
+const PRODUCT_NAMES = {
+  trio: "WAYAKI Trio",
+  salmon: "Salmon Deluxe",
+  shroom: "Shroom Bliss",
+  chicken: "Chicken Comfort",
+  tuna: "Tuna Delight",
+  luncheon: "Luncheon Melt",
+  seaweed: "Seaweed Pack",
+  tea: "Tea Bag",
+  upgrade: "Upgrade Set",
+};
+
+const MAIN_TRAYS = ["salmon", "shroom", "chicken", "tuna", "luncheon"];
+const TRIO_FLAVOURS = ["salmon", "shroom", "chicken", "tuna"];
+const EXTRA_ITEMS = ["seaweed", "tea", "upgrade"];
+const SALE_PRODUCTS = ["trio", ...MAIN_TRAYS, ...EXTRA_ITEMS];
+
+const DEFAULT_QTY_FIELDS = {
+  trio: "qtyTrio",
+  salmon: "qtySalmon",
+  shroom: "qtyShroom",
+  chicken: "qtyChicken",
+  tuna: "qtyTuna",
+  luncheon: "qtyLuncheon",
+  seaweed: "qtySeaweed",
+  tea: "qtyTea",
+  upgrade: "qtyUpgrade",
+};
+
+const DEFAULT_PRICE_FIELDS = {
+  trio: "priceTrio",
+  salmon: "priceSalmon",
+  shroom: "priceShroom",
+  chicken: "priceChicken",
+  tuna: "priceTuna",
+  luncheon: "priceLuncheon",
+  seaweed: "priceSeaweed",
+  tea: "priceTea",
+  upgrade: "priceUpgrade",
+};
+
+const TRIO_FIELD_IDS = {
+  salmon: "trioSalmon",
+  shroom: "trioShroom",
+  chicken: "trioChicken",
+  tuna: "trioTuna",
+};
+
+const COST_PREVIEW_IDS = {
+  trio: "trioCostPreview",
+  tuna: "tunaCostPreview",
+  salmon: "salmonCostPreview",
+  chicken: "chickenCostPreview",
+  shroom: "shroomCostPreview",
+  luncheon: "luncheonCostPreview",
+  upgrade: "upgradeCostPreview",
+};
+
+const BASE_RECIPES = {
+  packaging: {
+    tray: 1,
+    furikake: 5,
+    seaweed: 1,
+    logosticker: 1,
+    namestickertray: 1,
+    receiptstickerbag: 1,
+    spoon: 1,
+  },
+
+  rice: {
+    rice: 90,
+    vinegar: 5,
+    sugar: 2.5,
+    salt: 1,
+  },
+
+  salmon: {
+    salmon: 55,
+    crabstick: 30,
+    mayo: 22.5,
+    mentaiko: 20,
+    creamcheese: 2.5,
+  },
+
+  shroom: {
+    kingoyster: 50,
+    buttonmushroom: 70,
+    corn: 50,
+    truffle: 5,
+    mayo: 30,
+    creamcheese: 15,
+    cookingcream: 5,
+    mozzarella: 15,
+  },
+
+  chicken: {
+    chicken: 110,
+    flour: 8,
+    sesameoil: 2,
+    teriyaki: 40,
+    mayo: 20,
+    egg: 1,
+  },
+
+  tuna: {
+    tuna: 75,
+    mayo: 25,
+    creamcheese: 10,
+    soysauce: 2.5,
+    sugar: 1.25,
+    sesameoil: 1.25,
+    cucumber: 30,
+  },
+
+  luncheon: {
+    luncheon: 100,
+    mayo: 15,
+    egg: 1,
+  },
+
+  seaweed: {
+    seaweed: 1,
+  },
+
+  tea: {
+    tea: 1,
+  },
+  upgrade: {
+    edamame: 100,
+    yuzu: 20,
+    tea: 2,
+    tray: 1,
+    cup: 1,
+    cupsticker: 1,
+    namestickertray: 1,
+  },
+};
+
+/* -----------------------------
+  Small helpers
+----------------------------- */
+
+const $ = (id) => document.getElementById(id);
+
+function money(num) {
+  return "$" + Number(num || 0).toFixed(2);
 }
 
-// Estimate cost per tray recipe
-function getPackagingCost() {
-  const c = getCost;
+function toNumber(value) {
+  return Number.parseFloat(value) || 0;
+}
 
-  return (
-    c("tray") * 1 +
-    c("furikake") * 2 +
-    c("seaweed") * 1 +
-    c("logosticker") * 1 +
-    c("namestickertray") * 1 +
-    c("receiptstickerbag") * 1 +
-    c("spoon") * 1
+function getInputNumber(id) {
+  return toNumber($(id)?.value);
+}
+
+function getInputText(id, fallback = "") {
+  return $(id)?.value?.trim() || fallback;
+}
+
+function setInputValue(id, value) {
+  const el = $(id);
+  if (el) el.value = value;
+}
+
+function setText(id, text) {
+  const el = $(id);
+  if (el) el.textContent = text;
+}
+
+function getDateValue(id) {
+  return $(id)?.value || "";
+}
+
+function sortNewestFirst(list) {
+  return [...list].sort(
+    (a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date),
   );
+}
+
+function formatItemName(item) {
+  return PRODUCT_NAMES[item] || item;
+}
+
+/* -----------------------------
+  Cost calculation
+----------------------------- */
+
+function getCostPerUnit() {
+  const totals = {};
+
+  expenses.forEach((expense) => {
+    const tag = (expense.tag || "").toLowerCase().trim();
+    const amount = toNumber(expense.amount);
+    const cost = toNumber(expense.cost);
+
+    if (!tag || amount <= 0 || cost <= 0) return;
+
+    if (!totals[tag]) {
+      totals[tag] = { cost: 0, amount: 0 };
+    }
+
+    totals[tag].cost += cost;
+    totals[tag].amount += amount;
+  });
+
+  return Object.fromEntries(
+    Object.entries(totals).map(([tag, total]) => [
+      tag,
+      total.cost / total.amount,
+    ]),
+  );
+}
+
+function getCost(tag) {
+  return getCostPerUnit()[tag] || 0;
+}
+
+function getRecipeCost(recipeName) {
+  const costPerUnit = getCostPerUnit();
+  const recipe = BASE_RECIPES[recipeName] || {};
+
+  return Object.entries(recipe).reduce((total, [tag, amount]) => {
+    return total + amount * (costPerUnit[tag] || 0);
+  }, 0);
+}
+
+function getPackagingCost() {
+  return getRecipeCost("packaging");
 }
 
 function getRiceCost() {
-  const c = getCost;
-
-  return 90 * c("rice") + 5 * c("vinegar") + 2.5 * c("sugar") + 1 * c("salt");
-}
-
-function getSalmonCost() {
-  const c = getCost;
-
-  return (
-    55 * c("salmon") +
-    30 * c("crabstick") +
-    22.5 * c("mayo") +
-    10 * c("mentaiko") +
-    2.5 * c("creamcheese") +
-    10 * c("mentaiko") +
-    getRiceCost() +
-    getPackagingCost()
-  );
-}
-
-function getShroomCost() {
-  const c = getCost;
-
-  return (
-    50 * c("kingoyster") +
-    70 * c("buttonmushroom") +
-    50 * c("corn") +
-    5 * c("truffle") +
-    30 * c("mayo") +
-    15 * c("creamcheese") +
-    5 * c("cookingcream") +
-    15 * c("mozzarella") +
-    getRiceCost() +
-    getPackagingCost()
-  );
-}
-
-function getChickenCost() {
-  const c = getCost;
-
-  return (
-    110 * c("chicken") +
-    8 * c("flour") +
-    2 * c("sesameoil") +
-    40 * c("teriyaki") +
-    20 * c("mayo") +
-    1 * c("egg") +
-    getRiceCost() +
-    getPackagingCost()
-  );
-}
-
-function getTunaCost() {
-  const c = getCost;
-
-  return (
-    75 * c("tuna") +
-    15 * c("mayo") +
-    10 * c("creamcheese") +
-    2.5 * c("soysauce") +
-    1.25 * c("sugar") +
-    1.25 * c("sesameoil") +
-    30 * c("cucumber") +
-    10 * c("mayo") +
-    getRiceCost() +
-    getPackagingCost()
-  );
-}
-
-function getLuncheonCost() {
-  const c = getCost;
-
-  return (
-    100 * c("luncheon") +
-    15 * c("mayo") +
-    1 * c("egg") +
-    getRiceCost() +
-    getPackagingCost()
-  );
-}
-
-function getSeaweedCost() {
-  const c = getCost;
-  return 1 * c("seaweed");
-}
-
-function getTeaCost() {
-  const c = getCost;
-  return 1 * c("tea");
+  return getRecipeCost("rice");
 }
 
 function getProductCost(item) {
-  if (item === "salmon") return getSalmonCost();
-  if (item === "shroom") return getShroomCost();
-  if (item === "chicken") return getChickenCost();
-  if (item === "tuna") return getTunaCost();
-  if (item === "luncheon") return getLuncheonCost();
+  if (!BASE_RECIPES[item]) return 0;
 
-  if (item === "seaweed") return getSeaweedCost();
-  if (item === "tea") return getTeaCost();
-  return 0;
+  if (MAIN_TRAYS.includes(item)) {
+    return getRecipeCost(item) + getRiceCost() + getPackagingCost();
+  }
+
+  return getRecipeCost(item);
+}
+
+function getAverageTrioCost() {
+  return (
+    getProductCost("salmon") +
+    getProductCost("shroom") +
+    getProductCost("chicken") +
+    getProductCost("tuna")
+  ) / 4 * 3;
 }
 
 function updateProductCostPreview() {
-  document.getElementById("tunaCostPreview").textContent = money(getTunaCost());
-  document.getElementById("salmonCostPreview").textContent =
-    money(getSalmonCost());
-  document.getElementById("chickenCostPreview").textContent =
-    money(getChickenCost());
-  document.getElementById("shroomCostPreview").textContent =
-    money(getShroomCost());
-  document.getElementById("luncheonCostPreview").textContent =
-    money(getLuncheonCost());
+  Object.entries(COST_PREVIEW_IDS).forEach(([item, previewId]) => {
+    if (item === "trio") {
+      setText(previewId, money(getAverageTrioCost()));
+    } else {
+      setText(previewId, money(getProductCost(item)));
+    }
+  });
 }
+
+/* -----------------------------
+  API helpers
+----------------------------- */
+
+async function requestJson(url, options = {}) {
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    throw new Error(`Request failed: ${res.status}`);
+  }
+
+  return res.json();
+}
+
+async function postJson(url, data) {
+  return requestJson(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+}
+
+async function deleteJson(url) {
+  return fetch(url, { method: "DELETE" });
+}
+
+/* -----------------------------
+  Page setup / loading
+----------------------------- */
 
 window.onload = function () {
   const today = new Date();
   const month = today.toISOString().slice(0, 7);
 
-  document.getElementById("summaryMonth").value = month;
-  document.getElementById("expenseDate").valueAsDate = today;
-  document.getElementById("saleDate").valueAsDate = today;
+  setInputValue("summaryMonth", month);
+
+  if ($("expenseDate")) $("expenseDate").valueAsDate = today;
+  if ($("saleDate")) $("saleDate").valueAsDate = today;
+
+  $("summaryMonth")?.addEventListener("change", calculateSummary);
 
   loadExpenses();
   loadSales();
 };
 
-document
-  .getElementById("summaryMonth")
-  .addEventListener("change", calculateSummary);
-
 async function loadExpenses() {
-  const res = await fetch(`${API_URL}/expenses`);
-  expenses = await res.json();
-  renderExpenses();
-  calculateSummary();
+  try {
+    expenses = await requestJson(`${API_URL}/expenses`);
+    renderExpenses();
+    calculateSummary();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load expenses.");
+  }
 }
 
 async function loadSales() {
-  const res = await fetch(`${API_URL}/orders`);
-  sales = await res.json();
-  renderSales();
-  calculateSummary();
+  try {
+    sales = await requestJson(`${API_URL}/orders`);
+    renderSales();
+    calculateSummary();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load sales.");
+  }
 }
 
-async function addExpense() {
-  const date = document.getElementById("expenseDate").value;
-  const tag = document.getElementById("expenseTag").value;
-  const name = document.getElementById("expenseName").value;
-  const cost = parseFloat(document.getElementById("expenseCost").value);
-  const amount = parseFloat(document.getElementById("expenseAmount").value);
-  const unit = document.getElementById("expenseUnit").value;
+/* -----------------------------
+  Expenses
+----------------------------- */
 
-  if (!date || !tag || !name || isNaN(cost) || isNaN(amount)) {
+async function addExpense() {
+  const date = getDateValue("expenseDate");
+  const tag = getInputText("expenseTag").toLowerCase();
+  const name = getInputText("expenseName");
+  const cost = getInputNumber("expenseCost");
+  const amount = getInputNumber("expenseAmount");
+  const unit = getInputText("expenseUnit");
+
+  if (!date || !tag || !name || cost <= 0 || amount <= 0) {
     alert("Please fill in date, tag, item name, cost and amount.");
     return;
   }
 
-  await fetch(`${API_URL}/expenses`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      date,
-      tag,
-      name,
-      cost,
-      amount,
-      unit,
-      createdAt: new Date().toISOString(),
-    }),
+  await postJson(`${API_URL}/expenses`, {
+    date,
+    tag,
+    name,
+    cost,
+    amount,
+    unit,
+    createdAt: new Date().toISOString(),
   });
 
-  document.getElementById("expenseName").value = "";
-  document.getElementById("expenseCost").value = "";
-  document.getElementById("expenseAmount").value = "";
+  ["expenseName", "expenseCost", "expenseAmount"].forEach((id) =>
+    setInputValue(id, ""),
+  );
 
   loadExpenses();
 }
 
+function renderExpenses() {
+  const box = $("expenseList");
+  if (!box) return;
+
+  box.innerHTML = sortNewestFirst(expenses)
+    .slice(0, 5)
+    .map((expense) => {
+      const amount = toNumber(expense.amount);
+      const cost = toNumber(expense.cost);
+      const costPerUnit = amount > 0 ? cost / amount : 0;
+
+      return `
+        <div class="list-item">
+          <div>
+            <strong>${expense.name}</strong>
+            <p>
+              ${expense.date} · ${expense.tag || "others"} ·
+              ${expense.amount || "-"}${expense.unit || ""} ·
+              $${costPerUnit.toFixed(4)}/${expense.unit || "unit"}
+            </p>
+          </div>
+          <div>
+            <strong>${money(cost)}</strong>
+            <button class="mini-delete" onclick="deleteExpense('${expense._id}')">x</button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function deleteExpense(id) {
+  await deleteJson(`${API_URL}/expenses/${id}`);
+  loadExpenses();
+}
+
+/* -----------------------------
+  Sales
+----------------------------- */
+
+function getSaleItemsFromForm() {
+  const items = {};
+
+  SALE_PRODUCTS.forEach((product) => {
+    items[product] = {
+      qty: getInputNumber(DEFAULT_QTY_FIELDS[product]),
+      price: getInputNumber(DEFAULT_PRICE_FIELDS[product]),
+    };
+  });
+
+  items.trio.flavours = Object.fromEntries(
+    TRIO_FLAVOURS.map((flavour) => [
+      flavour,
+      getInputNumber(TRIO_FIELD_IDS[flavour]),
+    ]),
+  );
+
+  return items;
+}
+
+function getTotalItemsQty(items) {
+  return Object.values(items).reduce((total, item) => total + (item.qty || 0), 0);
+}
+
+function getTrioFlavourTotal(flavours) {
+  return TRIO_FLAVOURS.reduce(
+    (total, flavour) => total + (flavours[flavour] || 0),
+    0,
+  );
+}
+
+function resetSaleForm() {
+  setInputValue("customerName", "");
+
+  Object.values(DEFAULT_QTY_FIELDS).forEach((id) => setInputValue(id, 0));
+  Object.values(TRIO_FIELD_IDS).forEach((id) => setInputValue(id, 0));
+
+  setInputValue("customerDeliveryPaid", 0);
+  setInputValue("driverPaid", 0);
+}
+
 async function addSale() {
-  const customerName = document.getElementById("customerName").value || "Guest";
-  const date = document.getElementById("saleDate").value;
+  const customerName = getInputText("customerName", "Guest");
+  const date = getDateValue("saleDate");
+  const method = getInputText("collectionMethod");
+  const items = getSaleItemsFromForm();
 
-  const qtyTuna = parseInt(document.getElementById("qtyTuna").value) || 0;
-  const qtySalmon = parseInt(document.getElementById("qtySalmon").value) || 0;
-  const qtyChicken = parseInt(document.getElementById("qtyChicken").value) || 0;
-  const qtyShroom = parseInt(document.getElementById("qtyShroom").value) || 0;
-  const qtyLuncheon =
-    parseInt(document.getElementById("qtyLuncheon").value) || 0;
-  const qtySeaweed = parseInt(document.getElementById("qtySeaweed").value) || 0;
-  const qtyTea = parseInt(document.getElementById("qtyTea").value) || 0;
+  const trioQty = items.trio.qty;
+  const trioFlavourTotal = getTrioFlavourTotal(items.trio.flavours);
 
-  const priceTuna = parseFloat(document.getElementById("priceTuna").value) || 0;
-  const priceSalmon =
-    parseFloat(document.getElementById("priceSalmon").value) || 0;
-  const priceChicken =
-    parseFloat(document.getElementById("priceChicken").value) || 0;
-  const priceShroom =
-    parseFloat(document.getElementById("priceShroom").value) || 0;
-  const priceLuncheon =
-    parseFloat(document.getElementById("priceLuncheon").value) || 0;
-  const priceSeaweed =
-    parseFloat(document.getElementById("priceSeaweed").value) || 0;
-  const priceTea = parseFloat(document.getElementById("priceTea").value) || 0;
-
-  const qtyTrio = parseInt(document.getElementById("qtyTrio").value) || 0;
-  const priceTrio = parseFloat(document.getElementById("priceTrio").value) || 0;
-
-  const trioSalmon = parseInt(document.getElementById("trioSalmon").value) || 0;
-  const trioShroom = parseInt(document.getElementById("trioShroom").value) || 0;
-  const trioChicken =
-    parseInt(document.getElementById("trioChicken").value) || 0;
-  const trioTuna = parseInt(document.getElementById("trioTuna").value) || 0;
-
-  const trioFlavourTotal = trioSalmon + trioShroom + trioChicken + trioTuna;
-
-  if (trioFlavourTotal !== qtyTrio * 3) {
+  if (trioFlavourTotal !== trioQty * 3) {
     alert("Trio flavour total must equal WAYAKI Trio Qty × 3.");
     return;
   }
 
-  const method = document.getElementById("collectionMethod").value;
-
-  let customerDeliveryPaid = 0;
-  let driverPaid = 0;
-
-  if (method === "delivery") {
-    customerDeliveryPaid =
-      parseFloat(document.getElementById("customerDeliveryPaid").value) || 0;
-    driverPaid = parseFloat(document.getElementById("driverPaid").value) || 0;
-  }
-
-  if (
-    !date ||
-    qtyTuna +
-      qtySalmon +
-      qtyChicken +
-      qtyShroom +
-      qtyLuncheon +
-      qtyTrio +
-      qtySeaweed +
-      qtyTea ===
-      0
-  ) {
+  if (!date || getTotalItemsQty(items) === 0) {
     alert("Please enter date and at least 1 item.");
     return;
   }
 
-  await fetch(`${API_URL}/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      date,
-      customerName,
-      createdAt: new Date().toISOString(),
-      items: {
-        trio: {
-          qty: qtyTrio,
-          price: priceTrio,
-          flavours: {
-            salmon: trioSalmon,
-            shroom: trioShroom,
-            chicken: trioChicken,
-            tuna: trioTuna,
-          },
-        },
+  const customerDeliveryPaid =
+    method === "delivery" ? getInputNumber("customerDeliveryPaid") : 0;
+  const driverPaid = method === "delivery" ? getInputNumber("driverPaid") : 0;
 
-        salmon: { qty: qtySalmon, price: priceSalmon },
-        shroom: { qty: qtyShroom, price: priceShroom },
-        chicken: { qty: qtyChicken, price: priceChicken },
-        tuna: { qty: qtyTuna, price: priceTuna },
-        luncheon: { qty: qtyLuncheon, price: priceLuncheon },
-
-        seaweed: { qty: qtySeaweed, price: priceSeaweed },
-        tea: { qty: qtyTea, price: priceTea },
-      },
-      method,
-      customerDeliveryPaid,
-      driverPaid,
-    }),
+  await postJson(`${API_URL}/orders`, {
+    date,
+    customerName,
+    createdAt: new Date().toISOString(),
+    items,
+    method,
+    customerDeliveryPaid,
+    driverPaid,
   });
 
-  document.getElementById("customerName").value = "";
-  document.getElementById("qtyTrio").value = 0;
-  document.getElementById("trioSalmon").value = 0;
-  document.getElementById("trioShroom").value = 0;
-  document.getElementById("trioChicken").value = 0;
-  document.getElementById("trioTuna").value = 0;
-
-  document.getElementById("qtySalmon").value = 0;
-  document.getElementById("qtyShroom").value = 0;
-  document.getElementById("qtyChicken").value = 0;
-  document.getElementById("qtyTuna").value = 0;
-  document.getElementById("qtyLuncheon").value = 0;
-
-  document.getElementById("qtySeaweed").value = 0;
-  document.getElementById("qtyTea").value = 0;
-
-  document.getElementById("customerDeliveryPaid").value = 0;
-  document.getElementById("driverPaid").value = 0;
-
+  resetSaleForm();
   loadSales();
 }
 
-function getCostPerUnit() {
-  const totalCost = {};
-  const totalAmount = {};
-
-  expenses.forEach((e) => {
-    const tag = (e.tag || "").toLowerCase().trim();
-    const amount = parseFloat(e.amount);
-    const cost = parseFloat(e.cost);
-
-    if (!tag || !amount || !cost) return;
-
-    totalCost[tag] = (totalCost[tag] || 0) + cost;
-    totalAmount[tag] = (totalAmount[tag] || 0) + amount;
-  });
-
-  const costMap = {};
-
-  Object.keys(totalCost).forEach((tag) => {
-    costMap[tag] = totalCost[tag] / totalAmount[tag];
-  });
-
-  return costMap;
+function getOrderTotal(items) {
+  return Object.values(items).reduce((total, item) => {
+    return total + (item.qty || 0) * (item.price || 0);
+  }, 0);
 }
 
-function renderExpenses() {
-  const box = document.getElementById("expenseList");
-  box.innerHTML = "";
+function getTrioFlavourText(flavours = {}) {
+  return TRIO_FLAVOURS
+    .filter((flavour) => flavours[flavour] > 0)
+    .map((flavour) => {
+      const shortName = formatItemName(flavour)
+        .replace(" Deluxe", "")
+        .replace(" Bliss", "")
+        .replace(" Comfort", "")
+        .replace(" Delight", "");
 
-  expenses.sort(
-    (a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date),
-  );
+      return `${shortName} x${flavours[flavour]}`;
+    })
+    .join(", ");
+}
 
-  expenses.slice(0, 5).forEach((e, index) => {
-    const costPerUnit = e.amount > 0 ? e.cost / e.amount : 0;
+function getOrderLines(items) {
+  return Object.entries(items)
+    .filter(([, itemData]) => itemData.qty > 0)
+    .map(([item, itemData]) => {
+      const lineTotal = money(itemData.qty * itemData.price);
+      const mainLine = `${formatItemName(item)} x ${itemData.qty} — ${lineTotal}`;
 
-    box.innerHTML += `
-        <div class="list-item">
-          <div>
-            <strong>${e.name}</strong>
-            <p>
-              ${e.date} · ${e.tag || "others"} · 
-              ${e.amount || "-"}${e.unit || ""} · 
-              $${costPerUnit.toFixed(4)}/${e.unit || "unit"}
-            </p>
-          </div>
-          <div>
-            <strong>$${e.cost.toFixed(2)}</strong>
-            <button class="mini-delete" onclick="deleteExpense('${e._id}')">x</button>
-          </div>
-        </div>
+      if (item !== "trio") return mainLine;
+
+      return `
+        ${mainLine}<br>
+        <span class="small-text">→ ${getTrioFlavourText(itemData.flavours)}</span>
       `;
-  });
+    })
+    .join("<br>");
 }
 
 function renderSales() {
-  const box = document.getElementById("salesList");
-  box.innerHTML = "";
+  const box = $("salesList");
+  if (!box) return;
 
-  sales.sort(
-    (a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date),
-  );
+  box.innerHTML = sortNewestFirst(sales)
+    .slice(0, 5)
+    .map((sale) => {
+      const items = sale.items || {};
+      const orderText = getOrderLines(items);
+      const orderTotal = getOrderTotal(items);
 
-  sales.slice(0, 5).forEach((s) => {
-    const items = s.items || {};
-    let orderText = "";
-    let orderTotal = 0;
-
-    Object.keys(items).forEach((item) => {
-      const qty = items[item].qty || 0;
-      const price = items[item].price || 0;
-
-      if (qty > 0) {
-        if (item === "trio") {
-          const flavours = items[item].flavours || {};
-          const flavourText = [];
-
-          if (flavours.salmon > 0)
-            flavourText.push(`Salmon x${flavours.salmon}`);
-          if (flavours.shroom > 0)
-            flavourText.push(`Shroom x${flavours.shroom}`);
-          if (flavours.chicken > 0)
-            flavourText.push(`Chicken x${flavours.chicken}`);
-          if (flavours.tuna > 0) flavourText.push(`Tuna x${flavours.tuna}`);
-
-          orderText += `${formatItemName(item)} x ${qty} — $${(qty * price).toFixed(2)}<br>`;
-          orderText += `<span class="small-text">→ ${flavourText.join(", ")}</span><br>`;
-        } else {
-          orderText += `${formatItemName(item)} x ${qty} — $${(qty * price).toFixed(2)}<br>`;
-        }
-
-        orderTotal += qty * price;
-      }
-    });
-
-    box.innerHTML += `
-      <div class="list-item">
-        <div>
-          <strong>${orderText}</strong>
-          <p>${s.customerName || "Guest"} · ${s.date} · ${s.method}</p>
+      return `
+        <div class="list-item">
+          <div>
+            <strong>${orderText}</strong>
+            <p>${sale.customerName || "Guest"} · ${sale.date} · ${sale.method}</p>
+          </div>
+          <div>
+            <strong>${money(orderTotal)}</strong>
+            <button class="mini-delete" onclick="deleteSale('${sale._id}')">x</button>
+          </div>
         </div>
-        <div>
-          <strong>$${orderTotal.toFixed(2)}</strong>
-          <button class="mini-delete" onclick="deleteSale('${s._id}')">x</button>
-        </div>
-      </div>
-    `;
+      `;
+    })
+    .join("");
+}
+
+async function deleteSale(id) {
+  await deleteJson(`${API_URL}/orders/${id}`);
+  loadSales();
+}
+
+/* -----------------------------
+  Summary
+----------------------------- */
+
+function isSameMonth(date, month) {
+  return date && date.startsWith(month);
+}
+
+function getTraysCount(item, itemData) {
+  if (item === "trio") return (itemData.qty || 0) * 3;
+  if (MAIN_TRAYS.includes(item)) return itemData.qty || 0;
+  return 0;
+}
+
+function getItemProductCost(item, itemData) {
+  const qty = itemData.qty || 0;
+
+  if (item === "trio") {
+    const flavours = itemData.flavours || {};
+
+    return TRIO_FLAVOURS.reduce((total, flavour) => {
+      return total + (flavours[flavour] || 0) * getProductCost(flavour);
+    }, 0);
+  }
+
+  return qty * getProductCost(item);
+}
+
+function getOrderProductCost(items) {
+  let productCost = 0;
+  let traysCount = 0;
+
+  Object.entries(items).forEach(([item, itemData]) => {
+    productCost += getItemProductCost(item, itemData);
+    traysCount += getTraysCount(item, itemData);
   });
+
+  const thermalBagsNeeded = Math.ceil(traysCount / 5);
+  productCost += thermalBagsNeeded * getCost("thermalbag");
+
+  return productCost;
 }
 
 function calculateSummary() {
-  const selectedMonth = document.getElementById("summaryMonth").value;
+  const selectedMonth = getInputText("summaryMonth");
 
-  const monthlySales = sales.filter(
-    (s) => s.date && s.date.startsWith(selectedMonth),
-  );
-  const monthlyExpenses = expenses.filter(
-    (e) => e.date && e.date.startsWith(selectedMonth),
+  const monthlySales = sales.filter((sale) => isSameMonth(sale.date, selectedMonth));
+  const monthlyExpenses = expenses.filter((expense) =>
+    isSameMonth(expense.date, selectedMonth),
   );
 
-  let totalFoodSales = 0;
-  let totalProductCost = 0;
-  let deliveryCollected = 0;
-  let deliveryPaid = 0;
-  let totalExpenses = 0;
+  const summary = {
+    totalFoodSales: 0,
+    totalProductCost: 0,
+    deliveryCollected: 0,
+    deliveryPaid: 0,
+    totalExpenses: 0,
+  };
 
-  monthlySales.forEach((s) => {
-    const items = s.items || {};
-    let totalTraysInOrder = 0;
+  monthlySales.forEach((sale) => {
+    const items = sale.items || {};
 
-    Object.keys(items).forEach((item) => {
-      const qty = items[item].qty || 0;
-      const price = items[item].price || 0;
-
-      totalFoodSales += qty * price;
-
-      if (item === "trio") {
-        const flavours = items[item].flavours || {};
-
-        totalProductCost += (flavours.salmon || 0) * getProductCost("salmon");
-        totalProductCost += (flavours.shroom || 0) * getProductCost("shroom");
-        totalProductCost += (flavours.chicken || 0) * getProductCost("chicken");
-        totalProductCost += (flavours.tuna || 0) * getProductCost("tuna");
-
-        totalTraysInOrder += qty * 3;
-      } else {
-        totalProductCost += qty * getProductCost(item);
-
-        if (
-          item === "salmon" ||
-          item === "shroom" ||
-          item === "chicken" ||
-          item === "tuna" ||
-          item === "luncheon"
-        ) {
-          totalTraysInOrder += qty;
-        }
-      }
-    });
-
-    const thermalBagsNeeded = Math.ceil(totalTraysInOrder / 4);
-    totalProductCost += thermalBagsNeeded * getCost("thermalbag");
-
-    deliveryCollected += s.customerDeliveryPaid || 0;
-    deliveryPaid += s.driverPaid || 0;
+    summary.totalFoodSales += getOrderTotal(items);
+    summary.totalProductCost += getOrderProductCost(items);
+    summary.deliveryCollected += toNumber(sale.customerDeliveryPaid);
+    summary.deliveryPaid += toNumber(sale.driverPaid);
   });
 
-  monthlyExpenses.forEach((e) => {
-    totalExpenses += parseFloat(e.cost) || 0;
-  });
+  summary.totalExpenses = monthlyExpenses.reduce(
+    (total, expense) => total + toNumber(expense.cost),
+    0,
+  );
 
-  const deliveryProfit = deliveryCollected - deliveryPaid;
-  const realProfit = totalFoodSales - totalExpenses + deliveryProfit;
-  const estimatedProfit = totalFoodSales - totalProductCost;
+  const deliveryProfit = summary.deliveryCollected - summary.deliveryPaid;
+  const realProfit =
+    summary.totalFoodSales - summary.totalExpenses + deliveryProfit;
+  const estimatedProfit = summary.totalFoodSales - summary.totalProductCost;
   const profitMargin =
-    totalFoodSales > 0 ? (realProfit / totalFoodSales) * 100 : 0;
+    summary.totalFoodSales > 0
+      ? (realProfit / summary.totalFoodSales) * 100
+      : 0;
 
-  document.getElementById("totalFoodSales").textContent = money(totalFoodSales);
-  document.getElementById("totalProductCost").textContent =
-    money(totalProductCost);
-  document.getElementById("deliveryCollected").textContent =
-    money(deliveryCollected);
-  document.getElementById("deliveryPaid").textContent = money(deliveryPaid);
-  document.getElementById("deliveryProfit").textContent = money(deliveryProfit);
-  document.getElementById("totalExpenses").textContent = money(totalExpenses);
-  document.getElementById("realProfit").textContent = money(realProfit);
-  document.getElementById("estimatedProfit").textContent =
-    money(estimatedProfit);
-  document.getElementById("profitMargin").textContent =
-    profitMargin.toFixed(1) + "%";
+  setText("totalFoodSales", money(summary.totalFoodSales));
+  setText("totalProductCost", money(summary.totalProductCost));
+  setText("deliveryCollected", money(summary.deliveryCollected));
+  setText("deliveryPaid", money(summary.deliveryPaid));
+  setText("deliveryProfit", money(deliveryProfit));
+  setText("totalExpenses", money(summary.totalExpenses));
+  setText("realProfit", money(realProfit));
+  setText("estimatedProfit", money(estimatedProfit));
+  setText("profitMargin", profitMargin.toFixed(1) + "%");
 
-  const ownerPercent =
-    parseFloat(document.getElementById("ownerPercent").value) || 0;
-  const ingredientPercent =
-    parseFloat(document.getElementById("ingredientPercent").value) || 0;
-  const bufferPercent =
-    parseFloat(document.getElementById("bufferPercent").value) || 0;
-
-  document.getElementById("ownerPay").textContent = money(
-    (realProfit * ownerPercent) / 100,
+  setText("ownerPay", money((realProfit * getInputNumber("ownerPercent")) / 100));
+  setText(
+    "ingredientFund",
+    money((realProfit * getInputNumber("ingredientPercent")) / 100),
   );
-  document.getElementById("ingredientFund").textContent = money(
-    (realProfit * ingredientPercent) / 100,
-  );
-  document.getElementById("bufferFund").textContent = money(
-    (realProfit * bufferPercent) / 100,
+  setText(
+    "bufferFund",
+    money((realProfit * getInputNumber("bufferPercent")) / 100),
   );
 
   updateProductCostPreview();
 }
 
+/* -----------------------------
+  Delivery
+----------------------------- */
+
 function toggleDeliveryFields() {
-  const method = document.getElementById("collectionMethod").value;
+  const method = getInputText("collectionMethod");
 
   document.querySelectorAll(".delivery-field").forEach((field) => {
     field.classList.toggle("hidden", method !== "delivery");
@@ -559,39 +682,6 @@ function toggleDeliveryFields() {
 }
 
 function setDeliveryFee() {
-  const area = document.getElementById("deliveryArea").value;
-  document.getElementById("customerDeliveryPaid").value =
-    deliveryFees[area] || 0;
-}
-
-async function deleteExpense(id) {
-  await fetch(`${API_URL}/expenses/${id}`, {
-    method: "DELETE",
-  });
-
-  loadExpenses();
-}
-
-async function deleteSale(id) {
-  await fetch(`${API_URL}/orders/${id}`, {
-    method: "DELETE",
-  });
-
-  loadSales();
-}
-
-function formatItemName(item) {
-  if (item === "trio") return "WAYAKI Trio";
-  if (item === "salmon") return "Salmon Deluxe";
-  if (item === "shroom") return "Shroom Bliss";
-  if (item === "chicken") return "Chicken Comfort";
-  if (item === "tuna") return "Tuna Delight";
-  if (item === "luncheon") return "Luncheon Melt";
-  if (item === "seaweed") return "Seaweed Pack";
-  if (item === "tea") return "Tea Bag";
-  return item;
-}
-
-function money(num) {
-  return "$" + Number(num).toFixed(2);
+  const area = getInputText("deliveryArea");
+  setInputValue("customerDeliveryPaid", DELIVERY_FEES[area] || 0);
 }

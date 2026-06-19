@@ -217,6 +217,15 @@ const products = {
     ]
   },
 
+  upgrade: {
+    id: "upgrade",
+    name: "Upgrade Set",
+    price: 3.90,
+    image: "images/upgrade-set.png",
+
+    description: "100g Edamame + 350ml Yuzu Jasmine Tea",
+  },
+
   seaweed: {
     id: "seaweed",
     name: "Seaweed",
@@ -229,7 +238,7 @@ const products = {
   tea: {
     id: "tea",
     name: "Tea bag",
-    price: 1.0,
+    price: 0.5,
     image: "images/tea-bag.png",
 
     description: "Green tea bag",
