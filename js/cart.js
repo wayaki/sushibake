@@ -303,7 +303,7 @@ function buildOrderMessage(data) {
     
     if (item.selectedFlavours && item.selectedFlavours.length > 0) {
 
-      message += `  Flavours: ${item.selectedFlavours.join(", ")}\n`;
+      message += `  \tFlavours: ${item.selectedFlavours.join(", ")}\n`;
     
     }
 
