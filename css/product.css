@@ -194,3 +194,28 @@ textarea {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.option label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-text small {
+  color: #777;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.option-subtitle {
+  font-size: 0.8rem;
+  color: #777;
+  font-style: italic;
+  position: relative;
+  top: 2px;
+}

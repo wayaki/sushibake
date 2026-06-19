@@ -306,21 +306,17 @@ function buildOrderMessage(data) {
       message += `  Flavours: ${item.selectedFlavours.join(", ")}\n`;
     
     }
-    
-    if (item.id === "upgrade") {
-      message += `  Includes: Edamame + Yuzu Jasmine Tea\n`;
-    }
 
     if (item.rice) {
-      message += `  Rice: ${item.rice}\n`;
+      message += `  \tRice: ${item.rice}\n`;
     }
 
-    if (item.addons?.length) {
-      message += `  Add-ons: ${item.addons.join(", ")}\n`;
+    if (item.upgrades) {
+      message += `  \t${item.upgrades}\n`;
     }
 
     if (item.instructions) {
-      message += `  Note: ${item.instructions}\n`;
+      message += `  \tNote: ${item.instructions}\n`;
     }
 
     message += `\n`;
@@ -431,13 +427,11 @@ function renderCart() {
                   : ""
                 }
 
-                ${item.id === "upgrade" 
-                  ? `<div class="cart-note">Includes: Edamame + Yuzu Jasmine Tea</div>` 
-                  : ""
-                }
-
                 ${item.rice ? `<div class="cart-note">${item.rice}</div>` : ""}
-                ${item.addons?.length ? `<div class="cart-note">+ ${item.addons.join(", ")}</div>` : ""}
+                ${item.upgrades?.length
+                  ? `<div class="cart-note"> ${item.upgrades.join(", ")}</div>`
+                  : ""
+                }                
                 ${item.removed?.length ? `<div class="cart-note">No ${item.removed.join(", ")}</div>` : ""}
                 ${item.instructions ? `<div class="cart-note">${item.instructions}</div>` : ""}
 

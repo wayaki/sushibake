@@ -1,47 +1,49 @@
-    const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
-    const itemId = params.get("item");
-    const editIndex = params.get("edit");
+const itemId = params.get("item");
+const editIndex = params.get("edit");
 
-    if (editIndex !== null) {
-      document.querySelector(".add-cart-btn").innerHTML =
-        `Update Cart — <span id="final-price">$0.00</span>`;
-    }
+if (editIndex !== null) {
+  document.querySelector(".add-cart-btn").innerHTML =
+    `Update Cart — <span id="final-price">$0.00</span>`;
+}
 
-    const actionBtn =
-      document.getElementById("cart-action-btn");
+const actionBtn = document.getElementById("cart-action-btn");
 
-    if (editIndex !== null) {
-      actionBtn.innerHTML =
-        `Update Cart — <span id="final-price">$0.00</span>`;
-    }
+if (editIndex !== null) {
+  actionBtn.innerHTML = `Update Cart — <span id="final-price">$0.00</span>`;
+}
 
-    const product = products[itemId];
+const product = products[itemId];
+if (product.id === "upgrade") {
+  document.getElementById("remove-options").parentElement.style.display = "none";
+  document.getElementById("rice-options").parentElement.style.display = "none";
+  document.getElementById("upgrade-options").parentElement.style.display = "none";
+}
 
-    let savedCart = JSON.parse(localStorage.getItem("sushibakeCart"));
+let savedCart = JSON.parse(localStorage.getItem("sushibakeCart"));
 
-    if (!Array.isArray(savedCart)) {
-      savedCart = [];
-    }
+if (!Array.isArray(savedCart)) {
+  savedCart = [];
+}
 
-    const editingItem = editIndex !== null ? savedCart[Number(editIndex)] : null;
+const editingItem = editIndex !== null ? savedCart[Number(editIndex)] : null;
 
-    let quantity = 1;
+let quantity = 1;
 
-    let selectedRicePrice = 0;
+let selectedRicePrice = 0;
 
-    // set product info
-    document.getElementById("product-image").src = product.image;
+// set product info
+document.getElementById("product-image").src = product.image;
 
-    document.getElementById("product-name").textContent = product.name;
+document.getElementById("product-name").textContent = product.name;
 
-    document.getElementById("product-desc").textContent = product.description;
+document.getElementById("product-desc").textContent = product.description;
 
-    const includeContainer =
-      document.getElementById("include-options");
+const includeContainer = document.getElementById("include-options");
 
-    if (product.id === "upgrade") {
-      includeContainer.innerHTML = `
+if (product.id === "upgrade") {
+  includeContainer.innerHTML = `
         <div class="option">
           <label>
             <input type="radio" checked disabled>
@@ -57,24 +59,23 @@
         </div>
       `;
 
-      includeContainer.parentElement.style.display = "block";
-    }
+  includeContainer.parentElement.style.display = "block";
+}
 
-    document.getElementById("product-price").textContent =
-      `$${product.price.toFixed(2)}`;
+document.getElementById("product-price").textContent =
+  `$${product.price.toFixed(2)}`;
 
-    // trio flavour options
-    const flavourSection = document.getElementById("flavour-section");
-    const flavourContainer = document.getElementById("flavour-options");
+// trio flavour options
+const flavourSection = document.getElementById("flavour-section");
+const flavourContainer = document.getElementById("flavour-options");
 
-    if (product.id === "trio") {
-      flavourSection.style.display = "block";
+if (product.id === "trio") {
+  flavourSection.style.display = "block";
 
-      flavourContainer.innerHTML = "";
+  flavourContainer.innerHTML = "";
 
-      for (let i = 1; i <= 3; i++) {
-
-        flavourContainer.innerHTML += `
+  for (let i = 1; i <= 3; i++) {
+    flavourContainer.innerHTML += `
           <div class="option">
 
             <label>Flavour ${i}</label>
@@ -83,28 +84,32 @@
 
               <option value="">Choose flavour</option>
 
-              ${product.flavourOptions.map(flavour => `
+              ${product.flavourOptions
+                .map(
+                  (flavour) => `
                 <option value="${flavour.name}" data-price="${flavour.price}">
                   ${flavour.name}
                 </option>
-              `).join("")}
+              `,
+                )
+                .join("")}
 
             </select>
 
           </div>
         `;
-      }
-    document.getElementById("cart-action-btn").disabled = true;
-    
-    validateTrioSelection();
-    }
+  }
+  document.getElementById("cart-action-btn").disabled = true;
 
-    // removable ingredients
-    const removeContainer = document.getElementById("remove-options");
+  validateTrioSelection();
+}
 
-    if (product.removable && product.removable.length > 0) {
-      product.removable.forEach(item => {
-        removeContainer.innerHTML += `
+// removable ingredients
+const removeContainer = document.getElementById("remove-options");
+
+if (product.removable && product.removable.length > 0) {
+  product.removable.forEach((item) => {
+    removeContainer.innerHTML += `
           <div class="option">
             <label>
               <input type="checkbox" value="${item}" checked>
@@ -112,260 +117,311 @@
             </label>
           </div>
         `;
-      });
-    } else {
-      removeContainer.parentElement.style.display = "none";
-    }
+  });
+} else {
+  removeContainer.parentElement.style.display = "none";
+}
 
-    // rice options
-    const riceContainer = document.getElementById("rice-options");
+// rice options
+const riceContainer = document.getElementById("rice-options");
 
-    if (product.riceOptions && product.riceOptions.length > 0) {
-      product.riceOptions.forEach((option, index) => {
-        riceContainer.innerHTML += `
+if (product.riceOptions && product.riceOptions.length > 0) {
+  product.riceOptions.forEach((option, index) => {
+    riceContainer.innerHTML += `
           <div class="option">
             <label>
-              <input 
+              <input
                 type="radio"
                 name="rice"
                 value="${option.price}"
                 ${index === 0 ? "checked" : ""}
                 onchange="updatePrice()"
               >
-              ${option.name}
-            </label>
 
+              ${option.name}
+              ${
+                option.subtitle
+                  ? `<small class="option-subtitle">${option.subtitle}</small>`
+                  : ""
+              }
+            </label>
             <span>${option.price > 0 ? `+$${option.price}` : ""}</span>
           </div>
         `;
-      });
+  });
+} else {
+  riceContainer.parentElement.style.display = "none";
+}
+
+// upgrade options
+const upgradeContainer =
+  document.getElementById("upgrade-options");
+
+if (product.upgradeOptions && product.upgradeOptions.length > 0) {
+
+  product.upgradeOptions.forEach((option, index) => {
+
+    upgradeContainer.innerHTML += `
+      <div class="option">
+        <label>
+          <input
+            type="radio"
+            name="upgrade"
+            value="${option.price}"
+            ${index === 0 ? "checked" : ""}
+            onchange="updatePrice()"
+          >
+
+          ${option.name}
+
+          ${
+            option.subtitle
+              ? `<small class="option-subtitle">${option.subtitle}</small>`
+              : ""
+          }
+
+        </label>
+
+        <span>
+          ${option.price > 0 ? `+$${option.price.toFixed(2)}` : ""}
+        </span>
+
+      </div>
+    `;
+  });
+
+} else {
+  upgradeContainer.parentElement.style.display = "none";
+}
+
+function restoreEditSelections() {
+  if (!editingItem) return;
+
+  // quantity
+  quantity = editingItem.qty || 1;
+  document.getElementById("qty").textContent = quantity;
+
+  // removed ingredients
+  const removeBoxes = document.querySelectorAll("#remove-options input");
+
+  removeBoxes.forEach((box) => {
+    if (editingItem.removed?.includes(box.value)) {
+      box.checked = false;
     } else {
-      riceContainer.parentElement.style.display = "none";
+      box.checked = true;
     }
+  });
 
-    function restoreEditSelections() {
-      if (!editingItem) return;
+  // rice option
+  const riceRadios = document.querySelectorAll('input[name="rice"]');
 
-      // quantity
-      quantity = editingItem.qty || 1;
-      document.getElementById("qty").textContent = quantity;
+  riceRadios.forEach((radio) => {
+    const labelText = radio.parentElement.innerText.trim();
 
-      // removed ingredients
-      const removeBoxes = document.querySelectorAll("#remove-options input");
-
-      removeBoxes.forEach(box => {
-        if (editingItem.removed?.includes(box.value)) {
-          box.checked = false;
-        } else {
-          box.checked = true;
-        }
-      });
-
-      // rice option
-      const riceRadios = document.querySelectorAll('input[name="rice"]');
-
-      riceRadios.forEach(radio => {
-        const labelText = radio.parentElement.innerText.trim();
-
-        if (editingItem.rice?.includes(labelText)) {
-          radio.checked = true;
-        }
-      });
-
-      // instructions
-      document.getElementById("instructions").value =
-        editingItem.instructions || "";
-
-      updatePrice();
+    if (editingItem.rice?.includes(labelText)) {
+      radio.checked = true;
     }
+  });
 
-    restoreEditSelections();
+  // instructions
+  document.getElementById("instructions").value =
+    editingItem.instructions || "";
 
-    function validateTrioSelection() {
-        if (product.id !== "trio") return;
+  updatePrice();
+}
 
-        const selects =
-          document.querySelectorAll(".trio-flavour");
+restoreEditSelections();
 
-        const allSelected =
-          [...selects].every(select => select.value !== "");
+function validateTrioSelection() {
+  if (product.id !== "trio") return;
 
-        const button =
-          document.getElementById("cart-action-btn");
+  const selects = document.querySelectorAll(".trio-flavour");
 
-        button.disabled = !allSelected;
+  const allSelected = [...selects].every((select) => select.value !== "");
 
-        if (!allSelected) {
-          button.innerHTML =
-            `Choose 3 Flavours First`;
-        } else {
-          updatePrice();
-        }
-      }
+  const button = document.getElementById("cart-action-btn");
 
-    function closeProductPage() {
-      history.back();
-    }
+  button.disabled = !allSelected;
 
-    // quantity
-    function changeQty(delta) {
-
-      quantity += delta;
-
-      if (quantity < 1) {
-        quantity = 1;
-      }
-
-      document.getElementById("qty").textContent = quantity;
-
-      updatePrice();
-    }
-
-    // update price
-    function updatePrice() {
-
-      let total = product.price;
-
-      // rice
-      const riceOption =
-        document.querySelector('input[name="rice"]:checked');
-
-      if (riceOption) {
-        total += parseFloat(riceOption.value);
-      }
-
-      total *= quantity;
-
-      const actionText =
-        editIndex !== null ? "Update Cart" : "Add To Cart";
-
-      document.getElementById("cart-action-btn").innerHTML =
-        `${actionText} — <span id="final-price">$${total.toFixed(2)}</span>`;
-    }
-
+  if (!allSelected) {
+    button.innerHTML = `Choose 3 Flavours First`;
+  } else {
     updatePrice();
+  }
+}
 
-    function updateTrioOptions() {
-      const selects = document.querySelectorAll(".trio-flavour");
+function closeProductPage() {
+  history.back();
+}
 
-      const selectedValues = [...selects]
-        .map(select => select.value)
-        .filter(value => value !== "");
+// quantity
+function changeQty(delta) {
+  quantity += delta;
 
-      selects.forEach(select => {
-        const currentValue = select.value;
+  if (quantity < 1) {
+    quantity = 1;
+  }
 
-        [...select.options].forEach(option => {
-          if (option.value === "") return;
+  document.getElementById("qty").textContent = quantity;
 
-          option.disabled =
-            selectedValues.includes(option.value) &&
-            option.value !== currentValue;
-        });
-      });
+  updatePrice();
+}
 
-      updateTrioSaving();
+// update price
+function updatePrice() {
+  let total = product.price;
+
+  // rice
+  const riceOption = document.querySelector('input[name="rice"]:checked');
+
+  if (riceOption) {
+    total += parseFloat(riceOption.value);
+  }
+
+  // upgrade to set
+  const upgradeOption =
+    document.querySelector('input[name="upgrade"]:checked');
+
+  if (upgradeOption) {
+    total += parseFloat(upgradeOption.value);
+  }
+
+  total *= quantity;
+
+  const actionText = editIndex !== null ? "Update Cart" : "Add To Cart";
+
+  document.getElementById("cart-action-btn").innerHTML =
+    `${actionText} — <span id="final-price">$${total.toFixed(2)}</span>`;
+}
+
+updatePrice();
+
+function updateTrioOptions() {
+  const selects = document.querySelectorAll(".trio-flavour");
+
+  const selectedValues = [...selects]
+    .map((select) => select.value)
+    .filter((value) => value !== "");
+
+  selects.forEach((select) => {
+    const currentValue = select.value;
+
+    [...select.options].forEach((option) => {
+      if (option.value === "") return;
+
+      option.disabled =
+        selectedValues.includes(option.value) && option.value !== currentValue;
+    });
+  });
+
+  updateTrioSaving();
+}
+
+function updateTrioSaving() {
+  const selects = document.querySelectorAll(".trio-flavour");
+
+  let originalTotal = 0;
+  let selectedCount = 0;
+
+  selects.forEach((select) => {
+    const selectedOption = select.options[select.selectedIndex];
+
+    if (selectedOption && selectedOption.dataset.price) {
+      originalTotal += parseFloat(selectedOption.dataset.price);
+      selectedCount++;
     }
+  });
 
-    function updateTrioSaving() {
-      const selects = document.querySelectorAll(".trio-flavour");
+  const originalPriceBox = document.getElementById("original-price");
 
-      let originalTotal = 0;
-      let selectedCount = 0;
+  if (selectedCount === 3) {
+    originalPriceBox.textContent = `$${originalTotal.toFixed(2)}`;
+    originalPriceBox.style.display = "inline";
+  } else {
+    originalPriceBox.textContent = "";
+    originalPriceBox.style.display = "none";
+  }
+}
 
-      selects.forEach(select => {
-        const selectedOption = select.options[select.selectedIndex];
+// add to cart
+function addToCart() {
+  let cart = JSON.parse(localStorage.getItem("sushibakeCart"));
 
-        if (selectedOption && selectedOption.dataset.price) {
-          originalTotal += parseFloat(selectedOption.dataset.price);
-          selectedCount++;
-        }
-      });
+  if (!Array.isArray(cart)) {
+    cart = [];
+  }
 
-      const originalPriceBox = document.getElementById("original-price");
+  const selectedFlavours = [...document.querySelectorAll(".trio-flavour")]
+    .map((select) => select.value)
+    .filter((value) => value);
 
-      if (selectedCount === 3) {
-        originalPriceBox.textContent = `$${originalTotal.toFixed(2)}`;
-        originalPriceBox.style.display = "inline";
-      } else {
-        originalPriceBox.textContent = "";
-        originalPriceBox.style.display = "none";
-      }
+  // removed ingredients
+  const removed = [];
+
+  const ingredientCheckboxes = document.querySelectorAll(
+    "#remove-options input",
+  );
+
+  ingredientCheckboxes.forEach((box) => {
+    if (!box.checked) {
+      removed.push(box.value);
     }
+  });
 
-    // add to cart
-    function addToCart() {
+  // selected rice
+  const selectedRice = document.querySelector('input[name="rice"]:checked');
 
-      let cart = JSON.parse(localStorage.getItem("sushibakeCart"));
+  const rice = selectedRice
+    ? selectedRice.parentElement.innerText.split("\n")[0].trim()
+    : "";
 
-      if (!Array.isArray(cart)) {
-        cart = [];
-      }
+  // selected upgrade
+  const selectedUpgrade =
+    document.querySelector('input[name="upgrade"]:checked');
 
-      const selectedFlavours =
-        [...document.querySelectorAll(".trio-flavour")]
-        .map(select => select.value)
-        .filter(value => value);
+  const upgrades = [];
 
-      // removed ingredients
-      const removed = [];
+  if (selectedUpgrade && parseFloat(selectedUpgrade.value) > 0) {
+    upgrades.push(
+      selectedUpgrade.parentElement.innerText.split("\n")[0].trim()
+    );
+  }
 
-      const ingredientCheckboxes =
-        document.querySelectorAll("#remove-options input");
+  // instructions
+  const instructions = document.getElementById("instructions").value;
 
-      ingredientCheckboxes.forEach(box => {
+  // final price
+  const finalPrice = parseFloat(
+    document.getElementById("final-price").textContent.replace("$", ""),
+  );
 
-        if (!box.checked) {
-          removed.push(box.value);
-        }
-      });
+  // add item
+  const cartItem = {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    qty: quantity,
+    basePrice: product.price,
+    finalPrice,
 
-      // selected rice
-      const selectedRice = document.querySelector('input[name="rice"]:checked');
+    selectedFlavours,
 
-      const rice = selectedRice
-        ? selectedRice.parentElement.innerText.trim()
-        : "";
+    removed,
+    rice,
+    instructions,
+    upgrades,
+  };
 
-      // instructions
-      const instructions =
-        document.getElementById("instructions").value;
+  if (editIndex !== null) {
+    cart[Number(editIndex)] = cartItem;
+  } else {
+    cart.push(cartItem);
+  }
 
-      // final price
-      const finalPrice =
-        parseFloat(
-          document.getElementById("final-price")
-          .textContent.replace("$", "")
-        );
+  console.log(cartItem);
+  // save cart
+  localStorage.setItem("sushibakeCart", JSON.stringify(cart));
 
-      // add item
-      const cartItem = {
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        qty: quantity,
-        basePrice: product.price,
-        finalPrice,
-
-        selectedFlavours,
-
-        removed,
-        rice,
-        instructions
-      };
-
-      if (editIndex !== null) {
-        cart[Number(editIndex)] = cartItem;
-      } else {
-        cart.push(cartItem);
-      }
-
-      // save cart
-      localStorage.setItem(
-        "sushibakeCart",
-        JSON.stringify(cart)
-      );
-
-      // redirect
-      window.location.href = "./cart.html";
-    }
+  // redirect
+  window.location.href = "./cart.html";
+}

@@ -17,16 +17,26 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
       }
+    ],
+    
+    upgradeOptions: [
+      { name: "No Upgrade", price: 0 },
+      { name: "1 Set Upgrade", price: 3.90 },
+      { name: "2 Set Upgrades", price: 7.80 },
+      { name: "3 Set Upgrades", price: 11.70 }
     ]
   },
 
@@ -54,15 +64,30 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
+      }
+    ],
+
+    upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
       }
     ]
   },
@@ -92,15 +117,30 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
+      }
+    ],
+    
+    upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
       }
     ]
   },
@@ -130,15 +170,30 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
+      }
+    ],
+      
+    upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
       }
     ]
   },
@@ -167,15 +222,30 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
+      }
+    ],
+        
+    upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
       }
     ]
   },
@@ -204,26 +274,41 @@ const products = {
     riceOptions: [
       {
         name: "Normal Rice",
+        subtitle: "→ 180g",
         price: 0
       },
       {
         name: "Less Rice",
+        subtitle: "→ 140g",
         price: 0
       },
       {
         name: "More Rice",
+        subtitle: "→ 220g",
         price: 0
+      }
+    ],
+        
+    upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
       }
     ]
   },
 
   upgrade: {
     id: "upgrade",
-    name: "Upgrade Set",
+    name: "Upgrade to Set",
     price: 3.90,
-    image: "images/upgrade-set.png",
+    image: "images/upgrade-set.jpg",
 
-    description: "100g Edamame + 350ml Yuzu Jasmine Tea",
+    description: "350ml Yuzu Jasmine Tea + 100g Edamame",
   },
 
   seaweed: {
