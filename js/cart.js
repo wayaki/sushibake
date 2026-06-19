@@ -306,6 +306,10 @@ function buildOrderMessage(data) {
       message += `  Flavours: ${item.selectedFlavours.join(", ")}\n`;
     
     }
+    
+    if (item.id === "upgrade") {
+      message += `  Includes: Edamame + Yuzu Jasmine Tea\n`;
+    }
 
     if (item.rice) {
       message += `  Rice: ${item.rice}\n`;
@@ -424,6 +428,11 @@ function renderCart() {
 
                 ${item.selectedFlavours?.length 
                   ? `<div class="cart-note">Flavours: ${item.selectedFlavours.join(", ")}</div>` 
+                  : ""
+                }
+
+                ${item.id === "upgrade" 
+                  ? `<div class="cart-note">Includes: Edamame + Yuzu Jasmine Tea</div>` 
                   : ""
                 }
 
