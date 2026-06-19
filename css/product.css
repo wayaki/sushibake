@@ -219,3 +219,15 @@ textarea {
   position: relative;
   top: 2px;
 }
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.85rem;
+  margin-right: 4px;
+}
+
+.promo-price {
+  color: #e67e22;
+  font-weight: bold;
+}

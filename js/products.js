@@ -305,7 +305,7 @@ const products = {
   upgrade: {
     id: "upgrade",
     name: "Upgrade to Set",
-    price: 3.90,
+    price: 2.90,
     image: "images/upgrade-set.jpg",
 
     description: "350ml Yuzu Jasmine Tea + 100g Edamame",
