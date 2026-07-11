@@ -20,26 +20,84 @@ function hasCartItems() {
   return cart.length > 0;
 }
 
-// get selected date label
+function getSelectedOrderDateValue() {
+  return document
+    .getElementById("order-date")
+    .value;
+}
+
 function getSelectedOrderDateLabel() {
-  const select = document.getElementById("order-date");
-  return select.options[select.selectedIndex]?.text || "";
+  const select =
+    document.getElementById("order-date");
+
+  if (!select.value) {
+    return "";
+  }
+
+  return select.options[
+    select.selectedIndex
+  ]?.text || "";
 }
 
 // collect all form data
 function getFormData() {
   return {
-    orderDate: getSelectedOrderDateLabel(),
-    pickupTime: document.getElementById("pickup-time").value.trim(),
-    name: document.getElementById("name").value.trim(),
-    phone: document.getElementById("phone").value.trim(),
-    method: getSelectedMethod(),
+    orderDateValue:
+      getSelectedOrderDateValue(),
+
+    orderDate:
+      getSelectedOrderDateLabel(),
+
+    pickupTime:
+      document
+        .getElementById("pickup-time")
+        .value
+        .trim(),
+
+    name:
+      document
+        .getElementById("name")
+        .value
+        .trim(),
+
+    phone:
+      document
+        .getElementById("phone")
+        .value
+        .trim(),
+
+    method:
+      getSelectedMethod(),
+
     pickupLocation:
-      document.getElementById("pickup-location")?.innerText.trim() || "",
-    area: document.getElementById("area").value.trim(),
-    address: document.getElementById("address").value.trim(),
-    postal: document.getElementById("postal").value.trim(),
-    unit: document.getElementById("unit").value.trim(),
+      document
+        .getElementById("pickup-location")
+        ?.innerText
+        .trim() || "",
+
+    area:
+      document
+        .getElementById("area")
+        .value
+        .trim(),
+
+    address:
+      document
+        .getElementById("address")
+        .value
+        .trim(),
+
+    postal:
+      document
+        .getElementById("postal")
+        .value
+        .trim(),
+
+    unit:
+      document
+        .getElementById("unit")
+        .value
+        .trim()
   };
 }
 
@@ -61,7 +119,7 @@ function validateForm(data) {
   }
 
   // check order date
-  if (!data.orderDate) {
+  if (!data.orderDateValue) {
     return "Please select an order date.";
   }
 
@@ -108,7 +166,12 @@ function validateForm(data) {
 
 // calculate subtotal price
 function calculateSubtotal() {
-  return cart.reduce((total, item) => total + (item.finalPrice || 0), 0);
+  return cart.reduce(
+    (total, item) =>
+      total +
+      Number(item.finalPrice || 0),
+    0
+  );
 }
 
 // calculate delivery discount
@@ -213,71 +276,89 @@ function updateTotal() {
 
 // toggle between self collect and delivery
 function toggleDelivery() {
-  // get selected method
-  const method = getSelectedMethod();
+  const deliveryDiv =
+    document.getElementById(
+      "delivery-options"
+    );
 
-  // main sections
-  const deliveryDiv = document.getElementById("delivery-options");
-  const selfDiv = document.getElementById("self-options");
+  const selfDiv =
+    document.getElementById(
+      "self-options"
+    );
 
-  // late timing slot
-  const lateSlot = document.getElementById("late-slot");
+  const lateSlot =
+    document.getElementById(
+      "late-slot"
+    );
 
-  // time dropdown
-  const timeSelect = document.getElementById("pickup-time");
+  const timeSelect =
+    document.getElementById(
+      "pickup-time"
+    );
 
-  // delivery radio button
-  const deliveryRadio = document.querySelector('input[value="delivery"]');
+  const deliveryRadio =
+    document.querySelector(
+      'input[name="method"][value="delivery"]'
+    );
 
-  // total main trays in cart
-  const totalTrays = getTotalMainTrays();
+  const selfRadio =
+    document.querySelector(
+      'input[name="method"][value="self"]'
+    );
 
-  // disable delivery if less than 2 trays
+  const totalTrays =
+    getTotalMainTrays();
+
   if (totalTrays < 2) {
     deliveryRadio.disabled = true;
 
-    // auto switch back to self collect
     if (deliveryRadio.checked) {
-      document.querySelector('input[value="self"]').checked = true;
+      selfRadio.checked = true;
     }
   } else {
-    // enable delivery
     deliveryRadio.disabled = false;
   }
 
-  // show delivery section only when delivery selected
-  deliveryDiv.style.display = method === "delivery" ? "block" : "none";
+  // Get method after possibly switching radio
+  const method =
+    getSelectedMethod();
 
-  // show self collect section only when self selected
-  selfDiv.style.display = method === "self" ? "block" : "none";
+  deliveryDiv.style.display =
+    method === "delivery"
+      ? "block"
+      : "none";
 
-  // enable / disable delivery inputs
-  const deliveryInputs = deliveryDiv.querySelectorAll("input, select");
+  selfDiv.style.display =
+    method === "self"
+      ? "block"
+      : "none";
+
+  const deliveryInputs =
+    deliveryDiv.querySelectorAll(
+      "input, select"
+    );
 
   deliveryInputs.forEach((input) => {
-    input.disabled = method !== "delivery";
+    input.disabled =
+      method !== "delivery";
   });
 
-  // handle self collect only timing slot
   if (lateSlot) {
-    // if delivery selected
     if (method === "delivery") {
-      // hide late slot
       lateSlot.disabled = true;
       lateSlot.style.display = "none";
 
-      // remove selected late slot if chosen before
-      if (timeSelect.value === lateSlot.value) {
+      if (
+        timeSelect.value === lateSlot.value
+      ) {
         timeSelect.value = "";
       }
     } else {
-      // show late slot for self collect
       lateSlot.disabled = false;
       lateSlot.style.display = "block";
     }
   }
 
-  // refresh totals
   updateTotal();
 }
 
