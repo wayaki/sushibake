@@ -1109,11 +1109,19 @@ function addToCart() {
     id: product.id,
     name: product.name,
     image: product.image,
+
     qty: quantity,
+
     basePrice: product.price,
-    unitPrice: finalPrice / quantity,
+
+    unitPrice:
+      finalPrice / quantity,
+
     finalPrice,
-    instructions: instructionsInput.value.trim(),
+
+    instructions:
+      instructionsInput.value.trim(),
+
     upgrade,
     upgradePrice
   };

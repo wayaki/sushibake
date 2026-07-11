@@ -818,59 +818,64 @@ function getCutoffDate(orderDate) {
 
 // create order date dropdown options
 function populateOrderDates() {
-  const select =
-    document.getElementById("order-date");
-
-  const now = new Date();
+  const select = document.getElementById("order-date");
 
   select.innerHTML =
-    `<option value="">Select a date</option>`;
+    '<option value="">Select a date</option>';
 
-  const soldOutDates = [
-    // Example:
-    // "2026-07-15"
-  ];
+  const now = new Date();
+  const currentMonth = now.getMonth();
 
-  // Generate upcoming 30 calendar days
-  for (let i = 1; i <= 30; i++) {
+  // Open next month's slots 2 days before month ends
+  const lastDayOfMonth = new Date(
+    now.getFullYear(),
+    currentMonth + 1,
+    0
+  ).getDate();
+
+  const openNextMonth =
+    now.getDate() >= lastDayOfMonth - 1;
+
+  const soldOutDates = [];
+
+  for (let i = 1; i <= 60; i++) {
     const date = new Date(now);
-
-    date.setHours(0, 0, 0, 0);
     date.setDate(now.getDate() + i);
 
-    const dayOfWeek = date.getDay();
-
     // Skip weekends
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      continue;
+    }
+
+    // Only show current month unless next month is open
     if (
-      dayOfWeek === 0 ||
-      dayOfWeek === 6
+      !openNextMonth &&
+      date.getMonth() !== currentMonth
     ) {
       continue;
     }
 
-    const cutoff =
-      getCutoffDate(date);
-
-    if (now > cutoff) {
+    // Don't go beyond next month
+    if (
+      openNextMonth &&
+      date.getMonth() > currentMonth + 1
+    ) {
       continue;
     }
 
-    const option =
-      document.createElement("option");
+    // Cutoff check
+    if (new Date() > getCutoffDate(date)) {
+      continue;
+    }
 
-    option.value =
-      formatDateValue(date);
+    const option = document.createElement("option");
 
-    option.textContent =
-      formatDateLabel(date);
+    option.value = formatDateValue(date);
+    option.textContent = formatDateLabel(date);
 
-    if (
-      soldOutDates.includes(option.value)
-    ) {
+    if (soldOutDates.includes(option.value)) {
       option.disabled = true;
-
-      option.textContent =
-        `${formatDateLabel(date)} — SOLD OUT`;
+      option.textContent += " — SOLD OUT";
     }
 
     select.appendChild(option);
