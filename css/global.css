@@ -109,14 +109,3 @@ header {
   max-height: 80%;
   border-radius: 12px;
 }
-
-/* Close button */
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 30px;
-  font-weight: bold;
-  cursor: pointer;
-}

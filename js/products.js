@@ -1,3 +1,43 @@
+const DEFAULT_BASE_OPTIONS = [
+    {
+        name: "Japanese Rice",
+        subtitle: "180g",
+        price: 0
+    },
+    {
+        name: "Macaroni",
+        subtitle: "150g",
+        price: 0
+    }
+];
+
+const DEFAULT_PORTION_OPTIONS = [
+    {
+        name: "Normal",
+        price: 0
+    },
+    {
+        name: "Less",
+        price: 0
+    },
+    {
+        name: "More",
+        price: 0
+    }
+];
+
+const DEFAULT_UPGRADE = [
+    {
+        name: "No Upgrade",
+        price: 0
+    },
+    {
+        name: "Upgrade to Set",
+        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
+        price: 3.90
+    }
+];
+
 const products = {
   trio: {
     id: "trio",
@@ -5,38 +45,41 @@ const products = {
     price: 31.90,
     image: "images/wayaki-trio.jpg",
 
-    description: "Choose any 3 different flavours from Salmon Deluxe, Shroom Bliss, Chicken comfort and Tuna Delight",
+    description:
+      "Choose any 3 different flavours from Salmon Deluxe, Shroom Bliss, Chicken Comfort and Tuna Delight",
 
     flavourOptions: [
-      { name: "Salmon Deluxe", price: 12.90 },
-      { name: "Shroom Bliss", price: 11.90 },
-      { name: "Chicken Comfort", price: 10.90 },
-      { name: "Tuna Delight", price: 9.90 }
-    ],
-
-    riceOptions: [
       {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
+        productId: "salmon"
       },
       {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
+        productId: "shroom"
       },
       {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
+        productId: "chicken"
+      },
+      {
+        productId: "tuna"
       }
     ],
-    
+
     upgradeOptions: [
-      { name: "No Upgrade", price: 0 },
-      { name: "1 Set Upgrade", price: 3.90 },
-      { name: "2 Set Upgrades", price: 7.80 },
-      { name: "3 Set Upgrades", price: 11.70 }
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "1 Set Upgrade",
+        price: 3.90
+      },
+      {
+        name: "2 Set Upgrades",
+        price: 7.80
+      },
+      {
+        name: "3 Set Upgrades",
+        price: 11.70
+      }
     ]
   },
 
@@ -46,13 +89,12 @@ const products = {
     price: 12.90,
     image: "images/salmon-deluxe.jpg",
 
-    description: "Mentaiko · Salmon · Crabstick · Japanese Rice",
+    description: "Mentaiko · Salmon · Crabstick",
 
     ingredients: [
       "Mentaiko",
       "Salmon",
       "Crabstick",
-      "Japanese Rice"
     ],
 
     removable: [
@@ -61,35 +103,12 @@ const products = {
       "Crabstick"
     ],
 
-    riceOptions: [
-      {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
-      },
-      {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
-      },
-      {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
-      }
-    ],
+    baseOptions: DEFAULT_BASE_OPTIONS,
 
-    upgradeOptions: [
-      {
-        name: "No Upgrade",
-        price: 0
-      },
-      {
-        name: "Upgrade to Set",
-        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
-        price: 3.90
-      }
-    ]
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE,
+
   },
 
   shroom: {
@@ -98,14 +117,13 @@ const products = {
     price: 11.90,
     image: "images/shroom-bliss.jpg",
 
-    description: "Shrooms · Corn · Cheese · Truffle · Japanese Rice",
+    description: "Shrooms · Corn · Cheese · Truffle",
 
     ingredients: [
       "Shrooms",
       "Corn",
       "Cheese",
       "Truffle",
-      "Japanese Rice"
     ],
 
     removable: [
@@ -114,35 +132,12 @@ const products = {
       "Truffle"
     ],
 
-    riceOptions: [
-      {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
-      },
-      {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
-      },
-      {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
-      }
-    ],
-    
-    upgradeOptions: [
-      {
-        name: "No Upgrade",
-        price: 0
-      },
-      {
-        name: "Upgrade to Set",
-        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
-        price: 3.90
-      }
-    ]
+    baseOptions: DEFAULT_BASE_OPTIONS,
+
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE,
+
   },
 
   chicken: {
@@ -151,14 +146,13 @@ const products = {
     price: 10.90,
     image: "images/chicken-comfort.jpg",
 
-    description: "Mayo · Teriyaki · Chicken · Egg · Japanese Rice",
+    description: "Mayo · Teriyaki · Chicken · Egg",
 
     ingredients: [
       "Mayo",
       "Teriyaki",
       "Chicken",
       "Egg",
-      "Japanese Rice"
     ],
 
     removable: [
@@ -167,35 +161,12 @@ const products = {
       "Egg"
     ],
 
-    riceOptions: [
-      {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
-      },
-      {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
-      },
-      {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
-      }
-    ],
-      
-    upgradeOptions: [
-      {
-        name: "No Upgrade",
-        price: 0
-      },
-      {
-        name: "Upgrade to Set",
-        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
-        price: 3.90
-      }
-    ]
+    baseOptions: DEFAULT_BASE_OPTIONS,
+
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE,
+
   },
 
   tuna: {
@@ -204,13 +175,12 @@ const products = {
     price: 9.90,
     image: "images/tuna-delight.jpg",
 
-    description: "Mayo · Tuna · Cucumber · Japanese Rice",
+    description: "Mayo · Tuna · Cucumber",
 
     ingredients: [
       "Mayo",
       "Tuna",
       "Cucumber",
-      "Japanese Rice"
     ],
 
     removable: [
@@ -219,35 +189,12 @@ const products = {
       "Cucumber"
     ],
 
-    riceOptions: [
-      {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
-      },
-      {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
-      },
-      {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
-      }
-    ],
-        
-    upgradeOptions: [
-      {
-        name: "No Upgrade",
-        price: 0
-      },
-      {
-        name: "Upgrade to Set",
-        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
-        price: 3.90
-      }
-    ]
+    baseOptions: DEFAULT_BASE_OPTIONS,
+
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE,
+
   },
 
   luncheon: {
@@ -256,13 +203,12 @@ const products = {
     price: 5.90,
     image: "images/luncheon-melt.jpg",
 
-    description: "Mayo · Tuna · Cucumber · Japanese Rice",
+    description: "Mayo · Luncheon Meat · Egg",
 
     ingredients: [
       "Mayo",
       "Luncheon Meat",
       "Egg",
-      "Japanese Rice"
     ],
 
     removable: [
@@ -271,41 +217,18 @@ const products = {
       "Egg"
     ],
 
-    riceOptions: [
-      {
-        name: "Normal Rice",
-        subtitle: "→ 180g",
-        price: 0
-      },
-      {
-        name: "Less Rice",
-        subtitle: "→ 140g",
-        price: 0
-      },
-      {
-        name: "More Rice",
-        subtitle: "→ 220g",
-        price: 0
-      }
-    ],
-        
-    upgradeOptions: [
-      {
-        name: "No Upgrade",
-        price: 0
-      },
-      {
-        name: "Upgrade to Set",
-        subtitle: "100g Edamame + 350ml Yuzu Jasmine Tea",
-        price: 3.90
-      }
-    ]
+    baseOptions: DEFAULT_BASE_OPTIONS,
+
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE,
+
   },
 
   upgrade: {
     id: "upgrade",
     name: "Upgrade to Set",
-    price: 2.90,
+    price: 3.90,
     image: "images/upgrade-set.jpg",
 
     description: "350ml Yuzu Jasmine Tea + 100g Edamame",

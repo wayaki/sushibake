@@ -390,14 +390,14 @@ small {
   font-weight: 700;
   cursor: pointer;
   color: #fff2e0;
-  background: #7a3e00;
+  background: #743a00;
   box-shadow: 0 10px 20px #7a3e0080;
 
   transition: all 0.2s ease;
 }
 
 #order-btn:hover {
-  background: #512b00;
+  background: #ff8000;
   box-shadow: 0 10px 20px #512b0080;
 }
 

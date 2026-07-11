@@ -1,113 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>WAYAKI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>WAYAKI</title>
+
+  <!-- Google Font -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap"
+  >
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/cart.css">
   <link rel="stylesheet" href="css/product.css">
-
 </head>
 
 <body>
 
-  <div class="product-container">
+  <main class="product-page">
 
-    <button
-      type="button"
-      class="close-btn"
-      onclick="closeProductPage()"
-    >
-      ✕
-    </button>
+    <div class="product-container">
 
-    <img id="product-image" class="product-image">
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="close-btn"
+        aria-label="Close product page"
+        onclick="closeProductPage()"
+      >
+        ✕
+      </button>
 
-    <div class="product-name" id="product-name"></div>
+      <!-- Product Header -->
+      <section class="product-header">
 
-    <div class="product-desc" id="product-desc"></div>
+        <img
+          id="product-image"
+          class="product-image"
+          src=""
+          alt=""
+        >
 
-    <div class="price-row">
-      <span id="product-price" class="product-price"></span>
-      <span id="original-price" class="original-price"></span>
+        <div class="product-info">
+
+          <h1
+            id="product-name"
+            class="product-name"
+          ></h1>
+
+          <p
+            id="product-desc"
+            class="product-desc"
+          ></p>
+
+          <div class="price-row">
+
+            <span
+              id="product-price"
+              class="product-price"
+            ></span>
+
+            <span
+              id="original-price"
+              class="original-price"
+            ></span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- Trio Tray Sections -->
+      <section
+        class="section"
+        id="flavour-section"
+        hidden
+      >
+        <div class="section-heading">
+          <h2>Build Your WAYAKI Trio</h2>
+
+          <p>
+            Choose 3 different flavours and customise each tray.
+          </p>
+        </div>
+
+        <div id="flavour-options"></div>
+      </section>
+
+
+      <!-- Remove Ingredients -->
+      <section
+        class="section"
+        id="remove-section"
+      >
+        <div class="section-heading">
+          <h2>Remove Ingredients</h2>
+
+          <p>
+            Untick anything you would like us to remove.
+          </p>
+        </div>
+
+        <div
+          id="remove-options"
+          class="options-list"
+        ></div>
+      </section>
+
+
+      <!-- Base Options -->
+      <section
+        class="section"
+        id="base-section"
+      >
+        <div class="section-heading">
+          <h2>Choose Your Base</h2>
+
+          <p>
+            Pick Japanese rice or macaroni.
+          </p>
+        </div>
+
+        <div
+          id="base-options"
+          class="options-list"
+        ></div>
+      </section>
+
+
+      <!-- Portion Options -->
+      <section
+        class="section"
+        id="portion-section"
+      >
+        <div class="section-heading">
+          <h2>Portion Preference</h2>
+        </div>
+
+        <div
+          id="portion-options"
+          class="options-list"
+        ></div>
+      </section>
+
+
+      <!-- Includes -->
+      <section
+        class="section"
+        id="include-section"
+      >
+        <div class="section-heading">
+          <h2>Includes</h2>
+        </div>
+
+        <div
+          id="include-options"
+          class="options-list"
+        ></div>
+      </section>
+
+
+      <!-- Upgrade Options -->
+      <section
+        class="section"
+        id="upgrade-section"
+      >
+        <div class="section-heading">
+          <h2>Upgrade Your Meal</h2>
+
+          <p>
+            Add edamame and Yuzu Jasmine Tea.
+          </p>
+        </div>
+
+        <div
+          id="upgrade-options"
+          class="options-list"
+        ></div>
+      </section>
+
+
+      <!-- Special Instructions -->
+      <section class="section">
+
+        <div class="section-heading">
+          <h2>Special Instructions</h2>
+
+          <p>
+            Let us know if there is anything else we should take note of.
+          </p>
+        </div>
+
+        <textarea
+          id="instructions"
+          class="instructions-input"
+          maxlength="200"
+          placeholder="Anything we should know?"
+        ></textarea>
+
+      </section>
+
+
+      <!-- Quantity -->
+      <section class="section quantity-section">
+
+        <div class="section-heading">
+          <h2>Quantity</h2>
+        </div>
+
+        <div class="qty-wrapper">
+
+          <button
+            type="button"
+            class="qty-btn"
+            aria-label="Decrease quantity"
+            onclick="changeQty(-1)"
+          >
+            −
+          </button>
+
+          <span
+            id="qty"
+            class="qty-number"
+          >
+            1
+          </span>
+
+          <button
+            type="button"
+            class="qty-btn"
+            aria-label="Increase quantity"
+            onclick="changeQty(1)"
+          >
+            +
+          </button>
+
+        </div>
+
+      </section>
+
     </div>
 
-    <div class="section" id="flavour-section" style="display: none;">
-      <h3>Choose 3 Different Flavours</h3>
-      <div id="flavour-options"></div>
-    </div>
-    
-    <!-- Remove Ingredients -->
-    <div class="section">
-      <h3>Remove Ingredients</h3>
+  </main>
 
-      <div id="remove-options"></div>
-    </div>
-
-    <!-- Rice Options -->
-    <div class="section">
-      <h3>Rice Preference</h3>
-
-      <div id="rice-options"></div>
-    </div>
-
-    <!-- Includes Section -->
-    <div class="section">
-      <h3>Includes</h3>
-      <div id="include-options"></div>
-    </div>
-
-    <!-- Upgrade Options -->
-    <div class="section">
-      <h3>Upgrades & Add-Ons</h3>
-      <div id="upgrade-options"></div>
-    </div>
-
-    <!-- Instructions -->
-    <div class="section">
-      <h3>Special Instructions</h3>
-
-      <textarea id="instructions" placeholder="Anything we should know?"></textarea>
-    </div>
-
-    <!-- Quantity -->
-    <div class="section">
-      <h3>Quantity</h3>
-
-      <div class="qty-wrapper">
-        <button class="qty-btn" onclick="changeQty(-1)">-</button>
-
-        <span class="qty-number" id="qty">1</span>
-
-        <button class="qty-btn" onclick="changeQty(1)">+</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Bottom Bar -->
+  <!-- Bottom Cart Bar -->
   <div class="bottom-bar">
 
     <button
+      type="button"
       id="cart-action-btn"
       class="add-cart-btn"
       onclick="addToCart()"
     >
-      Add To Cart — <span id="final-price">$0.00</span>
+      Add To Cart —
+      <span id="final-price">$0.00</span>
     </button>
 
   </div>
 
+
   <!-- JavaScript -->
-  <!-- PRODUCTS -->
   <script src="js/products.js"></script>
-  <!-- PRODUCT -->
   <script src="js/product.js"></script>
 
 </body>

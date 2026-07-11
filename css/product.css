@@ -1,233 +1,568 @@
-body {
-  font-family: "Baloo 2", cursive;
-  background: #fff8ef;
-  margin: 0;
-  padding: 0;
-  color: #7a3e00;
+/* =========================
+   PRODUCT PAGE
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.product-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 16px 130px;
 }
 
 .product-container {
-  width: 90%;
-  max-width: 500px;
-  margin: auto;
-  padding-bottom: 120px;
+  position: relative;
+
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.product-container .close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #3c2415;
+
+  font-family: "Baloo 2", cursive;
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(60, 36, 21, 0.18);
+}
+
+.product-container .close-btn:hover {
+  transform: scale(1.05);
+}
+
+
+/* =========================
+   PRODUCT HEADER
+========================= */
+
+.product-header {
+  overflow: hidden;
+
+  margin-bottom: 16px;
+
+  border: 1px solid #f0dfd2;
+  border-radius: 24px;
+
+  background: white;
+
+  box-shadow: 0 8px 24px rgba(60, 36, 21, 0.08);
 }
 
 .product-image {
+  display: block;
+
   width: 100%;
-  border-radius: 24px;
-  margin-top: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  aspect-ratio: 4 / 3;
+
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 20px;
 }
 
 .product-name {
-  font-size: 2rem;
-  margin-top: 15px;
+  margin: 0;
+
+  color: #3c2415;
+
+  font-size: 28px;
+  line-height: 1.15;
   font-weight: 700;
 }
 
 .product-desc {
-  opacity: 0.8;
-  margin-top: 5px;
-  color: #282828;
-}
+  margin: 8px 0 0;
 
-.product-price {
-  font-size: 1.6rem;
-  margin-top: 10px;
-  color: #f08a24;
-  font-weight: bold;
-}
+  color: #7d6b60;
 
-.section {
-  background: white;
-  padding: 18px;
-  border-radius: 20px;
-  margin-top: 18px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-.section h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-.option {
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.option label {
-  flex: 1;
-}
-
-textarea {
-  width: 100%;
-  min-height: 90px;
-  border-radius: 14px;
-  border: 2px solid #eee;
-  padding: 12px;
-  font-family: "Baloo 2", cursive;
-  resize: none;
-  box-sizing: border-box;
-}
-
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: white;
-  padding: 15px;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.add-cart-btn {
-  background: linear-gradient(to right, #faa74a, #f08a24);
-  border: none;
-  color: white;
-  font-size: 1.1rem;
-  padding: 16px 24px;
-  border-radius: 999px;
-  width: 90%;
-  max-width: 500px;
-  cursor: pointer;
-  font-family: "Baloo 2", cursive;
-  font-weight: bold;
-  box-shadow: 0 6px 12px rgba(240, 138, 36, 0.25);
-}
-
-.qty-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.qty-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: #f08a24;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.qty-number {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* Trio Selection */
-#flavour-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-#flavour-options .option {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-#flavour-options label {
-  display: block;
-  width: 100%;
-  text-align: left;
-  font-size: 16px;
-  font-weight: bold;
-  color: #a6480d;
-}
-
-.trio-flavour {
-  width: 100%;
-  padding: 8px 0;
-  border: 2px solid #f2d2b3;
-  border-radius: 14px;
-  background: #fff;
-  font-family: "Baloo 2", cursive;
-  font-size: 16px;
-  color: #3d2210;
-  outline: none;
-  transition: 0.2s;
-}
-
-.trio-flavour:focus {
-  border-color: #a6480d;
-  box-shadow: 0 0 0 3px rgba(166, 72, 13, 0.15);
-}
-
-.trio-flavour:hover {
-  border-color: #d67a3d;
-}
-
-.trio-flavour option:disabled {
-  color: #bbb;
-}
-
-.original-price {
-  margin-top: 12px;
-  color: #a6480d;
-  text-align: left;
-  font-size: 18px;
-  text-decoration: line-through;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .price-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 10px 0 20px;
+
+  margin-top: 14px;
 }
 
-.add-cart-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.product-price {
+  color: #a6480d;
+
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.original-price {
+  display: none;
+
+  color: #9c8d83;
+
+  font-size: 16px;
+  text-decoration: line-through;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+  margin-bottom: 14px;
+  padding: 18px;
+
+  border: 1px solid #f0dfd2;
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow: 0 5px 16px rgba(60, 36, 21, 0.05);
+}
+
+.section-heading {
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: #a6480d;
+
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+
+  color: #8b796e;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+/* =========================
+   NORMAL OPTIONS
+========================= */
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  min-height: 50px;
+  padding: 11px 13px;
+
+  border: 1px solid #eadbd1;
+  border-radius: 13px;
+
+  background: #fffaf5;
 }
 
 .option label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
+
+  width: 100%;
+
+  color: #3c2415;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
 }
 
-.option-text {
-  display: flex;
-  flex-direction: column;
+.option input[type="radio"],
+.option input[type="checkbox"] {
+  flex-shrink: 0;
+
+  width: 18px;
+  height: 18px;
+
+  accent-color: #faa74a;
 }
 
-.option-text small {
-  color: #777;
-  font-size: 0.85rem;
-  margin-top: 2px;
+.option > span {
+  flex-shrink: 0;
+
+  color: #a6480d;
+
+  font-weight: 600;
 }
 
 .option-subtitle {
-  font-size: 0.8rem;
-  color: #777;
-  font-style: italic;
-  position: relative;
-  top: 2px;
+  display: block;
+
+  margin-left: 3px;
+
+  color: #8b796e;
+
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.old-price {
-  text-decoration: line-through;
-  color: #999;
-  font-size: 0.85rem;
-  margin-right: 4px;
+
+/* =========================
+   TRIO
+========================= */
+
+#flavour-options {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.promo-price {
-  color: #e67e22;
-  font-weight: bold;
+.trio-tray-section {
+  overflow: hidden;
+
+  border: 1px solid #f3d3b4;
+  border-radius: 18px;
+
+  background: #fff8f1;
+}
+
+.trio-tray-section > h4 {
+  margin: 0;
+  padding: 12px 15px;
+
+  background: linear-gradient(
+    to left,
+    #ffb056,
+    #ffdea6
+  );
+
+  color: #7a3e00;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.trio-tray-section > .option {
+  display: block;
+
+  margin: 14px;
+
+  background: white;
+}
+
+.trio-tray-section > .option > label {
+  margin-bottom: 8px;
+
+  color: #7a3e00;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.trio-flavour {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 38px 10px 12px;
+
+  border: 1px solid #dfc5ac;
+  border-radius: 12px;
+
+  background: white;
+  color: #3c2415;
+
+  font-family: "Baloo 2", cursive;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.trio-flavour:focus {
+  border-color: #faa74a;
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(250, 167, 74, 0.18);
+}
+
+.trio-tray-options {
+  padding: 0 14px 14px;
+}
+
+.trio-subsection {
+  margin-top: 12px;
+  padding: 13px;
+
+  border: 1px solid #f0dfd2;
+  border-radius: 14px;
+
+  background: white;
+}
+
+.trio-subsection h5 {
+  margin: 0 0 10px;
+
+  color: #7a3e00;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.trio-subsection .option {
+  min-height: 45px;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+
+  background: #fffaf5;
+}
+
+.trio-subsection .option:last-child {
+  margin-bottom: 0;
+}
+
+.empty-option-text {
+  margin: 0;
+
+  color: #8b796e;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.instructions-input {
+  display: block;
+
+  width: 100%;
+  min-height: 105px;
+  padding: 13px;
+
+  border: 1px solid #dfd0c6;
+  border-radius: 13px;
+
+  background: #fffaf5;
+  color: #3c2415;
+
+  font-family: "Baloo 2", cursive;
+  font-size: 15px;
+
+  resize: vertical;
+}
+
+.instructions-input:focus {
+  border-color: #faa74a;
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(250, 167, 74, 0.18);
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+.quantity-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quantity-section .section-heading {
+  margin: 0;
+}
+
+.qty-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 6px;
+
+  border: 1px solid #eadbd1;
+  border-radius: 999px;
+
+  background: #fff8f1;
+}
+
+.qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #faa74a;
+  color: white;
+
+  font-family: "Baloo 2", cursive;
+  font-size: 22px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background: #e99335;
+}
+
+.qty-number {
+  min-width: 20px;
+
+  color: #3c2415;
+
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   BOTTOM BAR
+========================= */
+
+.bottom-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+
+  padding:
+    14px
+    16px
+    calc(14px + env(safe-area-inset-bottom));
+
+  border-top: 1px solid #eadbd1;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  backdrop-filter: blur(10px);
+}
+
+.add-cart-btn {
+  display: block;
+
+  width: 100%;
+  max-width: 620px;
+  min-height: 54px;
+  margin: 0 auto;
+  padding: 14px 20px;
+
+  border: none;
+  border-radius: 15px;
+
+  background: #fa7d00;
+  color: white;
+
+  font-family: "Baloo 2", cursive;
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(166, 72, 13, 0.25);
+}
+
+.add-cart-btn:hover:not(:disabled) {
+  background: #8f3d0b;
+}
+
+.add-cart-btn:disabled {
+  background: #c9bcb3;
+  color: #f8f3ef;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .product-page {
+    padding: 0 0 120px;
+  }
+
+  .product-container {
+    max-width: none;
+  }
+
+  .product-header {
+    margin-bottom: 10px;
+
+    border-right: none;
+    border-left: none;
+    border-radius: 0 0 22px 22px;
+  }
+
+  .product-info {
+    padding: 17px;
+  }
+
+  .product-name {
+    font-size: 25px;
+  }
+
+  .section {
+    margin: 0 12px 12px;
+    padding: 16px;
+  }
+
+  .trio-tray-section > .option {
+    margin: 12px;
+  }
+
+  .trio-tray-options {
+    padding: 0 12px 12px;
+  }
+
+  .quantity-section {
+    display: flex;
+  }
 }

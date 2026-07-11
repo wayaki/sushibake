@@ -295,31 +295,61 @@ function buildOrderMessage(data) {
   message += `Order:\n`;
 
   cart.forEach((item) => {
-    message += `* ${item.name} x ${item.qty} — $${item.finalPrice.toFixed(2)}\n`;
+    message +=
+      `* ${item.name} x ${item.qty}` +
+      ` — $${Number(item.finalPrice).toFixed(2)}\n`;
 
-    if (item.removed?.length) {
-      message += `  No: ${item.removed.join(", ")}\n`;
+    if (
+      item.id === "trio" &&
+      Array.isArray(item.trays)
+    ) {
+      item.trays.forEach((tray) => {
+        message +=
+          `  Tray ${tray.trayNumber}: ` +
+          `${tray.flavour}\n`;
+
+        message +=
+          `    Base: ${tray.base}\n`;
+
+        message +=
+          `    Portion: ${tray.portion}\n`;
+
+        if (tray.removed?.length) {
+          message +=
+            `    No: ${tray.removed.join(", ")}\n`;
+        }
+      });
+    } else {
+      if (item.base) {
+        message +=
+          `  Base: ${item.base}\n`;
+      }
+
+      if (item.portion) {
+        message +=
+          `  Portion: ${item.portion}\n`;
+      }
+
+      if (item.removed?.length) {
+        message +=
+          `  No: ${item.removed.join(", ")}\n`;
+      }
     }
-    
-    if (item.selectedFlavours && item.selectedFlavours.length > 0) {
 
-      message += `  \tFlavours: ${item.selectedFlavours.join(", ")}\n`;
-    
-    }
-
-    if (item.rice) {
-      message += `  \tRice: ${item.rice}\n`;
-    }
-
-    if (item.upgrades) {
-      message += `  \t${item.upgrades}\n`;
+    if (
+      item.upgrade &&
+      item.upgrade !== "No Upgrade"
+    ) {
+      message +=
+        `  Upgrade: ${item.upgrade}\n`;
     }
 
     if (item.instructions) {
-      message += `  \tNote: ${item.instructions}\n`;
+      message +=
+        `  Note: ${item.instructions}\n`;
     }
 
-    message += `\n`;
+    message += "\n";
   });
 
   // collection method
@@ -399,12 +429,55 @@ function orderWhatsApp() {
   }, 1500);
 }
 
+function renderTrioTrayDetails(item) {
+  if (
+    item.id !== "trio" ||
+    !Array.isArray(item.trays)
+  ) {
+    return "";
+  }
+
+  return item.trays
+    .map((tray) => {
+      const removedText =
+        tray.removed?.length
+          ? `
+            <div class="cart-note">
+              No: ${tray.removed.join(", ")}
+            </div>
+          `
+          : "";
+
+      return `
+        <div class="trio-cart-tray">
+          <div class="trio-cart-tray-title">
+            Tray ${tray.trayNumber}: ${tray.flavour}
+          </div>
+
+          <div class="cart-note">
+            Base: ${tray.base}
+          </div>
+
+          <div class="cart-note">
+            Portion: ${tray.portion}
+          </div>
+
+          ${removedText}
+        </div>
+      `;
+    })
+    .join("");
+}
+
 // render all cart items on page
 function renderCart() {
-  const cartList = document.getElementById("cart-list");
+  const cartList =
+    document.getElementById("cart-list");
 
   if (cart.length === 0) {
-    cartList.innerHTML = "<li>Your cart is empty!</li>";
+    cartList.innerHTML =
+      "<li>Your cart is empty!</li>";
+
     updateTotal();
     return;
   }
@@ -412,84 +485,201 @@ function renderCart() {
   let html = "";
 
   cart.forEach((item, index) => {
-    html += `
-          <li class="cart-block">
+    const isTrio = item.id === "trio";
 
-            <div class="cart-row">
-
-              <img src="${item.image}" class="cart-item-img" alt="${item.name}">
-
-              <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-
-                ${item.selectedFlavours?.length 
-                  ? `<div class="cart-note">Flavours: ${item.selectedFlavours.join(", ")}</div>` 
-                  : ""
-                }
-
-                ${item.rice ? `<div class="cart-note">${item.rice}</div>` : ""}
-                ${item.upgrades?.length
-                  ? `<div class="cart-note"> ${item.upgrades.join(", ")}</div>`
-                  : ""
-                }                
-                ${item.removed?.length ? `<div class="cart-note">No ${item.removed.join(", ")}</div>` : ""}
-                ${item.instructions ? `<div class="cart-note">${item.instructions}</div>` : ""}
-
-                ${
-                  item.id === "trio"
-                    ? `<div class="free-seaweed-line">🎁 Free ${item.qty * 3} seaweed</div>`
-                    : ["salmon","shroom","chicken","tuna","luncheon"].includes(item.id)
-                      ? `<div class="free-seaweed-line">🎁 Free ${item.qty} seaweed</div>`
-                      : ``
-                }
-
-                <div class="cart-actions">
-                  <div class="cart-qty-control">
-                    <button onclick="changeCartQty(${index}, -1)">−</button>
-                    <span>${item.qty}</span>
-                    <button onclick="changeCartQty(${index}, 1)">+</button>
-                  </div>
-
-
+    const normalProductDetails = !isTrio
+      ? `
+          ${
+            item.base
+              ? `
+                <div class="cart-note">
+                  Base: ${item.base}
                 </div>
+              `
+              : ""
+          }
 
-              </div>
+          ${
+            item.portion
+              ? `
+                <div class="cart-note">
+                  Portion: ${item.portion}
+                </div>
+              `
+              : ""
+          }
 
-              <div class="cart-item-price">                  
-                <button class="edit-cart-btn"
-                    onclick="editCartItem(${index})">
-                    Edit
-                  </button>
-                $${item.finalPrice.toFixed(2)}
+          ${
+            item.removed?.length
+              ? `
+                <div class="cart-note">
+                  No: ${item.removed.join(", ")}
+                </div>
+              `
+              : ""
+          }
+        `
+      : "";
+
+    const upgradeDetails =
+      item.upgrade &&
+      item.upgrade !== "No Upgrade"
+        ? `
+          <div class="cart-note">
+            ${item.upgrade}
+          </div>
+        `
+        : "";
+
+    const instructionsDetails =
+      item.instructions
+        ? `
+          <div class="cart-note">
+            Note: ${item.instructions}
+          </div>
+        `
+        : "";
+
+    const freeSeaweedDetails =
+      item.id === "trio"
+        ? `
+          <div class="free-seaweed-line">
+            🎁 Free ${item.qty * 3} seaweed
+          </div>
+        `
+        : [
+              "salmon",
+              "shroom",
+              "chicken",
+              "tuna",
+              "luncheon"
+            ].includes(item.id)
+          ? `
+            <div class="free-seaweed-line">
+              🎁 Free ${item.qty} seaweed
+            </div>
+          `
+          : "";
+
+    html += `
+      <li class="cart-block">
+
+        <div class="cart-row">
+
+          <img
+            src="${item.image}"
+            class="cart-item-img"
+            alt="${item.name}"
+          >
+
+          <div class="cart-item-info">
+
+            <div class="cart-item-name">
+              ${item.name}
+            </div>
+
+            ${
+              isTrio
+                ? renderTrioTrayDetails(item)
+                : normalProductDetails
+            }
+
+            ${upgradeDetails}
+
+            ${instructionsDetails}
+
+            ${freeSeaweedDetails}
+
+            <div class="cart-actions">
+
+              <div class="cart-qty-control">
+
+                <button
+                  type="button"
+                  onclick="changeCartQty(${index}, -1)"
+                >
+                  −
+                </button>
+
+                <span>${item.qty}</span>
+
+                <button
+                  type="button"
+                  onclick="changeCartQty(${index}, 1)"
+                >
+                  +
+                </button>
+
               </div>
 
             </div>
-          </li>
-        `;
+
+          </div>
+
+          <div class="cart-item-price">
+
+            <button
+              type="button"
+              class="edit-cart-btn"
+              onclick="editCartItem(${index})"
+            >
+              Edit
+            </button>
+
+            $${Number(item.finalPrice).toFixed(2)}
+
+          </div>
+
+        </div>
+
+      </li>
+    `;
   });
+
   html += `
     <li class="cart-block add-more-block">
-      <a href="index.html" class="add-more-link">
+      <a
+        href="index.html"
+        class="add-more-link"
+      >
         + Add More Items
       </a>
     </li>
   `;
-  
+
   cartList.innerHTML = html;
+
   updateTotal();
 }
 
 function changeCartQty(index, delta) {
-  cart[index].qty += delta;
+  const item = cart[index];
 
-  if (cart[index].qty <= 0) {
-    cart.splice(index, 1);
-  } else {
-    const unitPrice = cart[index].finalPrice / (cart[index].qty - delta);
-    cart[index].finalPrice = unitPrice * cart[index].qty;
+  if (!item) {
+    return;
   }
 
-  localStorage.setItem("sushibakeCart", JSON.stringify(cart));
+  const unitPrice =
+    Number(
+      item.unitPrice ||
+      item.finalPrice / item.qty
+    );
+
+  item.qty += delta;
+
+  if (item.qty <= 0) {
+    cart.splice(index, 1);
+  } else {
+    item.unitPrice = unitPrice;
+    item.finalPrice =
+      unitPrice * item.qty;
+  }
+
+  localStorage.setItem(
+    "sushibakeCart",
+    JSON.stringify(cart)
+  );
+
   renderCart();
   toggleDelivery();
 }
@@ -497,13 +687,6 @@ function changeCartQty(index, delta) {
 function editCartItem(index) {
   const itemId = cart[index].id;
   window.location.href = `product.html?item=${itemId}&edit=${index}`;
-}
-
-function removeCartItem(index) {
-  cart.splice(index, 1);
-  localStorage.setItem("sushibakeCart", JSON.stringify(cart));
-  renderCart();
-  toggleDelivery();
 }
 
 // count total main trays in cart
@@ -554,65 +737,62 @@ function getCutoffDate(orderDate) {
 
 // create order date dropdown options
 function populateOrderDates() {
-  // order date dropdown
-  const select = document.getElementById("order-date");
-  // current date and time
+  const select =
+    document.getElementById("order-date");
+
   const now = new Date();
 
-  // reset dropdown
-  select.innerHTML = `<option value="">Select a date</option>`;
+  select.innerHTML =
+    `<option value="">Select a date</option>`;
 
-  // date when May Drops open
-  const orderOpenDate = new Date(2026, 4, 31, 0, 0, 0, 0);
-  // first delivery date
-  const firstDeliveryDate = new Date(2026, 5, 1, 0, 0, 0, 0);
-
-  // dates that are sold out
   const soldOutDates = [
-    "2026-06-16", // 22 May sold out
+    // Example:
+    // "2026-07-15"
   ];
 
-  // if customers visit before order opening date
-  if (now < orderOpenDate) {
-    const option = document.createElement("option");
+  // Generate upcoming 30 calendar days
+  for (let i = 1; i <= 30; i++) {
+    const date = new Date(now);
 
-    option.value = "";
-    option.textContent = "July Drops open on 29 June";
-    option.disabled = true;
+    date.setHours(0, 0, 0, 0);
+    date.setDate(now.getDate() + i);
 
-    select.appendChild(option);
-    return;
-  }
-
-  // generate dates for the next 30 days
-  for (let i = 0; i < 30; i++) {
-    const date = new Date(firstDeliveryDate);
-    date.setDate(firstDeliveryDate.getDate() + i);
-
-    // get day of week
     const dayOfWeek = date.getDay();
 
-    // skip Saturday and Sunday
-    if (dayOfWeek === 0 || dayOfWeek === 6) continue;
-
-    // get cutoff for this date
-    const cutoff = getCutoffDate(date);
-
-    // only show date if cutoff has not passed
-    if (now <= cutoff) {
-      const option = document.createElement("option");
-      option.value = formatDateValue(date);
-      option.textContent = formatDateLabel(date);
-
-      // show sold out date but disable selection
-      if (soldOutDates.includes(option.value)) {
-        option.disabled = true;
-        option.textContent = `${formatDateLabel(date)} — SOLD OUT`;
-      }
-
-      // add date to dropdown
-      select.appendChild(option);
+    // Skip weekends
+    if (
+      dayOfWeek === 0 ||
+      dayOfWeek === 6
+    ) {
+      continue;
     }
+
+    const cutoff =
+      getCutoffDate(date);
+
+    if (now > cutoff) {
+      continue;
+    }
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      formatDateValue(date);
+
+    option.textContent =
+      formatDateLabel(date);
+
+    if (
+      soldOutDates.includes(option.value)
+    ) {
+      option.disabled = true;
+
+      option.textContent =
+        `${formatDateLabel(date)} — SOLD OUT`;
+    }
+
+    select.appendChild(option);
   }
 }
 
