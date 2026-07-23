@@ -16,7 +16,6 @@ if (!product) {
   throw new Error(`Product not found: ${itemId}`);
 }
 
-
 // ========================
 // GET HTML ELEMENTS
 // ========================
@@ -65,7 +64,6 @@ const instructionsInput =
 const qtyElement =
   document.getElementById("qty");
 
-
 // ========================
 // CART + EDIT MODE
 // ========================
@@ -84,7 +82,6 @@ const editingItem =
     : null;
 
 let quantity = editingItem?.qty || 1;
-
 
 // ========================
 // PRODUCT INFORMATION
@@ -106,7 +103,6 @@ document.getElementById("product-price").textContent =
   `$${product.price.toFixed(2)}`;
 
 qtyElement.textContent = quantity;
-
 
 // ========================
 // HELPER FUNCTIONS
@@ -144,7 +140,6 @@ function getSelectedRadioPrice(name) {
     : 0;
 }
 
-
 // ========================
 // NORMAL PRODUCT
 // REMOVE INGREDIENTS
@@ -180,7 +175,6 @@ function renderRemoveOptions() {
     );
   });
 }
-
 
 // ========================
 // NORMAL PRODUCT
@@ -246,7 +240,6 @@ function renderBaseOptions() {
     });
 }
 
-
 // ========================
 // NORMAL PRODUCT
 // PORTION OPTIONS
@@ -301,6 +294,114 @@ function renderPortionOptions() {
     });
 }
 
+// ========================
+// DOUBLE UP PRICE
+// ========================
+
+function getDoubleUpPrice(firstFlavour, secondFlavour) {
+  const firstPrice =
+    DOUBLE_UP_FLAVOUR_PRICE[firstFlavour];
+
+  const secondPrice =
+    DOUBLE_UP_FLAVOUR_PRICE[secondFlavour];
+
+  if (
+    firstPrice === undefined ||
+    secondPrice === undefined
+  ) {
+    return DOUBLE_UP_BASE_PRICE;
+  }
+
+  return (
+    DOUBLE_UP_BASE_PRICE +
+    firstPrice +
+    secondPrice
+  );
+}
+function renderDoubleUpFlavours(product) {
+  const section =
+    document.getElementById("flavour-section");
+
+  const container =
+    document.getElementById("flavour-options");
+
+  const title =
+    document.getElementById("flavour-section-title");
+
+  const description =
+    document.getElementById("flavour-section-desc");
+
+  showSection(section);
+
+  title.textContent = "Build Your Double-Up";
+
+  description.textContent =
+    "Choose 1 or 2 flavours. You may select the same flavour twice.";
+
+  const flavourChoices = product.flavourOptions
+    .map(option => {
+      const flavourProduct =
+        products[option.productId];
+
+      return `
+        <option value="${option.productId}">
+          ${flavourProduct.name}
+        </option>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <div class="doubleup-flavour-group">
+
+      <label for="doubleup-flavour-1">
+        First Flavour
+      </label>
+
+      <select
+        id="doubleup-flavour-1"
+        class="flavour-select"
+      >
+        ${flavourChoices}
+      </select>
+
+    </div>
+
+    <div class="doubleup-flavour-group">
+
+      <label for="doubleup-flavour-2">
+        Second Flavour
+      </label>
+
+      <select
+        id="doubleup-flavour-2"
+        class="flavour-select"
+      >
+        ${flavourChoices}
+      </select>
+
+    </div>
+  `;
+
+  const firstSelect =
+    document.getElementById("doubleup-flavour-1");
+
+  const secondSelect =
+    document.getElementById("doubleup-flavour-2");
+
+  firstSelect.value = "tuna";
+  secondSelect.value = "tuna";
+
+  firstSelect.addEventListener(
+    "change",
+    updatePrice
+  );
+
+  secondSelect.addEventListener(
+    "change",
+    updatePrice
+  );
+}
 
 // ========================
 // WAYAKI TRIO
@@ -393,7 +494,6 @@ function renderTrioSections() {
 
   validateTrioSelection();
 }
-
 
 // ========================
 // TRIO INDIVIDUAL TRAY OPTIONS
@@ -549,7 +649,6 @@ function renderTrioTrayOptions(
     });
 }
 
-
 // ========================
 // PREVENT DUPLICATE TRIO FLAVOURS
 // ========================
@@ -580,6 +679,25 @@ function updateTrioFlavourLimits() {
   });
 }
 
+// ========================
+// VALIDATE DOUBLE UP
+// ========================
+function validateDoubleUpSelection() {
+  const firstFlavour =
+    document.getElementById(
+      "doubleup-flavour-1"
+    )?.value;
+
+  const secondFlavour =
+    document.getElementById(
+      "doubleup-flavour-2"
+    )?.value;
+
+  return (
+    firstFlavour &&
+    secondFlavour
+  );
+}
 
 // ========================
 // VALIDATE TRIO
@@ -617,7 +735,6 @@ function validateTrioSelection() {
 
   return isValid;
 }
-
 
 // ========================
 // TRIO ORIGINAL PRICE
@@ -840,7 +957,6 @@ function renderIncludedItems() {
   `;
 }
 
-
 // ========================
 // RESTORE NORMAL PRODUCT
 // ========================
@@ -875,7 +991,6 @@ function restoreNormalProductSelections() {
         radio.value === editingItem.portion;
     });
 }
-
 
 // ========================
 // RESTORE TRIO
@@ -1010,6 +1125,27 @@ function changeQty(delta) {
 function updatePrice() {
   let unitPrice = product.price;
 
+  // Double-Up flavour pricing
+  if (product.id === "doubleup") {
+    const firstFlavour =
+      document.getElementById(
+        "doubleup-flavour-1"
+      )?.value;
+
+    const secondFlavour =
+      document.getElementById(
+        "doubleup-flavour-2"
+      )?.value;
+
+    if (firstFlavour && secondFlavour) {
+      unitPrice = getDoubleUpPrice(
+        firstFlavour,
+        secondFlavour
+      );
+    }
+  }
+
+  // Trio customisation pricing
   if (product.id === "trio") {
     for (
       let trayIndex = 0;
@@ -1024,7 +1160,12 @@ function updatePrice() {
         `trio-portion-${trayIndex}`
       );
     }
-  } else {
+  // Double-Up only has base options
+  } else if (product.id === "doubleup") {
+  unitPrice +=
+    getSelectedRadioPrice("base");
+// Normal individual products
+} else {
     unitPrice +=
       getSelectedRadioPrice("base");
 
@@ -1032,6 +1173,7 @@ function updatePrice() {
       getSelectedRadioPrice("portion");
   }
 
+  // Upgrade price
   unitPrice +=
     getSelectedRadioPrice("upgrade");
 
@@ -1043,6 +1185,12 @@ function updatePrice() {
       ? "Update Cart"
       : "Add To Cart";
 
+  if (
+    product.id === "doubleup" &&
+    !validateDoubleUpSelection()
+  ) {
+    return;
+  }
   if (
     product.id === "trio" &&
     !validateTrioSelection()
@@ -1071,6 +1219,17 @@ function addToCart() {
 
   if (!Array.isArray(cart)) {
     cart = [];
+  }
+
+  if (
+    product.id === "doubleup" &&
+    !validateDoubleUpSelection()
+  ) {
+    alert(
+      "Please choose 2 flavours."
+    );
+
+    return;
   }
 
   if (
@@ -1112,7 +1271,17 @@ function addToCart() {
 
     qty: quantity,
 
-    basePrice: product.price,
+    basePrice:
+      product.id === "doubleup"
+        ? getDoubleUpPrice(
+            document.getElementById(
+              "doubleup-flavour-1"
+            ).value,
+            document.getElementById(
+              "doubleup-flavour-2"
+            ).value
+          )
+        : product.price,
 
     unitPrice:
       finalPrice / quantity,
@@ -1129,18 +1298,42 @@ function addToCart() {
   if (product.id === "trio") {
     cartItem.trays =
       getTrioSelections();
+
+  } else if (product.id === "doubleup") {
+    const firstFlavour =
+      document.getElementById(
+        "doubleup-flavour-1"
+      ).value;
+
+    const secondFlavour =
+      document.getElementById(
+        "doubleup-flavour-2"
+      ).value;
+
+    cartItem.flavours = [
+      {
+        id: firstFlavour,
+        name: products[firstFlavour].name
+      },
+      {
+        id: secondFlavour,
+        name: products[secondFlavour].name
+      }
+    ];
+
+    cartItem.base =
+      getSelectedRadioValue("base");
+
+    cartItem.portion = "";
+
   } else {
     const removed = [];
 
     document
-      .querySelectorAll(
-        ".remove-option"
-      )
+      .querySelectorAll(".remove-option")
       .forEach((checkbox) => {
         if (!checkbox.checked) {
-          removed.push(
-            checkbox.value
-          );
+          removed.push(checkbox.value);
         }
       });
 
@@ -1194,8 +1387,15 @@ function initialiseProductPage() {
   if (product.id === "trio") {
     renderTrioSections();
     renderUpgradeOptions();
+
+  } else if (product.id === "doubleup") {
+    renderDoubleUpFlavours(product);
+    renderBaseOptions();
+    renderUpgradeOptions();
+
   } else if (product.id === "upgrade") {
     renderIncludedItems();
+
   } else {
     renderRemoveOptions();
     renderBaseOptions();

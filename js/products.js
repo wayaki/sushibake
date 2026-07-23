@@ -38,7 +38,56 @@ const DEFAULT_UPGRADE = [
     }
 ];
 
+const DOUBLE_UP_FLAVOUR_PRICE = {
+  tuna: 0,
+  chicken: 1,
+  shroom: 2,
+  salmon: 3
+};
+
+const DOUBLE_UP_BASE_PRICE = 16.90;
+
 const products = {
+  doubleup: {
+    id: "doubleup",
+    name: "Double-Up",
+    price: 16.90,
+    image: "images/double-up.jpg",
+
+    description:
+      "Choose up to 2 flavours. Comes with 300g Japanese Rice or 200g Macaroni and 180g toppings.",
+
+    flavourOptions: [
+      {
+        productId: "tuna"
+      },
+      {
+        productId: "chicken"
+      },
+      {
+        productId: "shroom"
+      },
+      {
+        productId: "salmon"
+      }
+    ],
+
+    baseOptions: [
+      {
+        name: "Japanese Rice",
+        subtitle: "300g",
+        price: 0
+      },
+      {
+        name: "Macaroni",
+        subtitle: "200g",
+        price: 0
+      }
+    ],
+
+    upgradeOptions: DEFAULT_UPGRADE
+  },
+
   trio: {
     id: "trio",
     name: "Wayaki Trio",
