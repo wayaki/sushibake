@@ -183,9 +183,7 @@ function orderWhatsApp() {
     return;
   }
 
-  const message =
-    buildOrderMessage(data);
-
+  const message = buildOrderMessage(data);
   const phone = "6584840768";
 
   const url =
@@ -193,13 +191,30 @@ function orderWhatsApp() {
     `?phone=${phone}` +
     `&text=${encodeURIComponent(message)}`;
 
-  window.open(url, "_blank");
+  const whatsappWindow =
+    window.open(url, "_blank");
+
+  if (!whatsappWindow) {
+    alert(
+      "Please allow pop-ups to open WhatsApp."
+    );
+    return;
+  }
 
   setTimeout(() => {
     cart = [];
     saveCart();
-
     renderCart();
     toggleDelivery();
   }, 1500);
+}
+
+const orderButton =
+  document.getElementById("order-btn");
+
+if (orderButton) {
+  orderButton.addEventListener(
+    "click",
+    orderWhatsApp
+  );
 }
