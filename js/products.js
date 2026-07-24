@@ -58,17 +58,17 @@ const products = {
       "Choose up to 2 flavours. Comes with 300g Japanese Rice or 200g Macaroni and 180g toppings.",
 
     flavourOptions: [
-      {
-        productId: "tuna"
+      { 
+        productId: "tuna", extra: 0 
       },
-      {
-        productId: "chicken"
+      { 
+        productId: "chicken", extra: 1 
       },
-      {
-        productId: "shroom"
+      { 
+        productId: "shroom", extra: 2 
       },
-      {
-        productId: "salmon"
+      { 
+        productId: "salmon", extra: 3 
       }
     ],
 
@@ -85,7 +85,20 @@ const products = {
       }
     ],
 
-    upgradeOptions: DEFAULT_UPGRADE
+        upgradeOptions: [
+      {
+        name: "No Upgrade",
+        price: 0
+      },
+      {
+        name: "1 Set Upgrade",
+        price: 3.90
+      },
+      {
+        name: "2 Set Upgrades",
+        price: 7.80
+      },
+    ]
   },
 
   trio: {

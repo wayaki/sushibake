@@ -345,7 +345,7 @@ function renderDoubleUpFlavours(product) {
 
       return `
         <option value="${option.productId}">
-          ${flavourProduct.name}
+          ${flavourProduct.name} (+$${option.extra})
         </option>
       `;
     })
@@ -993,6 +993,32 @@ function restoreNormalProductSelections() {
 }
 
 // ========================
+// RESTORE DOUBLE UP
+// ========================
+function restoreDoubleUpSelections() {
+  if (!editingItem?.flavours?.length) {
+    return;
+  }
+
+  document.getElementById(
+    "doubleup-flavour-1"
+  ).value =
+    editingItem.flavours[0].id;
+
+  document.getElementById(
+    "doubleup-flavour-2"
+  ).value =
+    editingItem.flavours[1].id;
+
+  document
+    .querySelectorAll('input[name="base"]')
+    .forEach((radio) => {
+      radio.checked =
+        radio.value === editingItem.base;
+    });
+}
+
+// ========================
 // RESTORE TRIO
 // ========================
 
@@ -1091,6 +1117,8 @@ function restoreEditSelections() {
 
   if (product.id === "trio") {
     restoreTrioSelections();
+  } else if (product.id === "doubleup") {
+    restoreDoubleUpSelections();
   } else {
     restoreNormalProductSelections();
   }
@@ -1099,7 +1127,6 @@ function restoreEditSelections() {
 
   updatePrice();
 }
-
 
 // ========================
 // QUANTITY

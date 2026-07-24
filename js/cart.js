@@ -400,6 +400,17 @@ function buildOrderMessage(data) {
             `    No: ${tray.removed.join(", ")}\n`;
         }
       });
+    } else if (item.id === "doubleup") {
+        message +=
+          `  Flavours: ${
+            item.flavours[0].name
+          } + ${
+            item.flavours[1].name
+          }\n`;
+
+        message +=
+          `  Base: ${item.base}\n`;
+
     } else {
       if (item.base) {
         message +=
@@ -567,6 +578,7 @@ function renderCart() {
 
   cart.forEach((item, index) => {
     const isTrio = item.id === "trio";
+    const isDoubleUp = item.id === "doubleup";
 
     const normalProductDetails = !isTrio
       ? `
@@ -601,6 +613,22 @@ function renderCart() {
           }
         `
       : "";
+
+    const doubleUpDetails =
+      isDoubleUp
+        ? `
+            <div class="cart-note">
+              Flavours:
+              ${item.flavours[0].name}
+              +
+              ${item.flavours[1].name}
+            </div>
+
+            <div class="cart-note">
+              Base: ${item.base}
+            </div>
+          `
+        : "";
 
     const upgradeDetails =
       item.upgrade &&
@@ -662,7 +690,9 @@ function renderCart() {
             ${
               isTrio
                 ? renderTrioTrayDetails(item)
-                : normalProductDetails
+                : isDoubleUp
+                  ? doubleUpDetails
+                  : normalProductDetails
             }
 
             ${upgradeDetails}
