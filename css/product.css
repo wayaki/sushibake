@@ -1,10 +1,12 @@
-/* =========================
-   PRODUCT PAGE
-========================= */
+/* ================================================
+   Product page
+================================================ */
 
-* {
-  box-sizing: border-box;
-}
+
+/* ========================
+   PAGE LAYOUT
+   Main product page container
+======================== */
 
 .product-page {
   width: 100%;
@@ -14,15 +16,17 @@
 
 .product-container {
   position: relative;
+
   width: 100%;
   max-width: 620px;
   margin: 0 auto;
 }
 
 
-/* =========================
+/* ========================
    CLOSE BUTTON
-========================= */
+   Product page close control
+======================== */
 
 .product-container .close-btn {
   position: absolute;
@@ -44,13 +48,14 @@
   background: rgba(255, 255, 255, 0.95);
   color: #3c2415;
 
-  font-family: "Baloo 2", cursive;
   font-size: 18px;
   font-weight: 700;
 
   cursor: pointer;
 
-  box-shadow: 0 4px 12px rgba(60, 36, 21, 0.18);
+  box-shadow:
+    0 4px 12px rgba(60, 36, 21, 0.18);
+
   transition: transform 0.2s ease;
 }
 
@@ -59,9 +64,10 @@
 }
 
 
-/* =========================
+/* ========================
    PRODUCT HEADER
-========================= */
+   Image and product details
+======================== */
 
 .product-header {
   overflow: hidden;
@@ -73,7 +79,8 @@
 
   background: #fff3e0;
 
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
 .product-image {
@@ -133,9 +140,10 @@
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* ========================
+   OPTION SECTIONS
+   Shared product option cards
+======================== */
 
 .section {
   margin-bottom: 14px;
@@ -146,7 +154,8 @@
 
   background: #fff3e0;
 
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
 .section-heading {
@@ -172,9 +181,10 @@
 }
 
 
-/* =========================
+/* ========================
    NORMAL OPTIONS
-========================= */
+   Radio and checkbox options
+======================== */
 
 .options-list,
 #flavour-options {
@@ -227,10 +237,10 @@
 
 .option input[type="radio"],
 .option input[type="checkbox"] {
-  flex-shrink: 0;
-
   width: 18px;
   height: 18px;
+
+  flex-shrink: 0;
 
   accent-color: #faa74a;
 }
@@ -247,9 +257,10 @@
 }
 
 
-/* =========================
+/* ========================
    FLAVOUR SELECTS
-========================= */
+   Double-Up and Trio dropdowns
+======================== */
 
 .trio-flavour,
 .flavour-select {
@@ -260,10 +271,9 @@
   border: 1px solid #dfc5ac;
   border-radius: 12px;
 
-  background: white;
+  background: #fff;
   color: #3c2415;
 
-  font-family: "Baloo 2", cursive;
   font-size: 15px;
   font-weight: 600;
 
@@ -275,13 +285,15 @@
   border-color: #faa74a;
   outline: none;
 
-  box-shadow: 0 0 0 3px rgba(250, 167, 74, 0.18);
+  box-shadow:
+    0 0 0 3px rgba(250, 167, 74, 0.18);
 }
 
 
-/* =========================
+/* ========================
    DOUBLE-UP
-========================= */
+   Double-Up flavour groups
+======================== */
 
 .doubleup-flavour-group {
   padding: 14px;
@@ -304,9 +316,10 @@
 }
 
 
-/* =========================
+/* ========================
    TRIO
-========================= */
+   Trio tray customisation
+======================== */
 
 .trio-tray-section {
   overflow: hidden;
@@ -333,7 +346,7 @@
 
   margin: 14px;
 
-  background: white;
+  background: #fff;
 }
 
 .trio-tray-section > .option > label {
@@ -358,7 +371,7 @@
   border: 1px solid #f0dfd2;
   border-radius: 14px;
 
-  background: white;
+  background: #fff;
 }
 
 .trio-subsection h5 {
@@ -391,9 +404,10 @@
 }
 
 
-/* =========================
-   TEXTAREA
-========================= */
+/* ========================
+   INSTRUCTIONS
+   Customer instruction field
+======================== */
 
 .instructions-input {
   display: block;
@@ -408,7 +422,6 @@
   background: #fffaf5;
   color: #3c2415;
 
-  font-family: "Baloo 2", cursive;
   font-size: 15px;
 
   resize: vertical;
@@ -418,18 +431,21 @@
   border-color: #faa74a;
   outline: none;
 
-  box-shadow: 0 0 0 3px rgba(250, 167, 74, 0.18);
+  box-shadow:
+    0 0 0 3px rgba(250, 167, 74, 0.18);
 }
 
 
-/* =========================
+/* ========================
    QUANTITY
-========================= */
+   Product quantity controls
+======================== */
 
 .quantity-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .quantity-section .section-heading {
@@ -462,9 +478,8 @@
   border-radius: 50%;
 
   background: #faa74a;
-  color: white;
+  color: #fff;
 
-  font-family: "Baloo 2", cursive;
   font-size: 22px;
   font-weight: 700;
 
@@ -482,16 +497,16 @@
 
   color: #3c2415;
 
-  text-align: center;
-
   font-size: 18px;
   font-weight: 700;
+  text-align: center;
 }
 
 
-/* =========================
+/* ========================
    BOTTOM CART BAR
-========================= */
+   Add-to-cart action
+======================== */
 
 .bottom-bar {
   position: fixed;
@@ -525,15 +540,15 @@
   border-radius: 15px;
 
   background: #fa7d00;
-  color: white;
+  color: #fff;
 
-  font-family: "Baloo 2", cursive;
   font-size: 17px;
   font-weight: 700;
 
   cursor: pointer;
 
-  box-shadow: 0 6px 16px rgba(166, 72, 13, 0.25);
+  box-shadow:
+    0 6px 16px rgba(166, 72, 13, 0.25);
 
   transition:
     background 0.2s ease,
@@ -542,6 +557,7 @@
 
 .add-cart-btn:hover:not(:disabled) {
   background: #8f3d0b;
+
   transform: translateY(-1px);
 }
 
@@ -555,9 +571,10 @@
 }
 
 
-/* =========================
+/* ========================
    MOBILE
-========================= */
+   Small screen adjustments
+======================== */
 
 @media (max-width: 480px) {
   .product-page {
@@ -587,6 +604,11 @@
   .section {
     margin: 0 12px 12px;
     padding: 16px;
+  }
+
+  .quantity-section {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .trio-tray-section > .option {

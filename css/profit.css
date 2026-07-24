@@ -1,29 +1,62 @@
-* {
+/* ================================================
+   Profit dashboard
+================================================ */
+
+
+/* ========================
+   RESET
+   Apply consistent sizing
+======================== */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+
+/* ========================
+   PAGE
+   Dashboard page foundation
+======================== */
+
 body {
   margin: 0;
-  font-family: "Baloo 2", Arial, sans-serif;
+
   background: #fff7e8;
   color: #3d2210;
+
+  font-family:
+    "Baloo 2",
+    Arial,
+    sans-serif;
 }
 
 header {
-  background: linear-gradient(135deg, #faa74a, #ffe3a5);
   padding: 28px 18px;
-  text-align: center;
-  border-bottom-left-radius: 30px;
+
   border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #faa74a,
+      #ffe3a5
+    );
+
+  text-align: center;
 }
 
 header h1 {
   margin: 0;
+
   font-size: 28px;
 }
 
 header p {
   margin: 6px 0 0;
+
   font-size: 15px;
 }
 
@@ -31,15 +64,6 @@ main {
   max-width: 1000px;
   margin: 24px auto;
   padding: 0 16px 40px;
-}
-
-.card {
-  background: #fffdf8;
-  border-radius: 24px;
-  padding: 22px;
-  margin-bottom: 22px;
-  border: 2px solid #ffe3a5;
-  box-shadow: 0 8px 20px rgba(61, 34, 16, 0.1);
 }
 
 h2 {
@@ -54,31 +78,61 @@ h4 {
   margin: 0 0 12px;
 }
 
-/* Forms */
+
+/* ========================
+   CARDS
+   Dashboard content panels
+======================== */
+
+.card {
+  margin-bottom: 22px;
+  padding: 22px;
+
+  border: 2px solid #ffe3a5;
+  border-radius: 24px;
+
+  background: #fffdf8;
+
+  box-shadow:
+    0 8px 20px rgba(61, 34, 16, 0.1);
+}
+
+
+/* ========================
+   FORMS
+   Form fields and grids
+======================== */
 
 label {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-weight: 700;
+
   font-size: 14px;
+  font-weight: 700;
 }
 
 input,
 select {
+  width: 100%;
   padding: 11px 12px;
+
   border: 2px solid #f5c879;
   border-radius: 14px;
+
   background: #fffaf0;
-  font-size: 14px;
   color: #3d2210;
+
+  font: inherit;
+  font-size: 14px;
 }
 
 input:focus,
 select:focus {
-  outline: none;
   border-color: #faa74a;
-  background: #ffffff;
+  outline: none;
+
+  background: #fff;
 }
 
 .form-grid,
@@ -87,6 +141,7 @@ select:focus {
 .form-grid-4 {
   display: grid;
   gap: 14px;
+
   margin-bottom: 16px;
 }
 
@@ -95,114 +150,158 @@ select:focus {
 }
 
 .form-grid-2 {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 }
 
 .form-grid-3 {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 }
 
 .form-grid-4 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 }
 
-/* Buttons */
+
+/* ========================
+   BUTTONS
+   Dashboard action buttons
+======================== */
 
 button,
 .filterBtn,
 .filter-btn {
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 999px;
+
   background: #faa74a;
   color: #3d2210;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 999px;
+
+  font: inherit;
   font-weight: 800;
+
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(61, 34, 16, 0.15);
-  transition: 0.2s ease;
+
+  box-shadow:
+    0 4px 10px rgba(61, 34, 16, 0.15);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 button:hover,
 .filterBtn:hover,
 .filter-btn:hover {
   background: #f99424;
+
   transform: translateY(-1px);
 }
 
 .back-btn {
-  background: #fff0d6;
   border: 2px solid #3d2210;
+
+  background: #fff0d6;
   color: #3d2210;
 }
 
 .view-all-btn {
-  background: #ffb347;
   padding: 10px 16px;
+
+  background: #ffb347;
 }
 
 .danger {
   width: 100%;
-  background: #ffb4a2;
   margin-top: 8px;
+
+  background: #ffb4a2;
 }
 
 .mini-delete {
-  background: #ff7b7b;
-  color: white;
-  padding: 5px 9px;
   margin-left: 8px;
+  padding: 5px 9px;
+
   border-radius: 50%;
+
+  background: #ff7b7b;
+  color: #fff;
+
   box-shadow: none;
 }
 
 .mini-edit {
+  padding: 6px 10px;
+
+  border-radius: 10px;
+
   background: #ffe9b3;
   color: #3d2210;
-  border-radius: 10px;
-  padding: 6px 10px;
+
   font-size: 14px;
+
   box-shadow: none;
 }
 
 .mini-edit:hover {
   background: #ffd978;
+
   transform: scale(1.05);
 }
 
-/* Summary */
+
+/* ========================
+   SUMMARY
+   Profit summary cards
+======================== */
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
   gap: 14px;
+
   margin-top: 18px;
 }
 
 .summary-grid div {
-  background: #fff3d1;
-  border-radius: 18px;
-  padding: 16px;
-  min-height: 90px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  min-height: 90px;
+  padding: 16px;
+
+  border-radius: 18px;
+
+  background: #fff3d1;
 }
 
 .summary-grid span {
   font-size: 13px;
+
   opacity: 0.8;
 }
 
 .summary-grid strong {
-  font-size: 22px;
   margin-top: 6px;
+
+  font-size: 22px;
 }
 
 .profit-box {
   background: #dff5d8 !important;
 }
 
-/* Lists */
+
+/* ========================
+   LISTS
+   Sales and expense lists
+======================== */
 
 .list-box {
   margin-top: 18px;
@@ -219,50 +318,67 @@ button:hover,
 .list-header,
 .sales-page-header {
   justify-content: space-between;
+
   margin-bottom: 14px;
 }
 
 .list-item {
-  background: #fff7e8;
-  border: 1px solid #ffe3a5;
-  border-radius: 18px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
+
+  margin-bottom: 10px;
+  padding: 12px 14px;
+
+  border: 1px solid #ffe3a5;
+  border-radius: 18px;
+
+  background: #fff7e8;
 }
 
 .list-item p {
   margin: 4px 0 0;
+
   font-size: 13px;
+
   opacity: 0.75;
 }
 
-/* Filters */
+
+/* ========================
+   FILTERS
+   Date and category filters
+======================== */
 
 .filter-bar {
   display: flex;
-  gap: 14px;
-  align-items: end;
+  align-items: flex-end;
   flex-wrap: wrap;
+  gap: 14px;
+
   margin-bottom: 20px;
 }
 
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
   gap: 18px;
+
   margin: 20px 0;
 }
 
 .filter-card {
-  background: #fffaf2;
+  padding: 16px;
+
   border: 2px solid #f3d29b;
   border-radius: 24px;
-  padding: 16px;
-  box-shadow: 4px 4px 0 rgba(61, 34, 16, 0.08);
+
+  background: #fffaf2;
+
+  box-shadow:
+    4px 4px 0 rgba(61, 34, 16, 0.08);
 }
 
 .tag-filter-group {
@@ -272,20 +388,35 @@ button:hover,
 }
 
 .tag-filter {
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
   background: #fff3dd;
   color: #3d2210;
-  padding: 10px 16px;
-  border-radius: 999px;
+
   font-weight: 700;
+
   box-shadow: none;
 }
 
 .tag-filter.active {
-  background: linear-gradient(135deg, #faa74a, #ffcc80);
-  box-shadow: 3px 3px 0 #3d2210;
+  background:
+    linear-gradient(
+      135deg,
+      #faa74a,
+      #ffcc80
+    );
+
+  box-shadow:
+    3px 3px 0 #3d2210;
 }
 
-/* Modal */
+
+/* ========================
+   MODAL
+   Edit form modal
+======================== */
 
 .hidden {
   display: none !important;
@@ -294,30 +425,40 @@ button:hover,
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
   z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .edit-modal {
-  background: #fffaf0;
-  border: 3px solid #3d2210;
-  border-radius: 28px;
+  overflow-y: auto;
+
   width: 100%;
   max-width: 520px;
   max-height: 90vh;
-  overflow-y: auto;
   padding: 24px;
-  box-shadow: 8px 8px 0 #3d2210;
+
+  border: 3px solid #3d2210;
+  border-radius: 28px;
+
+  background: #fffaf0;
+
+  box-shadow:
+    8px 8px 0 #3d2210;
+
   animation: popup 0.2s ease;
 }
 
 .edit-modal h2 {
   margin-top: 0;
   margin-bottom: 18px;
+
   font-size: 28px;
 }
 
@@ -332,8 +473,10 @@ button:hover,
 
 .edit-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
   gap: 12px;
+
   margin-bottom: 10px;
 }
 
@@ -347,23 +490,11 @@ button:hover,
   margin-top: 20px;
 }
 
-/* Others */
 
-.small-text {
-  font-size: 14px;
-  opacity: 0.75;
-}
-
-.empty-sales {
-  text-align: center;
-  padding: 26px;
-  font-weight: 700;
-  opacity: 0.7;
-}
-
-.full-width {
-  grid-column: 1 / -1;
-}
+/* ========================
+   TRIO BREAKDOWN
+   Trio sales quantities
+======================== */
 
 .trio-section {
   width: 100%;
@@ -371,46 +502,143 @@ button:hover,
 }
 
 .trio-title {
-  font-weight: 700;
   margin-bottom: 10px;
+
   font-size: 14px;
+  font-weight: 700;
 }
 
 .trio-breakdown {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
 .trio-item {
-  background: #fff8ef;
+  margin-bottom: 10px;
+  padding: 10px;
+
   border: 2px solid #f4b34f;
   border-radius: 14px;
-  padding: 10px;
-  margin-bottom: 10px;
+
+  background: #fff8ef;
 }
 
 .trio-item label {
   display: block;
-  font-weight: 700;
+
   margin-bottom: 6px;
+
+  font-weight: 700;
 }
 
 .trio-item input {
   width: 100%;
-  box-sizing: border-box;
 }
 
-/* Animation */
+
+/* ========================
+   UTILITIES
+   Reusable helper classes
+======================== */
+
+.small-text {
+  font-size: 14px;
+
+  opacity: 0.75;
+}
+
+.empty-sales {
+  padding: 26px;
+
+  font-weight: 700;
+  text-align: center;
+
+  opacity: 0.7;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* ========================
+   ANIMATION
+   Modal opening animation
+======================== */
 
 @keyframes popup {
   from {
     opacity: 0;
+
     transform: scale(0.95);
   }
 
   to {
     opacity: 1;
+
     transform: scale(1);
+  }
+}
+
+
+/* ========================
+   MOBILE
+   Dashboard responsive layout
+======================== */
+
+@media (max-width: 760px) {
+  .summary-grid,
+  .form-grid-4,
+  .trio-breakdown {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .form-grid-3 {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  header {
+    padding: 22px 14px;
+  }
+
+  main {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .summary-grid,
+  .form-grid-2,
+  .form-grid-3,
+  .form-grid-4,
+  .filter-grid,
+  .trio-breakdown,
+  .edit-row {
+    grid-template-columns: 1fr;
+  }
+
+  .list-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .list-header,
+  .sales-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .modal-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

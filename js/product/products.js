@@ -1,3 +1,13 @@
+// ================================================
+// Product data and configuration
+// ================================================
+
+
+// ========================
+// DEFAULT BASE OPTIONS
+// Shared base choices for individual products
+// ========================
+
 const DEFAULT_BASE_OPTIONS = [
     {
         name: "Japanese Rice",
@@ -10,6 +20,12 @@ const DEFAULT_BASE_OPTIONS = [
         price: 0
     }
 ];
+
+
+// ========================
+// DEFAULT PORTION OPTIONS
+// Shared portion choices for individual products
+// ========================
 
 const DEFAULT_PORTION_OPTIONS = [
     {
@@ -26,7 +42,13 @@ const DEFAULT_PORTION_OPTIONS = [
     }
 ];
 
-const DEFAULT_UPGRADE = [
+
+// ========================
+// DEFAULT UPGRADE OPTIONS
+// Shared set upgrade choices for individual products
+// ========================
+
+const DEFAULT_UPGRADE_OPTIONS = [
     {
         name: "No Upgrade",
         price: 0
@@ -38,16 +60,19 @@ const DEFAULT_UPGRADE = [
     }
 ];
 
-const DOUBLE_UP_FLAVOUR_PRICE = {
-  tuna: 0,
-  chicken: 1,
-  shroom: 2,
-  salmon: 3
-};
 
-const DOUBLE_UP_BASE_PRICE = 16.90;
+// ========================
+// PRODUCT CATALOGUE
+// Store all product details, prices and options
+// ========================
 
-const products = {
+const PRODUCTS  = {
+
+  // ========================
+  // DOUBLE-UP
+  // Large tray with two selectable flavours
+  // ========================
+
   doubleup: {
     id: "doubleup",
     name: "Double-Up",
@@ -59,16 +84,20 @@ const products = {
 
     flavourOptions: [
       { 
-        productId: "tuna", extra: 0 
+        productId: "tuna", 
+        extra: 0 
       },
       { 
-        productId: "chicken", extra: 1 
+        productId: "chicken", 
+        extra: 1 
       },
       { 
-        productId: "shroom", extra: 2 
+        productId: "shroom", 
+        extra: 2 
       },
       { 
-        productId: "salmon", extra: 3 
+        productId: "salmon", 
+        extra: 3 
       }
     ],
 
@@ -100,6 +129,12 @@ const products = {
       },
     ]
   },
+
+
+  // ========================
+  // WAYAKI TRIO
+  // Bundle of three different individual trays
+  // ========================
 
   trio: {
     id: "trio",
@@ -145,6 +180,12 @@ const products = {
     ]
   },
 
+
+  // ========================
+  // SALMON DELUXE
+  // Salmon, crabstick and mentaiko sushi bake
+  // ========================
+
   salmon: {
     id: "salmon",
     name: "Salmon Deluxe",
@@ -169,9 +210,15 @@ const products = {
 
     portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
   },
+
+
+  // ========================
+  // SHROOM BLISS
+  // Mushroom, corn, cheese and truffle sushi bake
+  // ========================
 
   shroom: {
     id: "shroom",
@@ -198,9 +245,15 @@ const products = {
 
     portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
   },
+
+
+  // ========================
+  // CHICKEN COMFORT
+  // Teriyaki chicken and egg sushi bake
+  // ========================
 
   chicken: {
     id: "chicken",
@@ -227,9 +280,15 @@ const products = {
 
     portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
   },
+
+
+  // ========================
+  // TUNA DELIGHT
+  // Creamy tuna and cucumber sushi bake
+  // ========================
 
   tuna: {
     id: "tuna",
@@ -255,9 +314,15 @@ const products = {
 
     portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
   },
+
+
+  // ========================
+  // LUNCHEON MELT
+  // Luncheon meat and egg sushi bake
+  // ========================
 
   luncheon: {
     id: "luncheon",
@@ -283,9 +348,15 @@ const products = {
 
     portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
   },
+
+
+  // ========================
+  // UPGRADE SET
+  // Edamame and Yuzu Jasmine Tea set
+  // ========================
 
   upgrade: {
     id: "upgrade",
@@ -296,6 +367,12 @@ const products = {
     description: "350ml Yuzu Jasmine Tea + 100g Edamame",
   },
 
+
+  // ========================
+  // SEAWEED
+  // Individual roasted seaweed add-on
+  // ========================
+
   seaweed: {
     id: "seaweed",
     name: "Seaweed",
@@ -305,6 +382,12 @@ const products = {
     description: "Crispy roasted seaweed",
   },
   
+
+  // ========================
+  // TEA BAG
+  // Individual green tea bag add-on
+  // ========================
+
   tea: {
     id: "tea",
     name: "Tea bag",

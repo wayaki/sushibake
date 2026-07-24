@@ -1,32 +1,53 @@
-/* === Home === */
+/* ================================================
+   Home page and menu
+================================================ */
+
+
+/* ========================
+   HOME LAYOUT
+   Main home page container
+======================== */
+
 .home-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 25px 10px;
+
   width: 90%;
   max-width: 430px;
   margin: 0 auto;
-  box-sizing: border-box;
+  padding: 25px 10px;
 }
 
-.home-container img {
+.home-container > img {
   width: 100%;
 }
 
+
+/* ========================
+   CUTOFF BANNER
+   Order cutoff countdown
+======================== */
+
 .cutoff-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
   width: 90%;
   margin: 50px auto 1px;
-  padding: 10px 0;
+  padding: 10px 14px;
+
   border-radius: 20px;
+
+  color: #4a2a00;
+
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  color: #4a2a00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .cutoff-text {
@@ -34,13 +55,15 @@
 }
 
 .big-time {
+  display: block;
+
   font-size: 20px;
   font-weight: 800;
-  display: block;
 }
 
 .cutoff-icon {
   display: inline-block;
+
   transform-origin: center;
 }
 
@@ -49,260 +72,454 @@
 }
 
 .cutoff-banner.urgent {
-  background: #ffe0cc;
   border: 2px solid #f9a853;
+
+  background: #ffe0cc;
 }
 
 .cutoff-banner.urgent .cutoff-text {
   animation: soft-pulse 1s infinite;
 }
 
-.banner {
-  background: #fff3e0;
-  border-radius: 20px;
-  width: 90%;
-  padding: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 
+/* ========================
+   PROMOTIONAL BANNER
+   Home page promotional image
+======================== */
+
+.banner {
   display: flex;
   align-items: center;
   gap: 15px;
-  transition: transform 0.2s;
+
+  width: 90%;
+  padding: 15px;
+
+  border-radius: 20px;
+
+  background: #fff3e0;
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .banner img {
   width: 100%;
 }
 
-/* === Menu === */
+
+/* ========================
+   MENU GRID
+   Product card layout
+======================== */
+
 .menu-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
   gap: 18px;
+
+  width: 100%;
   margin: auto;
+
   justify-items: center;
 }
 
 .menu-item {
-  background: #fff3e0;
-  border-radius: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 20px;
+
+  background: #fff3e0;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.1);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .menu-item:hover {
-  transform: none !important;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.12);
+
+  transform: translateY(-2px);
 }
 
 .menu-item img {
   width: 100%;
   max-width: 180px;
   height: auto;
-  object-fit: cover;
+  aspect-ratio: 1 / 1;
+
   border-radius: 16px;
+
+  object-fit: cover;
 }
 
 .item-info {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  flex: 1;
+
+  width: 100%;
   min-width: 0;
 }
 
 .item-name {
-  font-size: 20px;
-  font-weight: bold;
   color: #a6480d;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .item-price {
-  font-size: 18px;
   color: #000;
+
+  font-size: 18px;
 }
 
-/* === Quantity Buttons === */
+
+/* ========================
+   QUANTITY
+   Menu quantity display
+======================== */
+
 .quantity {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+
+  width: 100%;
 }
 
 .quantity-count {
-  flex: 1;
-  
   display: flex;
-  justify-content: center;
+  flex: 1;
   align-items: center;
+  justify-content: center;
 
-  background: white;
-  padding: 5px 40px;
+  min-width: 0;
+  padding: 5px 16px;
+
   border: 2px solid #f2d2b3;
   border-radius: 14px;
 
-  box-sizing: border-box;
+  background: #fff;
+
+  font-weight: 700;
 }
 
 .quantity button {
   width: 40px;
   height: 40px;
+  padding: 0;
+
   flex-shrink: 0;
-  
+
   border: none;
   border-radius: 50%;
 
   background: #f8b400;
   color: #fff;
-  font-weight: bold;
+
   font-size: 18px;
-  padding: 8px 0;
+  font-weight: 700;
 
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.1s;
+
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2);
+
+  transition:
+    background 0.1s ease,
+    transform 0.1s ease;
 }
 
 .quantity button:hover {
-  transform: scale(1.1);
+  background: #e9a900;
+
+  transform: scale(1.08);
 }
 
-/* === Cart Button === */
+
+/* ========================
+   FLOATING CART BUTTON
+   Optional circular cart button
+======================== */
+
 .cart-btn {
   position: fixed;
-  bottom: 25px;
   right: 25px;
+  bottom: 25px;
+  z-index: 900;
+
+  padding: 15px 22px;
+
+  border: none;
+  border-radius: 50px;
+
   background: #f85c50;
   color: #fff;
-  border: none;
-  padding: 15px 22px;
-  border-radius: 50px;
-  font-weight: bold;
+
   font-size: 18px;
+  font-weight: 700;
+
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.2s ease;
 }
 
 .cart-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
-/* Modal background */
-.image-modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  padding-top: 50px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-}
 
-/* Image inside modal */
-.modal-content {
-  display: block;
-  margin: auto;
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 12px;
-}
+/* ========================
+   IMAGE MODAL CLOSE
+   Close button inside image modal
+======================== */
 
-/* Close button */
-.close-btn {
+.image-modal .close-btn {
   position: absolute;
   top: 20px;
   right: 30px;
-  color: white;
+
+  border: none;
+
+  background: transparent;
+  color: #fff;
+
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 700;
+
   cursor: pointer;
 }
 
-/* === Sticky Cart Bar === */
+
+/* ========================
+   STICKY CART BAR
+   Bottom cart summary
+======================== */
+
 .cart-bar {
   position: fixed;
-  left: 12px;
   right: 12px;
-  bottom: max(12px, env(safe-area-inset-bottom));
+  bottom:
+    max(
+      12px,
+      env(safe-area-inset-bottom)
+    );
+  left: 12px;
+  z-index: 999;
 
-  background: linear-gradient(to right, #faa74a, #f9a853);
-  color: #7a3e00;
-
-  display: flex;
-  justify-content: space-between;
+  display: none;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
 
+  max-width: 600px;
+  margin: 0 auto;
   padding: 8px 26px;
+
   border-radius: 22px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  background:
+    linear-gradient(
+      to right,
+      #faa74a,
+      #f9a853
+    );
+
+  color: #7a3e00;
 
   cursor: pointer;
-  z-index: 999;
-  overflow: visible;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
 .cart-left {
   display: flex;
   align-items: center;
   gap: 20px;
+
   min-width: 0;
 }
 
 .cart-mascot {
   width: 70px;
   height: 70px;
+
+  flex-shrink: 0;
+
   object-fit: contain;
 }
 
 .cart-info {
   display: flex;
   flex-direction: column;
+
+  min-width: 0;
+
   line-height: 1.1;
 }
 
 #cart-count {
+  overflow: hidden;
+
+  color: #4a2a00;
+
   font-size: 16px;
   font-weight: 700;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  color: #4a2a00;
 }
 
 #cart-total {
+  color: #4a2a00;
+
   font-size: 20px;
   font-weight: 700;
   white-space: nowrap;
-  color: #4a2a00;
 }
 
 .checkout-btn {
-  background: #fff7ef;
-  color: #7a3e00;
+  padding: 10px 16px;
+
+  flex-shrink: 0;
+
   border: none;
   border-radius: 999px;
-  padding: 10px 16px;
-  font-family: "Baloo 2", cursive;
+
+  background: #fff7ef;
+  color: #7a3e00;
+
   font-size: 16px;
   font-weight: 700;
   white-space: nowrap;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
   cursor: pointer;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 768px) {
+
+/* ========================
+   ANIMATIONS
+   Cutoff banner movement
+======================== */
+
+@keyframes tick-bounce {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-8deg);
+  }
+
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.72;
+  }
+}
+
+
+/* ========================
+   MOBILE
+   Small screen adjustments
+======================== */
+
+@media (max-width: 480px) {
+  .home-container {
+    width: 94%;
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .menu-container {
+    gap: 12px;
+  }
+
+  .menu-item {
+    padding: 10px;
+  }
+
   .item-name {
+    font-size: 17px;
+  }
+
+  .item-price {
+    font-size: 16px;
+  }
+
+  .quantity {
+    gap: 6px;
+  }
+
+  .quantity-count {
+    padding: 5px 8px;
+  }
+
+  .quantity button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cart-bar {
+    padding: 8px 14px;
+  }
+
+  .cart-left {
+    gap: 10px;
+  }
+
+  .cart-mascot {
+    width: 58px;
+    height: 58px;
+  }
+
+  #cart-count {
+    font-size: 14px;
+  }
+
+  #cart-total {
     font-size: 18px;
-    text-align: center;
+  }
+
+  .checkout-btn {
+    padding: 9px 12px;
+
+    font-size: 14px;
   }
 }
