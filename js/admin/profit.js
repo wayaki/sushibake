@@ -3,7 +3,7 @@ const API_URL = "http://localhost:3000/api";
 let expenses = [];
 let sales = [];
 
-const deliveryFees = {
+const DELIVERY_FEES = {
   north: 8,
   west: 12,
   northeast: 12,
