@@ -1,0 +1,725 @@
+/* ================================================
+   SG61 Lucky Spin page
+================================================ */
+
+
+/* ========================
+   PAGE
+======================== */
+
+body {
+  background:
+    linear-gradient(
+      to bottom,
+      var(--color-cream-light),
+      var(--color-cream)
+    );
+}
+
+.sg61-page {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+
+  text-align: center;
+}
+
+
+/* ================================================
+   SG61 HERO
+================================================ */
+
+.sg61-hero {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  margin: 0;
+  padding:
+    clamp(20px, 6vw, 40px)
+    clamp(10px, 5vw, 30px);
+
+  border: 3px solid
+    var(--color-orange-dark);
+
+  border-radius:
+    clamp(22px, 4vw, 32px);
+
+  background:
+    radial-gradient(
+      circle at 15% 18%,
+      rgba(255, 255, 255, 0.6) 0 6px,
+      transparent 7px
+    ),
+    radial-gradient(
+      circle at 86% 24%,
+      rgba(255, 255, 255, 0.5) 0 5px,
+      transparent 6px
+    ),
+    linear-gradient(
+      145deg,
+      #ffe9b8,
+      #ffc76f
+    );
+
+  box-shadow:
+    var(--shadow-card);
+
+  text-align: center;
+}
+
+
+/* Decorative sparkles */
+
+.sg61-hero::before,
+.sg61-hero::after {
+  position: absolute;
+  z-index: 1;
+
+  color: #ef4035;
+
+  font-weight: 900;
+  line-height: 1;
+}
+
+.sg61-hero::before {
+  content: "✦";
+
+  top: 20px;
+  left: clamp(18px, 6vw, 50px);
+
+  font-size:
+    clamp(24px, 5vw, 42px);
+
+  transform:
+    rotate(-12deg);
+}
+
+.sg61-hero::after {
+  content: "★";
+
+  top: 42%;
+  right: clamp(16px, 5vw, 42px);
+
+  font-size:
+    clamp(20px, 4vw, 34px);
+
+  transform:
+    rotate(12deg);
+}
+
+/* ========================
+   MASCOT
+======================== */
+
+.sg61-title-stack {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 4px;
+}
+
+.sg61-hero-mascot {
+  position: relative;
+  z-index: 3;
+
+  width: clamp(72px, 18vw, 105px);
+
+  margin-bottom: -5px;
+  margin-top: -10px;
+  margin-left: 10px;
+
+  filter:
+    drop-shadow(
+      0 5px 4px
+      rgba(60, 36, 21, 0.18)
+    );
+
+
+}
+
+/* ========================
+   SG61 TITLE
+======================== */
+
+.sg61-small-title {
+  position: relative;
+  z-index: 2;
+
+  display: inline-block;
+
+  margin: 0;
+  padding: 5px 14px;
+
+  border: 2px solid
+    var(--color-brown-dark);
+
+  border-radius: 20px;
+
+  background:
+    var(--color-brown-dark);
+
+  color:
+    var(--color-white);
+
+  font-size:
+    clamp(10px, 9vw, 30px);
+
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 1px;
+}
+
+
+/* ========================
+   LUCKY SPIN TITLE
+======================== */
+
+.sg61-hero h1 {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+
+  font-size: clamp(50px, 13vw, 80px);
+
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -1px;
+
+  text-transform: uppercase;
+
+  background: linear-gradient(
+    to bottom,
+    var(--color-orange-dark),
+    #ef4035
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke:
+    clamp(1px, 0.5vw, 2px)
+    var(--color-brown-dark);
+
+  paint-order: stroke fill;
+
+  text-shadow:
+    0 6px 0
+    rgba(60, 36, 21, 0.12);
+}
+
+
+/* ========================
+   SUBTITLE
+======================== */
+
+.sg61-hero-subtitle {
+  position: relative;
+  z-index: 2;
+
+  margin:0;
+
+  color:
+    var(--color-brown-dark);
+
+  font-size:
+    clamp(17px, 3.5vw, 24px);
+
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* ========================
+   PHONE CARD
+======================== */
+
+.phone-card {
+  margin: 30px auto;
+  padding: 24px;
+
+  border: 3px solid
+    var(--color-orange-dark);
+
+  border-radius:
+    var(--radius-large);
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.78
+    );
+
+  box-shadow:
+    var(--shadow-card);
+}
+
+.phone-card label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.phone-row {
+  display: flex;
+  gap: 10px;
+}
+
+.phone-row input {
+  min-width: 0;
+  flex: 1;
+
+  padding: 8px 16px;
+
+  border: 2px solid
+    var(--color-brown-light);
+
+  border-radius:
+    var(--radius-small);
+
+  background:
+    var(--color-white);
+
+  color:
+    var(--color-brown-dark);
+
+  font-size: 17px;
+}
+
+.phone-row input::placeholder {
+  color:
+    rgba(
+      60,
+      36,
+      21,
+      0.45
+    );
+}
+
+.phone-row button,
+.result-card button {
+  padding: 8px 20px;
+
+  border: none;
+  border-radius:
+    var(--radius-small);
+
+  background:
+    var(--color-brown);
+
+  color:
+    var(--color-white);
+
+  font-weight: 800;
+
+  box-shadow:
+    var(--shadow-soft);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.phone-row button:hover,
+.result-card button:hover {
+  background:
+    var(--color-brown-light);
+
+  transform:
+    translateY(-2px);
+}
+
+.phone-row button:disabled,
+.result-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spin-message {
+  min-height: 10px;
+  margin: 10px 0 0;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.spin-message.is-error {
+  color: #c53a31;
+}
+
+.spin-message.is-success {
+  color: #2f7c48;
+}
+
+.phone-note {
+    font-size: clamp(10px, 2.8vw, 14px);
+    margin: 0;
+}
+
+/* ========================
+   SPIN STATUS
+======================== */
+
+.spin-section {
+  margin-top: 28px;
+}
+
+.spin-status {
+  margin-bottom: 18px;
+}
+
+.spin-status h2 {
+  margin: 0;
+
+  color:
+    var(--color-brown-light);
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.spin-status p {
+  margin: 6px 0 0;
+
+  color:
+    var(--color-brown-dark);
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* ========================
+   WHEEL
+======================== */
+
+.wheel {
+  position: relative;
+
+  width:
+    min(
+      92vw,
+      600px
+    );
+
+  aspect-ratio: 1;
+
+  margin: 24px auto;
+}
+
+
+.wheel-prize {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  transform-origin: center;
+}
+
+
+.wheel-stand {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  z-index: 0;
+
+  width: 72%;
+
+  transform:
+    translateX(-50%);
+}
+
+
+.wheel-pointer {
+  position: absolute;
+  top: -4%;
+  left: 50%;
+  z-index: 3;
+
+  width: 15%;
+
+  transform:
+    translateX(-50%);
+
+  filter:
+    drop-shadow(
+      0 5px 6px
+      rgba(0, 0, 0, 0.3)
+    );
+}
+
+
+.spin-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 4;
+
+  width: 24%;
+  aspect-ratio: 1;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  cursor: pointer;
+}
+
+
+.spin-btn img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+.spin-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+
+/* ========================
+   TERMS
+======================== */
+
+.spin-terms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  width: 100%;
+  margin-top: 30px;
+  padding: 20px 0;
+
+  border-radius: var(--radius-medium);
+
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: var(--shadow-card);
+}
+
+.spin-term {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  min-height: 70px;
+  padding: 0 10px;
+
+  text-align: center;
+}
+
+.spin-term + .spin-term {
+  border-left: 2px solid rgba(122, 62, 0, 0.22);
+}
+
+.spin-term strong {
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.spin-term span {
+  margin-top: 3px;
+
+  color: var(--color-brown);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ========================
+   RESULT MODAL
+======================== */
+
+.result-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  min-height: 100dvh;
+
+  padding: clamp(16px, 4vw, 24px);
+
+  background: rgba(60, 36, 21, 0.72);
+
+  overflow-y: auto;
+}
+
+.result-card {
+  width: min(100%, 390px);
+
+  padding: clamp(20px, 5vw, 32px);
+
+  border: 4px solid
+    var(--color-orange-dark);
+
+  border-radius:
+    var(--radius-large);
+
+  background:
+    var(--color-cream-light);
+
+  box-shadow:
+    0 20px 50px
+      rgba(0, 0, 0, 0.28);
+
+  text-align: center;
+}
+
+.result-small {
+  margin: 0;
+
+  color:
+    var(--color-brown);
+
+  font-size:
+    clamp(15px, 2vw, 17px);
+
+  font-weight: 700;
+}
+
+.result-card h2 {
+  margin:
+    clamp(6px, 2vw, 10px)
+    0;
+
+  color:
+    var(--color-orange-dark);
+
+  font-size:
+    clamp(28px, 6vw, 34px);
+
+  font-weight: 800;
+
+  line-height: 1.1;
+}
+
+.result-prize {
+  margin:
+    clamp(18px, 5vw, 24px)
+    0;
+
+  color:
+    var(--color-brown-dark);
+
+  font-size:
+    clamp(24px, 6vw, 30px);
+
+  font-weight: 900;
+
+  line-height: 1.2;
+}
+
+.result-code-label {
+  margin: 0;
+
+  color:
+    var(--color-brown);
+
+  font-size:
+    clamp(13px, 2vw, 14px);
+
+  font-weight: 700;
+}
+
+.result-code {
+  display: block;
+
+  margin:
+    clamp(10px, 3vw, 14px)
+    0
+    clamp(16px, 4vw, 22px);
+
+  padding:
+    clamp(10px, 3vw, 14px);
+
+  border: 2px dashed
+    var(--color-brown-light);
+
+  border-radius:
+    var(--radius-small);
+
+  background:
+    var(--color-white);
+
+  color:
+    var(--color-brown-dark);
+
+  font-size:
+    clamp(20px, 5vw, 26px);
+
+  font-weight: 800;
+
+  letter-spacing:
+    clamp(0.5px, 0.2vw, 1.5px);
+
+  word-break: break-word;
+}
+
+.result-note {
+  margin:
+    0
+    0
+    clamp(18px, 5vw, 24px);
+
+  color:
+    var(--color-brown);
+
+  font-size:
+    clamp(13px, 2.5vw, 14px);
+
+  line-height: 1.6;
+}
+
+
+/* ========================
+   HELPERS
+======================== */
+
+.hidden {
+  display: none !important;
+}

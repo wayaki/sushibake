@@ -1,32 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>WAYAKI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/global.css">
+  <title>SG61 Lucky Spin | WAYAKI</title>
+
+  <link
+    rel="stylesheet"
+    href="css/global.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/sg61-lucky-draw.css"
+  >
 </head>
+
 <body>
 
-    <button
-    id="test-supabase-btn"
-    type="button"
+  <!-- ========================
+       SITE HEADER
+  ========================= -->
+
+  <header>
+    <a
+      href="https://wayaki.github.io/sushibake/"
+      aria-label="Go to WAYAKI menu"
     >
-    Test Supabase
-    </button>
+      <img
+        class="logo"
+        src="images/logo.png"
+        alt="WAYAKI"
+      >
+    </a>
 
-    <p id="test-result"></p>
+    <nav
+      class="nav-links"
+      aria-label="Main navigation"
+    >
+      <a
+        href="https://wayaki.github.io/sushibake/"
+        class="linked"
+      >
+        Menu
+      </a>
 
-  <!-- JavaScript -->
+      <a
+        href="https://wayaki.github.io/sushibake/cart"
+      >
+        Cart
+      </a>
+    </nav>
+  </header>
+
+
+  <!-- ========================
+       MAIN PAGE
+  ========================= -->
+
+  <main class="sg61-page">
+
+    <!-- HERO -->
+
+    <section class="sg61-hero">
+
+    <div class="sg61-title-stack">
+        <img
+        class="sg61-hero-mascot"
+        src="images/wheel/sg61-mascot.png"
+        alt="WAYAKI mascot"
+        >
+
+        <p class="sg61-small-title">
+        SG61
+        </p>
+    </div>
+
+    <h1>
+        Lucky Spin
+    </h1>
+
+    <p class="sg61-hero-subtitle">
+        Spin &amp; Win with WAYAKI!
+    </p>
+
+    </section>
+
+
+    <!-- PHONE CHECK -->
+
+    <section class="phone-card">
+      <label for="spin-phone">
+        Enter Your Mobile Number
+      </label>
+
+      <div class="phone-row">
+        <input
+          id="spin-phone"
+          type="tel"
+          inputmode="numeric"
+          maxlength="8"
+          autocomplete="tel"
+          placeholder="91234567"
+          aria-describedby="phone-note spin-message"
+        >
+
+        <button
+          id="check-spin-btn"
+          type="button"
+        >
+          Check Spin
+        </button>
+      </div>
+
+      <p
+        id="spin-message"
+        class="spin-message"
+        aria-live="polite"
+      ></p>
+
+      <p
+        id="phone-note"
+        class="phone-note"
+      >
+        🎁 Rewards are linked to your mobile number.
+        <br>
+        Please use the same number when placing your WAYAKI order.
+      </p>
+    </section>
+
+
+    <!-- WHEEL -->
+
+    <div
+      id="spin-section"
+      class="spin-section hidden"
+    >
+      <div class="spin-status">
+        <h2 id="spin-type-label">
+          Free Spin
+        </h2>
+
+        <p id="spin-balance">
+          You have 1 spin available!
+        </p>
+      </div>
+
+      <div class="wheel">
+        <img
+          id="wheel-prize"
+          class="wheel-prize"
+          src="images/wheel/wheel-prize.png"
+          alt="Lucky spin prize wheel"
+        >
+
+        <img
+          class="wheel-stand"
+          src="images/wheel/stand.png"
+          alt=""
+          aria-hidden="true"
+        >
+
+        <img
+          class="wheel-pointer"
+          src="images/wheel/pointer.png"
+          alt=""
+          aria-hidden="true"
+        >
+
+        <button
+          id="spin-btn"
+          class="spin-btn"
+          type="button"
+          aria-label="Spin the lucky wheel"
+        >
+          <img
+            src="images/wheel/spin-button.png"
+            alt=""
+            aria-hidden="true"
+          >
+        </button>
+      </div>
+    </div>
+
+
+    <!-- TERMS -->
+
+<div class="spin-terms">
+  <div class="spin-term">
+    <strong>One free spin</strong>
+    <span>per mobile number</span>
+  </div>
+
+  <div class="spin-term">
+    <strong>One bonus spin per customer</strong>
+    <span>per delivery day</span>
+  </div>
+
+  <div class="spin-term">
+    <strong>Rewards valid until</strong>
+    <span>30 Sep 2026</span>
+  </div>
+</div>
+
+  </main>
+
+
+  <!-- ========================
+       RESULT MODAL
+  ========================= -->
+
+  <div
+    id="result-modal"
+    class="result-modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="result-title"
+  >
+    <div class="result-card">
+      <p class="result-small">
+        Congratulations!
+      </p>
+
+      <h2 id="result-title">
+        You won!
+      </h2>
+
+      <div
+        id="result-prize"
+        class="result-prize"
+      ></div>
+
+      <p class="result-code-label">
+        Your reward code
+      </p>
+
+      <strong
+        id="result-code"
+        class="result-code"
+      ></strong>
+
+      <p class="result-note">
+        Screenshot this page and present the code
+        when placing your next order.
+      </p>
+
+      <button
+        id="close-result-btn"
+        type="button"
+      >
+        Done
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ========================
+       JAVASCRIPT
+  ========================= -->
+
   <script
     type="module"
-    src="js/sg61/init.js">
-  </script>
+    src="js/sg61/init.js"
+  ></script>
 
 </body>
 </html>

@@ -1,84 +1,231 @@
-const { data, error } =
-await supabase.functions.invoke(
-    "sg61-spin"
-);
+import {
+  supabase
+} from "./supabase-config.js";
 
-console.log(data);
+import {
+  findPrizeById
+} from "./prizes.js";
 
-// import { supabase } from "./supabase-config.js";
-// import { spinWheel } from "./wheel.js";
-// import { drawWheel, spinWheel } from "./wheel.js";
 
-// document.addEventListener(
-//   "DOMContentLoaded",
-//   init
-// );
+let verifiedPhone = "";
 
-// function init(){
+let availableSpinType = null;
 
-//     loadPage();
+let availableDeliveryDate = null;
 
-//     bindEvents();
 
-//     drawWheel(FREE_PRIZES);
+export function normalisePhone(
+  value
+) {
+  return String(value ?? "")
+    .replace(/\D/g, "");
+}
 
-// }
 
-// function bindEvents(){
+export function isValidPhone(
+  phone
+) {
+  return /^[89]\d{7}$/.test(
+    phone
+  );
+}
 
-//     document
-//         .getElementById(
-//             "check-btn"
-//         )
-//         .addEventListener(
-//             "click",
-//             checkPhone
-//         );
 
-//     document
-//         .getElementById(
-//             "spin-btn"
-//         )
-//         .addEventListener(
-//             "click",
-//             startSpin
-//         );
+export function getSpinState() {
+  return {
+    phone:
+      verifiedPhone,
 
-// }
+    spinType:
+      availableSpinType,
 
-// async function checkPhone(){
+    deliveryDate:
+      availableDeliveryDate
+  };
+}
 
-//     const phone =
-//         getPhoneNumber();
 
-//     if(
-//         !validatePhone(phone)
-//     ){
+export async function checkSpin(
+  phone
+) {
+  const normalisedPhone =
+    normalisePhone(
+      phone
+    );
 
-//         return;
+  if (
+    !isValidPhone(
+      normalisedPhone
+    )
+  ) {
+    throw new Error(
+      "Please enter a valid 8-digit Singapore mobile number."
+    );
+  }
 
-//     }
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .functions
+      .invoke(
+        "sg61-spin",
+        {
+          body: {
+            action: "check",
+            phone:
+              normalisedPhone
+          }
+        }
+      );
 
-//     const result =
-//         await getSpinType(
-//             phone
-//         );
+  if (error) {
+    throw await createFunctionError(
+      error,
+      "Unable to check your spin."
+    );
+  }
 
-// }
+  if (!data?.success) {
+    throw new Error(
+      data?.message ||
+      "Unable to check your spin."
+    );
+  }
 
-// async function startSpin(){
+  verifiedPhone =
+    normalisedPhone;
 
-//     disableSpinButton();
+  if (!data.available) {
+    availableSpinType =
+      null;
 
-//     const prize =
-//         await requestPrize();
+    availableDeliveryDate =
+      null;
 
-//     await spinWheel(
-//         prize
-//     );
+    return data;
+  }
 
-//     showPrizeModal(
-//         prize
-//     );
+  availableSpinType =
+    data.spinType;
 
-// }
+  availableDeliveryDate =
+    data.deliveryDate ||
+    null;
+
+  return data;
+}
+
+
+export async function claimSpin() {
+  if (!verifiedPhone) {
+    throw new Error(
+      "Please check your phone number first."
+    );
+  }
+
+  if (!availableSpinType) {
+    throw new Error(
+      "You do not have an available spin."
+    );
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .functions
+      .invoke(
+        "sg61-spin",
+        {
+          body: {
+            action: "spin",
+
+            phone:
+              verifiedPhone,
+
+            spinType:
+              availableSpinType,
+
+            deliveryDate:
+              availableDeliveryDate
+          }
+        }
+      );
+
+  if (error) {
+    throw await createFunctionError(
+      error,
+      "Unable to complete your spin."
+    );
+  }
+
+  if (!data?.success) {
+    throw new Error(
+      data?.message ||
+      "This spin is no longer available."
+    );
+  }
+
+  const prize =
+    findPrizeById(
+      data.prizeId
+    );
+
+  if (!prize) {
+    throw new Error(
+      "The server returned an unknown prize."
+    );
+  }
+
+  availableSpinType =
+    null;
+
+  availableDeliveryDate =
+    null;
+
+  return {
+    prize,
+    rewardCode:
+      data.rewardCode,
+
+    spinType:
+      data.spinType,
+
+    deliveryDate:
+      data.deliveryDate ||
+      null
+  };
+}
+
+
+async function createFunctionError(
+  error,
+  fallbackMessage
+) {
+  let message =
+    error?.message ||
+    fallbackMessage;
+
+  if (error?.context) {
+    try {
+      const responseBody =
+        await error
+          .context
+          .json();
+
+      message =
+        responseBody?.message ||
+        responseBody?.error ||
+        message;
+    } catch {
+      // Keep fallback message.
+    }
+  }
+
+  return new Error(
+    message
+  );
+}
