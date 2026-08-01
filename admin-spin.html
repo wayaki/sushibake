@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WAYAKI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/admin-spin.css">
+</head>
+<body>
+    <main class="admin-page">
+    <section
+        id="admin-login"
+        class="admin-login-card"
+        >
+        <h1>WAYAKI Spin Admin</h1>
+
+        <label for="admin-email">
+        Email
+        </label>
+
+        <input
+        id="admin-email" 
+        type="email"
+        autocomplete="email"
+        >
+        </br>
+        <label for="admin-password">
+        Password
+        </label>
+
+        <input
+        id="admin-password"
+        type="password"
+        autocomplete="current-password"
+        >
+
+        <button
+        id="admin-login-btn"
+        type="button"
+        >
+        Log In
+        </button>
+
+        <p
+        id="login-message"
+        aria-live="polite"
+        ></p>
+    </section>
+
+    <section
+        id="admin-dashboard"
+        class="hidden"
+    >
+        <div class="admin-heading">
+        <h1>WAYAKI Spin Admin</h1>
+
+        <button
+            id="admin-logout-btn"
+            type="button"
+        >
+            Log Out
+        </button>
+        </div>
+
+        <section class="admin-card">
+        <h2>Add Bonus Spin</h2>
+
+        <label for="bonus-phone">
+            Customer Mobile Number
+        </label>
+
+        <input
+            id="bonus-phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="91234567"
+        >
+
+        <label for="bonus-date">
+            Delivery Date
+        </label>
+
+        <input
+            id="bonus-date"
+            type="date"
+            min="2026-08-03"
+            max="2026-08-14"
+        >
+
+        <button
+            id="add-bonus-btn"
+            type="button"
+        >
+            Add Bonus Spin
+        </button>
+
+        <p
+            id="bonus-message"
+            aria-live="polite"
+        ></p>
+        </section>
+
+        <section class="admin-card">
+        <div class="admin-section-heading">
+            <h2>All Bonus Spins</h2>
+
+            <button
+            id="refresh-bonus-btn"
+            type="button"
+            >
+            Refresh
+            </button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+            <thead>
+                <tr>
+                <th>Mobile</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Created</th>
+                </tr>
+            </thead>
+
+            <tbody id="bonus-body"></tbody>
+            </table>
+        </div>
+        </section>
+
+        <section class="admin-card">
+        <div class="admin-section-heading">
+            <h2>All Rewards</h2>
+
+            <button
+            id="refresh-rewards-btn"
+            type="button"
+            >
+            Refresh
+            </button>
+        </div>
+
+        <label for="reward-search">
+            Search
+        </label>
+
+        <input
+            id="reward-search"
+            type="search"
+            placeholder="Mobile, prize or reward code"
+        >
+
+        <div class="table-wrapper">
+            <table>
+            <thead>
+                <tr>
+                <th>Mobile</th>
+                <th>Prize</th>
+                <th>Code</th>
+                <th>Spin Type</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="rewards-body"></tbody>
+            </table>
+        </div>
+        </section>
+    </section>
+    </main>
+
+    <script
+        type="module"
+        src="js/sg61/admin-init.js"
+    ></script>
+</body>
+</html>

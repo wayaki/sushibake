@@ -208,6 +208,13 @@ header {
   object-fit: contain;
 }
 
+/* ========================
+   Hidden
+======================== */
+.hidden {
+  display: none !important;
+}
+
 
 /* ========================
    ACCESSIBILITY
