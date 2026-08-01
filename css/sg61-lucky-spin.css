@@ -196,7 +196,7 @@ body {
 
 .title-stroke {
   -webkit-text-stroke:
-    6px var(--color-brown-dark);
+    4px var(--color-brown-dark);
 }
 
 .title-fill {
