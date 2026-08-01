@@ -522,3 +522,86 @@
     font-size: 14px;
   }
 }
+
+/* ========================
+   SG61 Lucky Draw
+======================== */
+.sg61-lucky-draw {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+}
+
+.sg61-link {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 5px 90px;
+
+  border: 2px solid var(--color-orange-dark);
+  border-radius: 20px;
+
+  background: linear-gradient(
+    145deg,
+    #ffe9b8,
+    #ffc76f
+  );
+
+  color: var(--color-brown-dark);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 18px;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.sg61-link::before,
+.sg61-link::after {
+  position: absolute;
+
+  pointer-events: none;
+
+  line-height: 1;
+}
+
+.sg61-link::before {
+  content: "✦";
+
+  top: 18px;
+  left: 60px;
+
+  color: #ffc05a;
+
+  font-size: 20px;
+
+  transform: rotate(-15deg);
+}
+
+.sg61-link::after {
+  content: "✦";
+
+  right: 60px;
+  bottom: 18px;
+
+  color: #ffecc4;
+
+  font-size: 20px;
+
+  transform: rotate(18deg);
+}
+
+.sg61-link img {
+  width: 52px;
+  height: auto;
+}

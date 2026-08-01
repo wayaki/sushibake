@@ -39,9 +39,7 @@ body {
 
   width: 100%;
   margin: 0;
-  padding:
-    clamp(20px, 6vw, 40px)
-    clamp(10px, 5vw, 30px);
+  padding: 20px;
 
   border: 3px solid
     var(--color-orange-dark);
@@ -51,12 +49,12 @@ body {
 
   background:
     radial-gradient(
-      circle at 15% 18%,
+      circle at 18% 38%,
       rgba(255, 255, 255, 0.6) 0 6px,
       transparent 7px
     ),
     radial-gradient(
-      circle at 86% 24%,
+      circle at 82% 40%,
       rgba(255, 255, 255, 0.5) 0 5px,
       transparent 6px
     ),
@@ -80,7 +78,7 @@ body {
   position: absolute;
   z-index: 1;
 
-  color: #ef4035;
+  color: #ff9d00;
 
   font-weight: 900;
   line-height: 1;
@@ -89,24 +87,24 @@ body {
 .sg61-hero::before {
   content: "✦";
 
-  top: 20px;
-  left: clamp(18px, 6vw, 50px);
+  top: 45%;
+  left: clamp(20px, 6vw, 50px);
 
   font-size:
-    clamp(24px, 5vw, 42px);
+    clamp(30px, 5vw, 42px);
 
   transform:
     rotate(-12deg);
 }
 
 .sg61-hero::after {
-  content: "★";
+  content: "✦";
 
-  top: 42%;
-  right: clamp(16px, 5vw, 42px);
+  top: 45%;
+  right: clamp(20px, 6vw, 50px);
 
   font-size:
-    clamp(20px, 4vw, 34px);
+    clamp(30px, 4vw, 34px);
 
   transform:
     rotate(12deg);
@@ -170,7 +168,7 @@ body {
     var(--color-white);
 
   font-size:
-    clamp(10px, 9vw, 30px);
+    clamp(10px, 5vw, 30px);
 
   font-weight: 900;
   line-height: 0.9;
@@ -188,7 +186,7 @@ body {
 
   margin: 0;
 
-  font-size: clamp(50px, 13vw, 80px);
+  font-size: clamp(50px, 11vw, 80px);
 
   font-weight: 900;
   line-height: 0.82;
@@ -233,7 +231,7 @@ body {
     var(--color-brown-dark);
 
   font-size:
-    clamp(17px, 3.5vw, 24px);
+    clamp(14px, 4vw, 20px);
 
   font-weight: 800;
   line-height: 1.2;
