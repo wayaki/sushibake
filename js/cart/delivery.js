@@ -258,7 +258,7 @@ function toggleDelivery() {
   const totalTrays =
     getTotalMainTrays();
 
-  if (totalTrays < 2) {
+  if (totalTrays < 1) {
     deliveryRadio.disabled = true;
 
     if (deliveryRadio.checked) {

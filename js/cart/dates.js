@@ -75,33 +75,140 @@ function getCutoffDate(orderDate) {
 // Populate all available order dates in the dropdown
 // ========================
 
+// function populateOrderDates() {
+//   const select =
+//     document.getElementById(
+//       "order-date"
+//     );
+
+//   select.innerHTML =
+//     '<option value="">Select a date</option>';
+
+//   const now = new Date();
+
+//   const currentYear =
+//     now.getFullYear();
+
+//   const currentMonth =
+//     now.getMonth();
+
+//   const lastDayOfMonth =
+//     new Date(
+//       currentYear,
+//       currentMonth + 1,
+//       0
+//     ).getDate();
+
+//   const openNextMonth =
+//     now.getDate() >=
+//     lastDayOfMonth - 1;
+
+//   const soldOutDates = [
+//     "2026-08-06",
+//     "2026-08-07"
+//   ];
+
+//   for (let i = 1; i <= 60; i++) {
+//     const date =
+//       new Date(now);
+
+//     date.setDate(
+//       now.getDate() + i
+//     );
+
+//     // Skip weekends (Saturday & Sunday)
+//     if (
+//       date.getDay() === 0 ||
+//       date.getDay() === 6
+//     ) {
+//       continue;
+//     }
+
+//     const dateYear =
+//       date.getFullYear();
+
+//     const dateMonth =
+//       date.getMonth();
+
+//     const isCurrentMonth =
+//       dateYear === currentYear &&
+//       dateMonth === currentMonth;
+
+//     const nextMonthDate =
+//       new Date(
+//         currentYear,
+//         currentMonth + 1,
+//         1
+//       );
+
+//     const isNextMonth =
+//       dateYear ===
+//         nextMonthDate.getFullYear() &&
+//       dateMonth ===
+//         nextMonthDate.getMonth();
+
+//     if (
+//       !openNextMonth &&
+//       !isCurrentMonth
+//     ) {
+//       continue;
+//     }
+
+//     if (
+//       openNextMonth &&
+//       !isCurrentMonth &&
+//       !isNextMonth
+//     ) {
+//       continue;
+//     }
+
+//     if (
+//       now > getCutoffDate(date)
+//     ) {
+//       continue;
+//     }
+
+//     const option =
+//       document.createElement(
+//         "option"
+//       );
+
+//     option.value =
+//       formatDateValue(date);
+
+//     option.textContent =
+//       formatDateLabel(date);
+
+//     if (
+//       soldOutDates.includes(
+//         option.value
+//       )
+//     ) {
+//       option.disabled = true;
+
+//       option.textContent +=
+//         " — SOLD OUT";
+//     }
+
+//     select.appendChild(option);
+//   }
+// }
+
 function populateOrderDates() {
   const select =
-    document.getElementById(
-      "order-date"
-    );
+    document.getElementById("order-date");
+
+  if (!select) {
+    return;
+  }
 
   select.innerHTML =
     '<option value="">Select a date</option>';
 
   const now = new Date();
 
-  const currentYear =
-    now.getFullYear();
-
-  const currentMonth =
-    now.getMonth();
-
-  const lastDayOfMonth =
-    new Date(
-      currentYear,
-      currentMonth + 1,
-      0
-    ).getDate();
-
-  const openNextMonth =
-    now.getDate() >=
-    lastDayOfMonth - 1;
+  const specialOpenStart = "2026-08-03";
+  const specialOpenEnd = "2026-08-14";
 
   const soldOutDates = [
     "2026-08-06",
@@ -109,14 +216,13 @@ function populateOrderDates() {
   ];
 
   for (let i = 1; i <= 60; i++) {
-    const date =
-      new Date(now);
+    const date = new Date(now);
 
     date.setDate(
       now.getDate() + i
     );
 
-    // Skip weekends (Saturday & Sunday)
+    // Skip weekends
     if (
       date.getDay() === 0 ||
       date.getDay() === 6
@@ -124,68 +230,34 @@ function populateOrderDates() {
       continue;
     }
 
-    const dateYear =
-      date.getFullYear();
+    const value =
+      formatDateValue(date);
 
-    const dateMonth =
-      date.getMonth();
+    const isSpecialOpen =
+      value >= specialOpenStart &&
+      value <= specialOpenEnd;
 
-    const isCurrentMonth =
-      dateYear === currentYear &&
-      dateMonth === currentMonth;
-
-    const nextMonthDate =
-      new Date(
-        currentYear,
-        currentMonth + 1,
-        1
-      );
-
-    const isNextMonth =
-      dateYear ===
-        nextMonthDate.getFullYear() &&
-      dateMonth ===
-        nextMonthDate.getMonth();
-
-    if (
-      !openNextMonth &&
-      !isCurrentMonth
-    ) {
+    // Only show 3–14 August 2026
+    if (!isSpecialOpen) {
       continue;
     }
 
-    if (
-      openNextMonth &&
-      !isCurrentMonth &&
-      !isNextMonth
-    ) {
-      continue;
-    }
-
-    if (
-      now > getCutoffDate(date)
-    ) {
+    // Hide date after its 8 PM cutoff
+    if (now > getCutoffDate(date)) {
       continue;
     }
 
     const option =
-      document.createElement(
-        "option"
-      );
+      document.createElement("option");
 
-    option.value =
-      formatDateValue(date);
-
+    option.value = value;
     option.textContent =
       formatDateLabel(date);
 
     if (
-      soldOutDates.includes(
-        option.value
-      )
+      soldOutDates.includes(value)
     ) {
       option.disabled = true;
-
       option.textContent +=
         " — SOLD OUT";
     }
