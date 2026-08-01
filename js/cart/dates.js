@@ -104,8 +104,8 @@ function populateOrderDates() {
     lastDayOfMonth - 1;
 
   const soldOutDates = [
-    // Manually disable fully booked dates
-    // Example: "2026-07-28"
+    "2026-08-06",
+    "2026-08-07"
   ];
 
   for (let i = 1; i <= 60; i++) {
