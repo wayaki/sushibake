@@ -180,19 +180,28 @@ body {
    LUCKY SPIN TITLE
 ======================== */
 
-.sg61-hero h1 {
+.title-wrap {
   position: relative;
-  z-index: 2;
+  display: inline-block;
+}
 
+.title-wrap h1 {
   margin: 0;
-
   font-size: clamp(50px, 11vw, 80px);
-
   font-weight: 900;
   line-height: 0.82;
   letter-spacing: -1px;
-
   text-transform: uppercase;
+}
+
+.title-stroke {
+  -webkit-text-stroke:
+    6px var(--color-brown-dark);
+}
+
+.title-fill {
+  position: absolute;
+  inset: 0;
 
   background: linear-gradient(
     to bottom,
@@ -202,20 +211,8 @@ body {
 
   -webkit-background-clip: text;
   background-clip: text;
-
   -webkit-text-fill-color: transparent;
-
-  -webkit-text-stroke:
-    clamp(1px, 0.5vw, 2px)
-    var(--color-brown-dark);
-
-  paint-order: stroke fill;
-
-  text-shadow:
-    0 6px 0
-    rgba(60, 36, 21, 0.12);
 }
-
 
 /* ========================
    SUBTITLE
