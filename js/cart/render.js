@@ -316,7 +316,7 @@ function renderCart() {
 
     <li class="cart-block add-more-block">
       <a
-        href="index.html"
+        href="../index.html"
         class="add-more-link"
       >
         + Add More Items
