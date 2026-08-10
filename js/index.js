@@ -10,7 +10,7 @@
 
 function goToProduct(itemId) {
   window.location.href =
-    `product.html?item=${itemId}`;
+    `./pages/product.html?item=${itemId}`;
 }
 
 
@@ -78,7 +78,7 @@ function updateCartBar() {
 
 function goToCart() {
   window.location.href =
-    "./cart.html";
+    ".pages/cart.html";
 }
 
 

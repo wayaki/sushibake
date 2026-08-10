@@ -1,6 +1,6 @@
 import {
   supabase
-} from "./supabase-config.js";
+} from "../supabase-config.js";
 
 
 // ================================================

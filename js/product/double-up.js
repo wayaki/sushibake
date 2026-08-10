@@ -67,7 +67,7 @@ function renderDoubleUpFlavours() {
     "Build Your Double-Up";
 
   description.textContent =
-    "Choose a flavour for each half. You may select the same flavour twice.";
+    "Choose a flavour for each half and customise them.";
 
   const flavourChoices =
     product.flavourOptions
@@ -93,30 +93,59 @@ function renderDoubleUpFlavours() {
       .join("");
 
   flavourContainer.innerHTML = `
+    
     <div class="doubleup-flavour-group">
-      <label for="doubleup-flavour-1">
-        First Flavour
-      </label>
+      <h4>
+          First Half
+      </h4>
+      <div class="option">
+        <label for="doubleup-flavour-1">
+          Flavour
+        </label>
+      
+        <select
+          id="doubleup-flavour-1"
+          class="flavour-select"
+          data-half="1"
+        >
+          <option value="">
+            Choose flavour
+          </option>
 
-      <select
-        id="doubleup-flavour-1"
-        class="flavour-select"
-      >
-        ${flavourChoices}
-      </select>
+          ${flavourChoices}
+        </select>
+      </div>
+      <div
+        id="doubleup-options-1"
+        class="doubleup-half-options"
+      ></div>
     </div>
 
+
     <div class="doubleup-flavour-group">
+      <h4>
+        Second Half
+      </h4>
       <label for="doubleup-flavour-2">
-        Second Flavour
+        Flavour
       </label>
 
       <select
         id="doubleup-flavour-2"
         class="flavour-select"
+        data-half="2"
       >
+        <option value="">
+          Choose flavour
+        </option>
+
         ${flavourChoices}
       </select>
+
+      <div
+        id="doubleup-options-2"
+        class="doubleup-half-options"
+      ></div>
     </div>
   `;
 
@@ -130,17 +159,14 @@ function renderDoubleUpFlavours() {
       "doubleup-flavour-2"
     );
 
-  firstSelect.value = "tuna";
-  secondSelect.value = "tuna";
-
   firstSelect.addEventListener(
     "change",
-    updatePrice
+    handleDoubleUpFlavourChange
   );
 
   secondSelect.addEventListener(
     "change",
-    updatePrice
+    handleDoubleUpFlavourChange
   );
 }
 
@@ -184,16 +210,132 @@ function getDoubleUpSelections() {
       "doubleup-flavour-2"
     ).value;
 
+  function getRemovedForHalf(
+    half
+  ) {
+    const removed = [];
+
+    document
+      .querySelectorAll(
+        `.doubleup-remove-option` +
+        `[data-half="${half}"]`
+      )
+      .forEach((checkbox) => {
+        if (!checkbox.checked) {
+          removed.push(
+            checkbox.value
+          );
+        }
+      });
+
+    return removed;
+  }
+
   return [
     {
       id: firstFlavour,
       name:
-        PRODUCTS[firstFlavour].name
+        PRODUCTS[firstFlavour].name,
+
+      removed:
+        getRemovedForHalf(1)
     },
+
     {
       id: secondFlavour,
       name:
-        PRODUCTS[secondFlavour].name
+        PRODUCTS[secondFlavour].name,
+
+      removed:
+        getRemovedForHalf(2)
     }
   ];
+}
+
+// ========================
+// HANDLE FLAVOUR CHANGE
+// Update after changing its flavour
+// ========================
+function handleDoubleUpFlavourChange(
+  event
+) {
+  const select =
+    event.currentTarget;
+
+  const half =
+    Number(select.dataset.half);
+
+  renderDoubleUpHalfOptions(
+    half,
+    select.value
+  );
+
+  validateDoubleUpSelection();
+  updatePrice();
+}
+
+function renderDoubleUpHalfOptions(
+  half,
+  flavourId
+) {
+  const container =
+    document.getElementById(
+      `doubleup-options-${half}`
+    );
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = "";
+
+  if (!flavourId) {
+    return;
+  }
+
+  const selectedProduct =
+    PRODUCTS[flavourId];
+
+  if (!selectedProduct) {
+    return;
+  }
+
+  const removable =
+    selectedProduct.removable || [];
+
+  if (removable.length === 0) {
+    container.innerHTML = `
+      <p class="empty-option-text">
+        No removable ingredients
+      </p>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="doubleup-subsection">
+      <h5>
+        Remove Ingredients
+      </h5>
+
+      ${removable
+        .map((ingredient) => `
+          <div class="option">
+            <label>
+              <input
+                type="checkbox"
+                class="doubleup-remove-option"
+                data-half="${half}"
+                value="${ingredient}"
+                checked
+              >
+
+              ${ingredient}
+            </label>
+          </div>
+        `)
+        .join("")}
+    </div>
+  `;
 }

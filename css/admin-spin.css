@@ -16,12 +16,12 @@ body {
    PAGE
 ======================== */
 
-.admin-page {
-  width: min(100%, 1100px);
+.admin-card {
+  width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 40px 20px 80px;
+  margin-top: 20px;
+  padding: 28px 0 50px;
 }
-
 
 /* ========================
    LOGIN
@@ -190,27 +190,20 @@ body {
   margin: 0;
 }
 
-#admin-logout-btn {
-  padding: 9px 18px;
+.admin-logout-btn {
+  padding: 10px 14px;
 
-  border: 0;
-  border-radius:
-    var(--radius-small);
+  border: 1px solid #f0c99c;
+  border-radius: 10px;
 
-  background:
-    var(--color-brown);
+  background: #fff8f1;
+  color: #7a3e00;
 
-  color:
-    var(--color-white);
-
+  font-size: 14px;
   font-weight: 700;
 
+  text-decoration: none;
   cursor: pointer;
-}
-
-#admin-logout-btn:hover {
-  background:
-    var(--color-brown-light);
 }
 
 

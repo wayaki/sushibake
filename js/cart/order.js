@@ -2,18 +2,28 @@
 // WhatsApp order message and checkout
 // ================================================
 
+import {
+  buildOrderPayload,
+  createOrder
+} from "../api/cart-api.js";
 
 // ========================
 // BUILD ORDER MESSAGE
 // Create the complete WhatsApp order message
 // ========================
 
-function buildOrderMessage(data) {
+function buildOrderMessage(
+  data,
+  orderNumber
+) {
   let message =
     `Hello! My name is ${data.name}.\n`;
 
   message +=
     `I'd like to order from WAYAKI Sushibake 🍣\n\n`;
+
+  message +=
+    `Order No: ${orderNumber}\n\n`;
 
   message +=
     `Order Date: ${data.orderDate}\n`;
@@ -54,16 +64,35 @@ function buildOrderMessage(data) {
     } else if (
       item.id === "doubleup"
     ) {
-      const firstFlavour =
-        item.flavours?.[0]?.name || "";
+      const firstHalf =
+        item.flavours?.[0];
 
-      const secondFlavour =
-        item.flavours?.[1]?.name || "";
+      const secondHalf =
+        item.flavours?.[1];
 
       message +=
-        `  Flavours: ` +
-        `${firstFlavour} + ` +
-        `${secondFlavour}\n`;
+        `  First Half: ` +
+        `${firstHalf?.name || ""}\n`;
+
+      if (
+        firstHalf?.removed?.length
+      ) {
+        message +=
+          `    No: ` +
+          `${firstHalf.removed.join(", ")}\n`;
+      }
+
+      message +=
+        `  Second Half: ` +
+        `${secondHalf?.name || ""}\n`;
+
+      if (
+        secondHalf?.removed?.length
+      ) {
+        message +=
+          `    No: ` +
+          `${secondHalf.removed.join(", ")}\n`;
+      }
 
       message +=
         `  Base: ${item.base}\n`;
@@ -174,7 +203,7 @@ function buildOrderMessage(data) {
 // Validate the order and open WhatsApp checkout
 // ========================
 
-function orderWhatsApp() {
+async function orderWhatsApp() {
   const data = getFormData();
   const error = validateForm(data);
 
@@ -183,7 +212,52 @@ function orderWhatsApp() {
     return;
   }
 
-  const message = buildOrderMessage(data);
+  const deliveryFee =
+    data.method === "delivery"
+      ? getDeliveryFee()
+      : 0;
+
+  const payload =
+    buildOrderPayload(
+      data,
+      cart,
+      deliveryFee
+    );
+
+  console.log(
+    "Order payload:",
+    payload
+  );
+
+  let createdOrder;
+
+  try {
+    createdOrder =
+      await createOrder(payload);
+
+    console.log(
+      "Created order:",
+      createdOrder
+    );
+
+  } catch (error) {
+    console.error(
+      "Order creation failed:",
+      error
+    );
+
+    alert(
+      "Unable to create your order. Please try again."
+    );
+
+    return;
+  }
+
+  const message =
+    buildOrderMessage(
+      data,
+      createdOrder.created_order_number
+    );
   const phone = "6584840768";
 
   const url =
@@ -218,3 +292,4 @@ if (orderButton) {
     orderWhatsApp
   );
 }
+

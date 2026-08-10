@@ -26,7 +26,7 @@ if (!product) {
   alert("Product not found.");
 
   window.location.href =
-    "./index.html";
+    "../index.html";
 
   throw new Error(
     `Product not found: ${itemId}`

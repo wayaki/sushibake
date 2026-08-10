@@ -77,7 +77,7 @@ const PRODUCTS  = {
     id: "doubleup",
     name: "Double-Up",
     price: 16.90,
-    image: "images/double-up.jpg",
+    image: "../images/double-up.jpg",
 
     description:
       "Choose up to 2 flavours. Comes with 300g Japanese Rice or 200g Macaroni and 180g toppings.",
@@ -140,7 +140,7 @@ const PRODUCTS  = {
     id: "trio",
     name: "Wayaki Trio",
     price: 31.90,
-    image: "images/wayaki-trio.jpg",
+    image: "../images/wayaki-trio.jpg",
 
     description:
       "Choose any 3 different flavours from Salmon Deluxe, Shroom Bliss, Chicken Comfort and Tuna Delight",
@@ -190,7 +190,7 @@ const PRODUCTS  = {
     id: "salmon",
     name: "Salmon Deluxe",
     price: 12.90,
-    image: "images/salmon-deluxe.jpg",
+    image: "../images/salmon-deluxe.jpg",
 
     description: "Mentaiko · Salmon · Crabstick",
 
@@ -203,7 +203,8 @@ const PRODUCTS  = {
     removable: [
       "Mentaiko",
       "Salmon",
-      "Crabstick"
+      "Crabstick",
+      "Cream Cheese"
     ],
 
     baseOptions: DEFAULT_BASE_OPTIONS,
@@ -224,7 +225,7 @@ const PRODUCTS  = {
     id: "shroom",
     name: "Shroom Bliss",
     price: 11.90,
-    image: "images/shroom-bliss.jpg",
+    image: "../images/shroom-bliss.jpg",
 
     description: "Shrooms · Corn · Cheese · Truffle",
 
@@ -259,7 +260,7 @@ const PRODUCTS  = {
     id: "chicken",
     name: "Chicken Comfort",
     price: 10.90,
-    image: "images/chicken-comfort.jpg",
+    image: "../images/chicken-comfort.jpg",
 
     description: "Mayo · Teriyaki · Chicken · Egg",
 
@@ -294,7 +295,7 @@ const PRODUCTS  = {
     id: "tuna",
     name: "Tuna Delight",
     price: 9.90,
-    image: "images/tuna-delight.jpg",
+    image: "../images/tuna-delight.jpg",
 
     description: "Mayo · Tuna · Cucumber",
 
@@ -302,12 +303,12 @@ const PRODUCTS  = {
       "Mayo",
       "Tuna",
       "Cucumber",
+      "Cream Cheese"
     ],
 
     removable: [
-      "Mayo",
-      "Tuna",
-      "Cucumber"
+      "Cucumber",
+      "Cream Cheese"
     ],
 
     baseOptions: DEFAULT_BASE_OPTIONS,
@@ -328,7 +329,7 @@ const PRODUCTS  = {
     id: "luncheon",
     name: "Luncheon Melt",
     price: 5.90,
-    image: "images/luncheon-melt.jpg",
+    image: "../images/luncheon-melt.jpg",
 
     description: "Mayo · Luncheon Meat · Egg",
 
@@ -362,7 +363,7 @@ const PRODUCTS  = {
     id: "upgrade",
     name: "Upgrade to Set",
     price: 3.90,
-    image: "images/upgrade-set.jpg",
+    image: "../images/upgrade-set.jpg",
 
     description: "350ml Yuzu Jasmine Tea + 100g Edamame",
   },
@@ -377,7 +378,7 @@ const PRODUCTS  = {
     id: "seaweed",
     name: "Seaweed",
     price: 1.0,
-    image: "images/seaweed.png",
+    image: "../images/seaweed.png",
 
     description: "Crispy roasted seaweed",
   },
@@ -392,7 +393,7 @@ const PRODUCTS  = {
     id: "tea",
     name: "Tea bag",
     price: 0.5,
-    image: "images/tea-bag.png",
+    image: "../images/tea-bag.png",
 
     description: "Green tea bag",
   }

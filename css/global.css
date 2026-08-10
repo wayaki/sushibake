@@ -119,13 +119,19 @@ header {
   height: 60px;
 }
 
+.logout,
+.store {
+  height: 25px;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.nav-links a {
+.nav-links a,
+.nav-links button { 
   padding: 8px 16px;
 
   border-radius: var(--radius-pill);
@@ -142,13 +148,15 @@ header {
     transform 0.2s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links button:hover {
   background: #ffe0b2;
 
   transform: translateY(-2px);
 }
 
 .nav-links a.linked,
+.nav-links button.linked,
 .linked {
   background: var(--color-brown) !important;
   color: var(--color-white) !important;
@@ -250,7 +258,8 @@ textarea:focus-visible {
     gap: 8px;
   }
 
-  .nav-links a {
+  .nav-links a,
+  .nav-links button {
     padding: 7px 12px;
 
     font-size: 14px;
