@@ -76,7 +76,7 @@
 
           <!-- Self collect radio -->
           <label class="radio">
-            <input type="radio" name="method" value="self" checked onchange="toggleDelivery()">
+            <input type="radio" name="method" value="self" checked onchange="toggleDelivery()" >
             Self Collect (Free)
           </label>
 
@@ -109,8 +109,11 @@
 
           <!-- Delivery radio -->
           <label class="radio">
-            <input type="radio" name="method" value="delivery" onchange="toggleDelivery()">
+            <input type="radio" name="method" value="delivery" onchange="toggleDelivery()" disabled> <!-- TEMPORARY -->
             Delivery
+            <span class="unavailable-label">
+              Unavailable 17 – 31 Aug
+            </span>
           </label>
 
           <!-- Delivery fields -->

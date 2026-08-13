@@ -258,14 +258,26 @@ function toggleDelivery() {
   const totalTrays =
     getTotalMainTrays();
 
-  if (totalTrays < 1) {
-    deliveryRadio.disabled = true;
+  // TEMPORARY 
+  // if (totalTrays < 1) {
+  //   deliveryRadio.disabled = true;
 
-    if (deliveryRadio.checked) {
-      selfRadio.checked = true;
-    }
-  } else {
-    deliveryRadio.disabled = false;
+  //   if (deliveryRadio.checked) {
+  //     selfRadio.checked = true;
+  //   }
+  // } else {
+  //   deliveryRadio.disabled = false;
+  // }
+
+  // ========================
+  // TEMPORARY SELF COLLECTION ONLY
+  // 17 Aug - 31 Aug 2026
+  // ========================
+
+  deliveryRadio.disabled = true;
+
+  if (deliveryRadio.checked) {
+    selfRadio.checked = true;
   }
 
   const method =

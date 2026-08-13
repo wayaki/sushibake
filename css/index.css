@@ -605,3 +605,26 @@
   width: 52px;
   height: auto;
 }
+
+/* ========================
+   Labels
+======================== */
+.menu-item.unavailable {
+  opacity: 0.45;
+  cursor: default;
+  position: relative;
+}
+
+.unavailable-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: red;
+}
+
+.available-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: green;
+}
