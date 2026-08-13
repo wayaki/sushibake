@@ -207,8 +207,9 @@ function populateOrderDates() {
 
   const now = new Date();
 
-  const specialOpenStart = "2026-08-03";
-  const specialOpenEnd = "2026-08-14";
+  // TEMPORARY 
+  const specialOpenStart = "2026-08-17";
+  const specialOpenEnd = "2026-08-31";
 
   const soldOutDates = [
     "2026-08-06",
