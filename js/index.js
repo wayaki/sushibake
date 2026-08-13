@@ -78,7 +78,7 @@ function updateCartBar() {
 
 function goToCart() {
   window.location.href =
-    ".pages/cart.html";
+    "https://wayaki.github.io/sushibake/pages/cart.html";
 }
 
 
