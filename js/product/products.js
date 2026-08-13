@@ -2,7 +2,7 @@
 // Product data and configuration
 // ================================================
 
-// Temporary Only
+  // TEMPORARY 
 const LIMITED_MENU = {
   startDate: "2026-08-17",
   endDate: "2026-08-31",

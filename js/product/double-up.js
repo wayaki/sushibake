@@ -69,7 +69,7 @@ function renderDoubleUpFlavours() {
   description.textContent =
     "Choose a flavour for each half and customise them.";
 
-  // Temporary
+  // TEMPORARY 
   // const flavourChoices =
   //   product.flavourOptions
   //     .map((option) => {
