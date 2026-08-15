@@ -337,33 +337,33 @@ const PRODUCTS  = {
   // Luncheon meat and egg sushi bake
   // ========================
 
-  luncheon: {
-    id: "luncheon",
-    name: "Luncheon Melt",
-    price: 5.90,
-    image: "../images/luncheon-melt.jpg",
+  // luncheon: {
+  //   id: "luncheon",
+  //   name: "Luncheon Melt",
+  //   price: 5.90,
+  //   image: "../images/luncheon-melt.jpg",
 
-    description: "Mayo · Luncheon Meat · Egg",
+  //   description: "Mayo · Luncheon Meat · Egg",
 
-    ingredients: [
-      "Mayo",
-      "Luncheon Meat",
-      "Egg",
-    ],
+  //   ingredients: [
+  //     "Mayo",
+  //     "Luncheon Meat",
+  //     "Egg",
+  //   ],
 
-    removable: [
-      "Mayo",
-      "Luncheon Meat",
-      "Egg"
-    ],
+  //   removable: [
+  //     "Mayo",
+  //     "Luncheon Meat",
+  //     "Egg"
+  //   ],
 
-    baseOptions: DEFAULT_BASE_OPTIONS,
+  //   baseOptions: DEFAULT_BASE_OPTIONS,
 
-    portionOptions: DEFAULT_PORTION_OPTIONS,
+  //   portionOptions: DEFAULT_PORTION_OPTIONS,
 
-    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
+  //   upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
-  },
+  // },
 
 
   // ========================
