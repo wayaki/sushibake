@@ -427,6 +427,26 @@ export async function loadRewards() {
 
   try {
     const {
+      data: {
+        session
+      },
+      error: sessionError
+    } = await supabase.auth.getSession();
+
+    console.log("Session:", session);
+    console.log("Session error:", sessionError);
+
+    const {
+      data: {
+        user
+      },
+      error: userError
+    } = await supabase.auth.getUser();
+
+    console.log("User:", user);
+    console.log("User error:", userError);
+
+    const {
       data,
       error
     } = await supabase

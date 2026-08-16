@@ -158,7 +158,7 @@ body {
   border: none;
   border-radius: 12px;
 
-  background: #f29a5a;
+  background: var(--color-orange-dark);
 
   color: #ffffff;
 
