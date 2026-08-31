@@ -165,16 +165,23 @@ async function initialiseReceipt() {
 
     // ================================================
     // ORDER HAS REACHED RECEIPT
-    // Clear completed shopping data
+    // Clear shopping / checkout browser data
     // ================================================
-
+    
     localStorage.removeItem(
-    "sushibakeCart"
+      "sushibakeCart"
     );
-
+    
     localStorage.removeItem(
-    "wayakiCheckout"
+      "wayakiCheckout"
     );
+    
+    localStorage.removeItem(
+      "wayakiCreatedOrder"
+    );
+    
+    clearCheckoutSession();
+
 
 
     // ================================================
