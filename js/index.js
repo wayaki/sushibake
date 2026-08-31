@@ -502,6 +502,41 @@ function updateCutoffBanner() {
   );
 }
 
+// ================================================
+// WEBSITE VERSION RESET
+// Clear old shopping data once after site update
+// ================================================
+
+const CURRENT_SITE_VERSION =
+  "2026-09-01";
+
+const savedSiteVersion =
+  localStorage.getItem(
+    "wayakiSiteVersion"
+  );
+
+if (
+  savedSiteVersion !==
+  CURRENT_SITE_VERSION
+) {
+
+  localStorage.removeItem(
+    "sushibakeCart"
+  );
+
+  localStorage.removeItem(
+    "wayakiCheckout"
+  );
+
+  localStorage.removeItem(
+    "wayakiCreatedOrder"
+  );
+
+  localStorage.setItem(
+    "wayakiSiteVersion",
+    CURRENT_SITE_VERSION
+  );
+}
 
 // ========================
 // INITIALISE MENU PAGE
