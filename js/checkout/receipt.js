@@ -735,15 +735,27 @@ function buildReceiptMessage(
 
 // ================================================
 // START NEW ORDER
+// Clear current browser order session
 // ================================================
 
-newOrderButton.addEventListener(
+newOrderButton?.addEventListener(
   "click",
   () => {
 
+    localStorage.removeItem(
+      "sushibakeCart"
+    );
+
+    localStorage.removeItem(
+      "wayakiCheckout"
+    );
+
+    localStorage.removeItem(
+      "wayakiPendingOrder"
+    );
+
     window.location.href =
       "https://wayaki.github.io/sushibake/";
-
   }
 );
 
