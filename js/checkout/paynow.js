@@ -1069,6 +1069,16 @@ if (
 }
 
 
+console.log(
+  "Payment proof path saved:",
+  filePath
+);
+
+
+return filePath;
+}
+
+
 // ================================================
 // CONTINUE TO RECEIPT
 // ================================================
