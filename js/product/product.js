@@ -26,7 +26,7 @@ if (!product) {
   alert("Product not found.");
 
   window.location.href =
-    "../index.html";
+    "https://wayaki.github.io/sushibake/";
 
   throw new Error(
     `Product not found: ${itemId}`

@@ -343,7 +343,7 @@ function renderCart() {
 
     <li class="cart-block add-more-block">
       <a
-        href="../index.html"
+        href="https://wayaki.github.io/sushibake/"
         class="add-more-link"
       >
         + Add More Items
