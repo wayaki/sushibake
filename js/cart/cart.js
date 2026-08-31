@@ -98,8 +98,7 @@ function getTotalMainTrays() {
     "salmon",
     "shroom",
     "tuna",
-    "chicken",
-    "luncheon"
+    "chicken"
   ];
 
   return cart.reduce((total, item) => {

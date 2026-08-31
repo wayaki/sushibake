@@ -1,0 +1,561 @@
+/* ================================================
+   WAYAKI PAYNOW PAGE
+================================================ */
+
+
+/* ================================================
+   PAYMENT HEADER / ORDER SUMMARY
+================================================ */
+
+.payment-card {
+  width: 100%;
+  padding: 20px 18px;
+
+  border-radius: 20px;
+
+  background: var(--color-cream);
+
+  box-shadow:
+    0 6px 12px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+.payment-header {
+  margin-bottom: 14px;
+}
+
+
+.payment-header p {
+  margin: 0;
+
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+/* ========================
+   ORDER SUMMARY
+======================== */
+
+.payment-summary {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  color: var(--color-brown-dark);
+}
+
+
+.summary-row span {
+  font-size: 15px;
+}
+
+
+.summary-row strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* ================================================
+   PAYNOW CARD
+================================================ */
+
+.checkout-card {
+  width: 100%;
+  padding: 20px 18px;
+
+  border-radius: 20px;
+
+  background: var(--color-cream);
+
+  box-shadow:
+    0 6px 12px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================
+   PAYNOW SECTION
+======================== */
+
+.checkout-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* ================================================
+   AMOUNT / PAYMENT DETAIL BOX
+================================================ */
+
+.pickup-box {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  width: 100%;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background: #fffaf5;
+}
+
+
+.pickup-title {
+  color: var(--color-brown-dark);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.pickup-value {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.pickup-value strong {
+  color: var(--color-brown-dark);
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+#paynow-amount {
+  color: var(--color-brown);
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+.pickup-value small {
+  color: #80664e;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+
+/* ================================================
+   GENERATE PAYNOW BUTTON
+================================================ */
+
+.checkout-btn {
+  width: 100%;
+
+  padding: 11px 18px;
+
+  border: 2px solid #f2d2b3;
+  border-radius: 999px;
+
+  background: #fff7ef;
+  color: var(--color-brown-dark);
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.checkout-btn:hover:not(:disabled) {
+  background: var(--color-cream);
+}
+
+
+.checkout-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+
+.checkout-btn:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+/* ================================================
+   GENERATED PAYNOW CONTENT
+================================================ */
+
+#paynow-generated {
+  width: 100%;
+}
+
+
+/* ================================================
+   QR CODE
+================================================ */
+
+.qr-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+
+  margin: 22px auto;
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow:
+    0 6px 16px
+    rgba(0, 0, 0, 0.1);
+}
+
+
+#paynow-qr {
+  display: block;
+
+  width: 240px;
+  height: 240px;
+
+  max-width: 100%;
+}
+
+
+/* ================================================
+   PAYMENT NOTE
+================================================ */
+
+.payment-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-top: 18px;
+  padding: 14px;
+
+  border-radius: 14px;
+
+  background: #fffaf5;
+}
+
+
+.payment-note > span {
+  flex-shrink: 0;
+
+  font-size: 18px;
+}
+
+
+.payment-note p {
+  margin: 0;
+
+  color: #80664e;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+/* ================================================
+   PAYMENT SCREENSHOT
+================================================ */
+
+.payment-proof-section {
+  width: 100%;
+
+  margin-top: 20px;
+}
+
+
+/* ========================
+   SCREENSHOT LABEL
+======================== */
+
+.proof-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+.required {
+  color: #e76f51;
+}
+
+
+/* ========================
+   UPLOAD BOX
+======================== */
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  width: 100%;
+
+  padding: 24px 16px;
+
+  border: 2px dashed
+    var(--color-orange-dark);
+
+  border-radius: 16px;
+
+  background: #fffaf5;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.upload-box:hover {
+  background: #fff3e0;
+}
+
+
+.upload-icon {
+  margin-bottom: 3px;
+
+  font-size: 26px;
+}
+
+
+.upload-box strong {
+  color: var(--color-brown-dark);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+.upload-box small {
+  color: #9b8068;
+
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+/* ========================
+   SELECTED FILE
+======================== */
+
+.proof-file-info {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 10px;
+  padding: 10px 14px;
+
+  border-radius: 12px;
+
+  background: #f0fdf4;
+
+  color: #427a4b;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ========================
+   SCREENSHOT PREVIEW
+======================== */
+
+.proof-preview-wrapper {
+  width: 100%;
+
+  margin-top: 12px;
+
+  text-align: center;
+}
+
+
+#proof-preview {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  max-height: 360px;
+
+  margin: 0 auto;
+
+  border-radius: 14px;
+
+  object-fit: contain;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.12);
+}
+
+
+/* ================================================
+   CONTINUE TO RECEIPT BUTTON
+================================================ */
+
+#send-receipt-btn {
+  width: 100%;
+
+  margin-top: 18px;
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to right,
+    #faa74a,
+    #f9a853
+  );
+
+  color: var(--color-brown-dark);
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 10px
+    rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+#send-receipt-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 14px
+    rgba(0, 0, 0, 0.14);
+}
+
+
+#send-receipt-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+
+#send-receipt-btn:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* ================================================
+   BACK TO CHECKOUT
+================================================ */
+
+.back-cart {
+  display: block;
+
+  width: fit-content;
+
+  margin: 26px auto 10px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+
+.back-cart:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================================
+   MOBILE
+================================================ */
+
+@media (max-width: 480px) {
+
+  .payment-card,
+  .checkout-card {
+    padding: 18px 14px;
+  }
+
+
+  .pickup-box {
+    padding: 14px;
+  }
+
+
+  .qr-box {
+    width: 100%;
+    max-width: 280px;
+
+    padding: 14px;
+  }
+
+
+  #paynow-qr {
+    width: 220px;
+    height: 220px;
+  }
+
+
+  .upload-box {
+    padding: 20px 14px;
+  }
+
+}

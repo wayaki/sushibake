@@ -165,6 +165,58 @@ header {
     0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.ig-logo {
+  background: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ig-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Prevent styles intended for .nav-links a */
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+
+.ig-logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ig-logo:hover {
+  transform: translateY(-2px);
+}
+
+/* ========================
+   CONTAINER
+   Shared container
+======================== */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  width: 90%;
+  max-width: 720px;
+
+  margin: 0 auto;
+  padding: 25px 10px 10px;
+}
 
 /* ========================
    SECTION TITLE
@@ -172,7 +224,7 @@ header {
 ======================== */
 
 .section-title {
-  width: 90%;
+  width: 100%;
 }
 
 .section-title h2 {

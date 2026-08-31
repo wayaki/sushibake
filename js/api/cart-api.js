@@ -566,3 +566,66 @@ export async function createOrder(
   return data[0];
 }
 
+// ================================================
+// UPDATE PENDING ORDER
+//
+// Calls PostgreSQL:
+//
+// update_pending_order(
+//   p_order_id uuid,
+//   p_checkout_token uuid,
+//   p_payload jsonb
+// )
+// ================================================
+
+export async function updatePendingOrder(
+  orderId,
+  checkoutToken,
+  payload
+) {
+
+  const {
+    data,
+    error
+  } = await supabase.rpc(
+    "update_pending_order",
+    {
+      p_order_id:
+        orderId,
+
+      p_checkout_token:
+        checkoutToken,
+
+      p_payload:
+        payload
+    }
+  );
+
+
+  if (error) {
+
+    console.error(
+      "Update pending order error:",
+      error
+    );
+
+    throw error;
+
+  }
+
+
+  if (
+    !Array.isArray(data) ||
+    data.length === 0
+  ) {
+
+    throw new Error(
+      "Order was updated but no result was returned."
+    );
+
+  }
+
+
+  return data[0];
+
+}

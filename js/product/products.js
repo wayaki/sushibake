@@ -2,19 +2,6 @@
 // Product data and configuration
 // ================================================
 
-  // TEMPORARY 
-const LIMITED_MENU = {
-  startDate: "2026-08-17",
-  endDate: "2026-08-31",
-
-  products: [
-    "salmon",
-    "tuna"
-  ],
-
-  selfCollectionOnly: true
-};
-
 // ========================
 // DEFAULT BASE OPTIONS
 // Shared base choices for individual products

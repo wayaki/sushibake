@@ -16,13 +16,45 @@
 
   <header>
     <a href="https://wayaki.github.io/sushibake/">
-      <img class="logo" src="images/logo.png" alt="WAYAKI Logo">
+        <img
+        class="logo"
+        src="../images/logo.png"
+        alt="WAYAKI Logo"
+        >
     </a>
 
-    <nav class="nav-links">
-      <a href="https://wayaki.github.io/sushibake/" class="linked">Menu</a>
-      <a href="https://wayaki.github.io/sushibake/pages/cart.html">Cart</a>
-    </nav>
+    <div class="header-right">
+
+        <!-- Instagram -->
+        <a
+        class="ig-link"
+        href="https://www.instagram.com/wayaki.sushibake/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WAYAKI Instagram"
+        >
+        <img
+            class="ig-logo"
+            src="../images/ig-logo-mascot.png"
+            alt=""
+        >
+        </a>
+
+        <!-- Navigation -->
+        <nav class="nav-links">
+        <a
+            href="https://wayaki.github.io/sushibake/"
+            class="linked"
+        >
+            Menu
+        </a>
+
+        <a href="https://wayaki.github.io/sushibake/pages/cart.html">
+            Cart
+        </a>
+        </nav>
+
+    </div>
   </header>
 
   <div class="cutoff-banner" id="cutoff-banner">
@@ -47,15 +79,31 @@
     </a>
   </div> -->
 
-  <div class="home-container">
+  <div class="container">
     <!-- BUNDLE  DEALS -->
     <div class="section-title">
       <h2>Bundle Deals</h2>
     </div>
 
-    <!-- BUNDLE 1 -->
     <div class="menu-container">
-      <!-- TEMPORARY -->
+
+      <!-- BUNDLE 1 -->
+      <div class="menu-item" onclick="goToProduct('trio')">
+        <img src="images/wayaki-trio.jpg" alt="Wayaki Trio">
+
+        <div class="item-info">
+          <div class="item-name">Wayaki Trio</div>
+          <div class="item-price">$31.90</div>
+          <div class="available-label">
+            Available
+          </div>
+          <div class="quantity" id="trio-qty-container">
+            <div class="quantity-count" id="trio-count">0</div>
+            <button>+</button>
+          </div>
+        </div>
+      </div>
+
       <!-- BUNDLE 2 -->
       <div class="menu-item" onclick="goToProduct('doubleup')">
         <img src="images/double-up.jpg" alt="Double Up">
@@ -73,22 +121,7 @@
         </div>
       </div>      
 
-      <div class="menu-item" unavailable>
-      <!-- <div class="menu-item" onclick="goToProduct('trio')"> -->
-        <img src="images/wayaki-trio.jpg" alt="Wayaki Trio">
 
-        <div class="item-info">
-          <div class="item-name">Wayaki Trio</div>
-          <div class="item-price">$31.90</div>
-          <div class="unavailable-label">
-            Back in September
-          </div>
-          <div class="quantity" id="trio-qty-container">
-            <div class="quantity-count" id="trio-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
 
 
       
@@ -96,7 +129,7 @@
   </div>
 
 
-  <div class="home-container">
+  <div class="container">
     <!-- MAINS -->
     <div class="section-title">
       <h2>Mains</h2>
@@ -119,8 +152,41 @@
           </div>
         </div>
       </div>
-      
-      <!-- TEMPORARY -->
+
+      <!-- MAIN 2 -->
+      <div class="menu-item" onclick="goToProduct('shroom')">
+        <img src="images/shroom-bliss.jpg" alt="Shroom Bliss">
+
+        <div class="item-info">
+          <div class="item-name">Shroom Bliss</div>
+          <div class="item-price">$11.90</div>
+          <div class="available-label">
+            Available
+          </div>
+          <div class="quantity" id="shroom-qty-container">
+            <div class="quantity-count" id="shroom-count">0</div>
+            <button>+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN 3 -->
+      <div class="menu-item" onclick="goToProduct('chicken')">
+        <img src="images/chicken-comfort.jpg" alt="Chicken Comfort">
+
+        <div class="item-info">
+          <div class="item-name">Chicken Comfort</div>
+          <div class="item-price">$10.90</div>
+          <div class="available-label">
+            Available
+          </div>
+          <div class="quantity" id="chicken-qty-container">
+            <div class="quantity-count" id="chicken-count">0</div>
+            <button>+</button>
+          </div>
+        </div>
+      </div>
+
       <!-- MAIN 4 -->
       <div class="menu-item" onclick="goToProduct('tuna')">
         <img src="images/tuna-delight.jpg" alt="Tuna Delight">
@@ -137,59 +203,6 @@
           </div>
         </div>
       </div>
-
-      <!-- MAIN 2 -->
-      <div class="menu-item" unavailable>
-      <!-- <div class="menu-item" onclick="goToProduct('shroom')"> -->
-        <img src="images/shroom-bliss.jpg" alt="Shroom Bliss">
-
-        <div class="item-info">
-          <div class="item-name">Shroom Bliss</div>
-          <div class="item-price">$11.90</div>
-          <div class="unavailable-label">
-            Back in September
-          </div>
-          <div class="quantity" id="shroom-qty-container">
-            <div class="quantity-count" id="shroom-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN 3 -->
-      <div class="menu-item" unavailable>
-      <!-- <div class="menu-item" onclick="goToProduct('chicken')"> -->
-        <img src="images/chicken-comfort.jpg" alt="Chicken Comfort">
-
-        <div class="item-info">
-          <div class="item-name">Chicken Comfort</div>
-          <div class="item-price">$10.90</div>
-          <div class="unavailable-label">
-            Back in September
-          </div>
-          <div class="quantity" id="chicken-qty-container">
-            <div class="quantity-count" id="chicken-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN 4 -->
-      <!-- <div class="menu-item" onclick="goToProduct('tuna')">
-        <img src="images/tuna-delight.jpg" alt="Tuna Delight">
-
-        <div class="item-info">
-          <div class="item-name">Tuna Delight</div>
-          <div class="item-price">$9.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="tuna-qty-container">
-            <div class="quantity-count" id="tuna-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div> -->
 
       <!-- MAIN 5 -->
       <!-- <div class="menu-item" unavailable> -->
@@ -209,8 +222,9 @@
         </div>
       </div> -->
     </div>
-  </br>
+  </div>
 
+  <div class="container">
     <!-- SIDES AND UPGRADES -->
     <div class="section-title">
       <h2>Upgrades & Add-Ons</h2>
@@ -260,8 +274,8 @@
         <div class="item-info">
           <div class="item-name">Upgrade to Set</div>
           <div class="item-price">$3.90</div>
-          <div class="unavailable-label">
-            Back in September
+          <div class="available-label">
+            Available
           </div>
           <div class="quantity" id="upgrade-qty-container">
             <div class="quantity-count" id="upgrade-count">0</div>
@@ -269,25 +283,23 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
 
+  <!-- Cart Bar -->
+  <div class="cart-bar" id="cartBar" onclick="goToCart()">
+    <div class="cart-left">
+      <img class="cart-mascot" src="images/cart-mascot.png" alt="Cart mascot">
 
-      <!-- Cart Bar -->
-    <div class="cart-bar" id="cartBar" onclick="goToCart()">
-      <div class="cart-left">
-        <img class="cart-mascot" src="images/cart-mascot.png" alt="Cart mascot">
-
-        <div class="cart-info">
-          <span id="cart-count">0 items in cart</span>
-          <span id="cart-total">$0.00</span>
-        </div>
+      <div class="cart-info">
+        <span id="cart-count">0 items in cart</span>
+        <span id="cart-total">$0.00</span>
       </div>
-
-      <button class="checkout-btn" type="button">View Cart</button>
     </div>
+
+    <button class="cart-btn" type="button">View Cart</button>
+  </div>
 
   <!-- Image Modal -->
   <div id="imageModal" class="image-modal">

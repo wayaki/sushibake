@@ -285,6 +285,33 @@ function renderCartItem(item, index) {
   `;
 }
 
+// ========================
+// CART Update Subtotal
+// Update the subtotal
+// ========================
+
+function updateSubtotal() {
+  const subtotalElement =
+    document.getElementById(
+      "subtotal-price"
+    );
+
+  if (!subtotalElement) {
+    return;
+  }
+
+  const subtotal =
+    cart.reduce(
+      (total, item) =>
+        total +
+        Number(item.finalPrice || 0),
+      0
+    );
+
+  subtotalElement.textContent =
+    subtotal.toFixed(2);
+}
+
 
 // ========================
 // CART DISPLAY
@@ -301,7 +328,7 @@ function renderCart() {
     cartList.innerHTML =
       "<li>Your cart is empty!</li>";
 
-    updateTotal();
+    updateSubtotal();
     return;
   }
 
@@ -324,5 +351,5 @@ function renderCart() {
     </li>
   `;
 
-  updateTotal();
+  updateSubtotal();
 }

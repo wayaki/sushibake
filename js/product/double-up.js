@@ -69,42 +69,8 @@ function renderDoubleUpFlavours() {
   description.textContent =
     "Choose a flavour for each half and customise them.";
 
-  // TEMPORARY 
-  // const flavourChoices =
-  //   product.flavourOptions
-  //     .map((option) => {
-  //       const flavourProduct =
-  //         PRODUCTS[
-  //           option.productId
-  //         ];
-
-  //       const extraText =
-  //         option.extra > 0
-  //           ? ` (+$${option.extra})`
-  //           : "";
-
-  //       return `
-  //         <option
-  //           value="${option.productId}"
-  //         >
-  //           ${flavourProduct.name}${extraText}
-  //         </option>
-  //       `;
-  //     })
-  //     .join("");
-
-  const LIMITED_MENU = [
-    "salmon",
-    "tuna"
-  ];
-
   const flavourChoices =
     product.flavourOptions
-      .filter((option) =>
-        LIMITED_MENU.includes(
-          option.productId
-        )
-      )
       .map((option) => {
         const flavourProduct =
           PRODUCTS[
@@ -125,6 +91,7 @@ function renderDoubleUpFlavours() {
         `;
       })
       .join("");
+
 
   flavourContainer.innerHTML = `
     

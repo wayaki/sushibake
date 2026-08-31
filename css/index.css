@@ -1,32 +1,10 @@
 /* ================================================
-   Home page and menu
+   Home Page / Menu
 ================================================ */
 
 
 /* ========================
-   HOME LAYOUT
-   Main home page container
-======================== */
-
-.home-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  width: 90%;
-  max-width: 430px;
-  margin: 0 auto;
-  padding: 25px 10px;
-}
-
-.home-container > img {
-  width: 100%;
-}
-
-
-/* ========================
    CUTOFF BANNER
-   Order cutoff countdown
 ======================== */
 
 .cutoff-banner {
@@ -36,12 +14,13 @@
   gap: 8px;
 
   width: 90%;
-  margin: 50px auto 1px;
+  max-width: 720px;
+  margin: 40px auto 1px;
   padding: 10px 14px;
 
   border-radius: 20px;
 
-  color: #4a2a00;
+  color: var(--color-brown-dark);
 
   font-weight: 700;
   text-align: center;
@@ -50,9 +29,11 @@
     0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+
 .cutoff-text {
   white-space: pre-line;
 }
+
 
 .big-time {
   display: block;
@@ -61,15 +42,18 @@
   font-weight: 800;
 }
 
+
 .cutoff-icon {
   display: inline-block;
 
   transform-origin: center;
 }
 
+
 .cutoff-banner.ticking .cutoff-icon {
   animation: tick-bounce 1s infinite;
 }
+
 
 .cutoff-banner.urgent {
   border: 2px solid #f9a853;
@@ -77,40 +61,14 @@
   background: #ffe0cc;
 }
 
+
 .cutoff-banner.urgent .cutoff-text {
   animation: soft-pulse 1s infinite;
 }
 
 
 /* ========================
-   PROMOTIONAL BANNER
-   Home page promotional image
-======================== */
-
-.banner {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-
-  width: 90%;
-  padding: 15px;
-
-  border-radius: 20px;
-
-  background: #fff3e0;
-
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.banner img {
-  width: 100%;
-}
-
-
-/* ========================
    MENU GRID
-   Product card layout
 ======================== */
 
 .menu-container {
@@ -124,6 +82,11 @@
 
   justify-items: center;
 }
+
+
+/* ========================
+   MENU ITEM
+======================== */
 
 .menu-item {
   display: flex;
@@ -148,6 +111,7 @@
     transform 0.2s ease;
 }
 
+
 .menu-item:hover {
   box-shadow:
     0 8px 16px rgba(0, 0, 0, 0.12);
@@ -155,15 +119,21 @@
   transform: translateY(-2px);
 }
 
+
 .menu-item img {
   width: 100%;
-  max-width: 180px;
+  max-width: 320px;
   height: auto;
 
   border-radius: 16px;
 
   object-fit: cover;
 }
+
+
+/* ========================
+   ITEM INFORMATION
+======================== */
 
 .item-info {
   display: flex;
@@ -176,25 +146,83 @@
   min-width: 0;
 }
 
-.item-name {
-  color: #a6480d;
 
-  font-size: 20px;
+.item-name {
+  color: var(--color-brown-light);
+
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
 }
 
+
 .item-price {
   color: #000;
+  font-weight: 700;
+  font-size: 20px;
+}
 
-  font-size: 18px;
+
+/* ========================
+   AVAILABILITY LABELS
+======================== */
+
+.available-label,
+.unavailable-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 0;
+  width: auto;
+  min-width: 140px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+
+/* Available */
+.available-label {
+  background: #287a3b;
+  color: #fff;
+}
+
+
+/* Unavailable */
+.unavailable-label {
+  background: #fff0ee;
+  color: #a33a32;
+
+  border: 1px solid #e3a7a2;
+}
+
+/* ========================
+   UNAVAILABLE ITEM
+======================== */
+
+.menu-item[unavailable] {
+  position: relative;
+
+  opacity: 0.6;
+
+  cursor: default;
+}
+
+
+.menu-item[unavailable]:hover {
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.1);
+
+  transform: none;
 }
 
 
 /* ========================
    QUANTITY
-   Menu quantity display
 ======================== */
 
 .quantity {
@@ -205,6 +233,7 @@
 
   width: 100%;
 }
+
 
 .quantity-count {
   display: flex;
@@ -223,6 +252,7 @@
   font-weight: 700;
 }
 
+
 .quantity button {
   width: 40px;
   height: 40px;
@@ -233,7 +263,7 @@
   border: none;
   border-radius: 50%;
 
-  background: #f8b400;
+  background: var(--color-brown);
   color: #fff;
 
   font-size: 18px;
@@ -249,51 +279,16 @@
     transform 0.1s ease;
 }
 
-.quantity button:hover {
-  background: #e9a900;
+/* Disable quantity interaction
+   for unavailable products */
 
-  transform: scale(1.08);
+.menu-item[unavailable] .quantity {
+  pointer-events: none;
 }
 
 
 /* ========================
-   FLOATING CART BUTTON
-   Optional circular cart button
-======================== */
-
-.cart-btn {
-  position: fixed;
-  right: 25px;
-  bottom: 25px;
-  z-index: 900;
-
-  padding: 15px 22px;
-
-  border: none;
-  border-radius: 50px;
-
-  background: #f85c50;
-  color: #fff;
-
-  font-size: 18px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.2);
-
-  transition: transform 0.2s ease;
-}
-
-.cart-btn:hover {
-  transform: scale(1.08);
-}
-
-
-/* ========================
-   IMAGE MODAL CLOSE
-   Close button inside image modal
+   IMAGE MODAL
 ======================== */
 
 .image-modal .close-btn {
@@ -315,18 +310,18 @@
 
 /* ========================
    STICKY CART BAR
-   Bottom cart summary
 ======================== */
 
 .cart-bar {
   position: fixed;
-  right: 12px;
+
+  left: 50%;
   bottom:
     max(
       12px,
       env(safe-area-inset-bottom)
     );
-  left: 12px;
+
   z-index: 999;
 
   display: none;
@@ -334,9 +329,12 @@
   justify-content: space-between;
   gap: 12px;
 
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 8px 26px;
+  width: calc(100% - 24px);
+  max-width: 720px;
+
+  padding: 8px 20px;
+
+  box-sizing: border-box;
 
   border-radius: 22px;
 
@@ -347,21 +345,31 @@
       #f9a853
     );
 
-  color: #7a3e00;
+  color: #4a2a00;
 
   cursor: pointer;
 
+  transform: translateX(-50%);
+
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.18);
+    0 8px 24px
+    rgba(0, 0, 0, 0.18);
 }
+
+
+/* ========================
+   CART LEFT
+======================== */
 
 .cart-left {
   display: flex;
+  flex: 1;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 
   min-width: 0;
 }
+
 
 .cart-mascot {
   width: 70px;
@@ -372,6 +380,7 @@
   object-fit: contain;
 }
 
+
 .cart-info {
   display: flex;
   flex-direction: column;
@@ -381,6 +390,7 @@
   line-height: 1.1;
 }
 
+
 #cart-count {
   overflow: hidden;
 
@@ -388,19 +398,27 @@
 
   font-size: 16px;
   font-weight: 700;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 
 #cart-total {
   color: #4a2a00;
 
   font-size: 20px;
   font-weight: 700;
+
   white-space: nowrap;
 }
 
-.checkout-btn {
+
+/* ========================
+   VIEW CART BUTTON
+======================== */
+
+.cart-btn {
   padding: 10px 16px;
 
   flex-shrink: 0;
@@ -409,25 +427,27 @@
   border-radius: 999px;
 
   background: #fff7ef;
-  color: #7a3e00;
+  color: #4a2a00;
 
   font-size: 16px;
   font-weight: 700;
+
   white-space: nowrap;
 
   cursor: pointer;
 
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.08);
+    0 2px 8px
+    rgba(0, 0, 0, 0.08);
 }
 
 
 /* ========================
    ANIMATIONS
-   Cutoff banner movement
 ======================== */
 
 @keyframes tick-bounce {
+
   0%,
   100% {
     transform: rotate(0deg);
@@ -442,7 +462,9 @@
   }
 }
 
+
 @keyframes soft-pulse {
+
   0%,
   100% {
     opacity: 1;
@@ -456,175 +478,75 @@
 
 /* ========================
    MOBILE
-   Small screen adjustments
 ======================== */
 
-@media (max-width: 480px) {
-  .home-container {
-    width: 94%;
-    padding-right: 6px;
-    padding-left: 6px;
-  }
+@media (max-width: 600px) {
 
   .menu-container {
     gap: 12px;
   }
 
+
   .menu-item {
     padding: 10px;
   }
 
+
   .item-name {
-    font-size: 17px;
+    font-size: 18px;
   }
+
 
   .item-price {
     font-size: 16px;
   }
 
+
   .quantity {
     gap: 6px;
   }
 
+
   .quantity-count {
     padding: 5px 8px;
   }
+
 
   .quantity button {
     width: 36px;
     height: 36px;
   }
 
+
   .cart-bar {
     padding: 8px 14px;
   }
 
+
   .cart-left {
     gap: 10px;
   }
+
 
   .cart-mascot {
     width: 58px;
     height: 58px;
   }
 
+
   #cart-count {
     font-size: 14px;
   }
+
 
   #cart-total {
     font-size: 18px;
   }
 
-  .checkout-btn {
+
+  .cart-btn {
     padding: 9px 12px;
 
     font-size: 14px;
   }
-}
-
-/* ========================
-   SG61 Lucky Draw
-======================== */
-.sg61-lucky-draw {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-top: 20px;
-}
-
-.sg61-link {
-  position: relative;
-  overflow: hidden;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 5px 90px;
-
-  border: 2px solid var(--color-orange-dark);
-  border-radius: 20px;
-
-  background: linear-gradient(
-    145deg,
-    #ffe9b8,
-    #ffc76f
-  );
-
-  color: var(--color-brown-dark);
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 18px;
-
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.15);
-
-  transition:
-    transform .2s,
-    box-shadow .2s;
-}
-
-.sg61-link::before,
-.sg61-link::after {
-  position: absolute;
-
-  pointer-events: none;
-
-  line-height: 1;
-}
-
-.sg61-link::before {
-  content: "✦";
-
-  top: 18px;
-  left: 60px;
-
-  color: #ffc05a;
-
-  font-size: 20px;
-
-  transform: rotate(-15deg);
-}
-
-.sg61-link::after {
-  content: "✦";
-
-  right: 60px;
-  bottom: 18px;
-
-  color: #ffecc4;
-
-  font-size: 20px;
-
-  transform: rotate(18deg);
-}
-
-.sg61-link img {
-  width: 52px;
-  height: auto;
-}
-
-/* ========================
-   Labels
-======================== */
-.menu-item.unavailable {
-  opacity: 0.45;
-  cursor: default;
-  position: relative;
-}
-
-.unavailable-label {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: red;
-}
-
-.available-label {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: green;
 }

@@ -1,0 +1,527 @@
+/* ================================================
+   Receipt Page
+================================================ */
+
+
+/* ========================
+   PAGE
+======================== */
+
+.receipt-page {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 0 auto;
+  padding: 24px 18px 60px;
+}
+
+
+/* ========================
+   SUCCESS HEADER
+======================== */
+
+.receipt-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 24px;
+
+  text-align: center;
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin-bottom: 10px;
+
+  border-radius: 50%;
+
+  background: #fff0dc;
+
+  font-size: 30px;
+}
+
+.receipt-success h1 {
+  margin: 0;
+
+  color: var(--color-brown-dark);
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.receipt-success p {
+  margin: 6px 0 0;
+
+  color: #80664e;
+
+  font-size: 15px;
+}
+
+
+/* ========================
+   RECEIPT CARD
+======================== */
+
+.receipt-card {
+  width: 100%;
+  padding: 20px 18px;
+
+  border-radius: 20px;
+
+  background: var(--color-cream);
+
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================
+   ORDER NUMBER
+======================== */
+
+.receipt-order-number {
+  text-align: center;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #f2d2b3;
+
+  margin-bottom: 20px;
+}
+
+.receipt-order-number span {
+  display: block;
+  color: #80664e;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.receipt-order-number strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-brown-dark);
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+/* ========================
+   RECEIPT SECTIONS
+======================== */
+
+.receipt-section {
+  padding: 20px 0;
+
+  border-bottom: 1px solid #f2d2b3;
+}
+
+.receipt-section:last-of-type {
+  border-bottom: none;
+}
+
+.receipt-section h2 {
+  margin: 0 0 14px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* ========================
+   RECEIPT ROWS
+======================== */
+
+.receipt-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 10px;
+
+  font-size: 14px;
+}
+
+.receipt-row:last-child {
+  margin-bottom: 0;
+}
+
+.receipt-row span {
+  color: #80664e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.receipt-row strong {
+  color: var(--color-brown-dark);
+
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* ========================
+   TOTAL
+======================== */
+
+.total-row {
+  margin-top: 12px;
+  padding-top: 12px;
+
+  border-top: 1px solid rgba(74, 42, 0, 0.2);
+
+  font-size: 19px;
+}
+
+.total-row strong {
+  font-weight: 800;
+}
+
+
+/* ========================
+   ORDER ITEMS
+======================== */
+
+.receipt-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.receipt-item {
+  padding: 12px 0;
+
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
+}
+
+.receipt-item:first-child {
+  padding-top: 0;
+}
+
+.receipt-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+
+/* ITEM NAME + PRICE */
+
+.receipt-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.receipt-item-name {
+  flex: 1;
+
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.receipt-item-price {
+  flex-shrink: 0;
+
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* ITEM CUSTOMISATION */
+
+.receipt-item-details {
+  margin-top: 4px;
+
+  color: #80664e;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.receipt-item-details:empty {
+  display: none;
+}
+
+.receipt-selection {
+  color: #80664e;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.receipt-item-note {
+  margin-top: 3px;
+
+  color: #80664e;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+/* ========================
+   PAYMENT PROOF
+======================== */
+
+.receipt-proof-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 18px;
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background: var(--color-white);
+
+  box-shadow: inset 0 0 0 1px #f2d2b3;
+}
+
+.receipt-proof-title {
+  width: 100%;
+
+  margin: 0 0 12px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.receipt-proof-image {
+  width: 100%;
+  max-width: 260px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.view-proof-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #fff4e6;
+  color: var(--color-brown-dark);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.view-proof-btn:hover {
+  background: #ffe3bd;
+}
+
+
+/* ========================
+   PAYMENT STATUS
+======================== */
+
+.payment-status {
+  margin-top: 18px;
+  padding: 12px 14px;
+
+  border-radius: 14px;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.payment-status:empty {
+  display: none;
+}
+
+
+/* ========================
+   NEXT STEP
+======================== */
+
+.receipt-next-step {
+  margin-top: 20px;
+  padding: 20px 18px;
+
+  border-radius: 20px;
+
+  background: #fff4e6;
+
+  text-align: center;
+
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+
+.receipt-next-step h2 {
+  margin: 0;
+
+  color: var(--color-brown-dark);
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.receipt-next-step p {
+  margin: 8px 0 16px;
+
+  color: #80664e;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+/* ========================
+   WHATSAPP BUTTON
+======================== */
+
+.whatsapp-btn {
+  width: 100%;
+  padding: 11px 16px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to right,
+    #faa74a,
+    #f9a853
+  );
+
+  color: var(--color-brown-dark);
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  opacity: 0.92;
+}
+
+.whatsapp-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* ========================
+   NEW ORDER BUTTON
+======================== */
+
+.new-order-btn {
+  width: 100%;
+
+  margin-top: 20px;
+  padding: 10px 16px;
+
+  border: 1px solid #f2d2b3;
+  border-radius: 999px;
+
+  background: transparent;
+  color: var(--color-brown-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.new-order-btn:hover {
+  border-color: var(--color-orange);
+
+  background: #fffaf5;
+}
+
+
+/* ========================
+   MOBILE
+======================== */
+
+@media (max-width: 600px) {
+
+  .receipt-page {
+    padding: 20px 14px 50px;
+  }
+
+  .receipt-card {
+    padding: 16px 14px;
+  }
+
+  .success-icon {
+    width: 56px;
+    height: 56px;
+
+    font-size: 26px;
+  }
+
+  .receipt-success h1 {
+    font-size: 26px;
+  }
+
+  .receipt-order-number {
+    padding: 12px 14px;
+  }
+
+  .receipt-order-number strong {
+    font-size: 16px;
+  }
+
+  .receipt-section {
+    padding: 16px 0;
+  }
+
+  .receipt-row {
+    font-size: 13px;
+  }
+
+  .total-row {
+    font-size: 18px;
+  }
+
+  .receipt-proof-image {
+    max-width: 100px;
+  }
+
+  .receipt-next-step {
+    padding: 18px 14px;
+  }
+
+  .whatsapp-btn {
+    font-size: 15px;
+  }
+}

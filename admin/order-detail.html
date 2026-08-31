@@ -1,0 +1,194 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>WAYAKI Order</title>
+
+
+    <!-- Google Font -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+
+    <!-- Global CSS -->
+
+    <link
+      rel="stylesheet"
+      href="../css/global.css"
+    />
+
+
+    <!-- Admin Orders CSS -->
+
+    <link
+      rel="stylesheet"
+      href="../css/admin/orders.css"
+    />
+
+
+    <!-- Order Detail CSS -->
+
+    <link
+      rel="stylesheet"
+      href="../css/admin/order-detail.css"
+    />
+
+  </head>
+
+
+  <body>
+
+
+    <!-- ================================================
+         ADMIN HEADER
+    ================================================= -->
+
+    <header>
+
+      <div class="admin-brand">
+
+        <a href="./orders.html">
+
+          <img
+            class="logo"
+            src="../images/logo.png"
+            alt="WAYAKI Logo"
+          />
+
+        </a>
+
+
+        <span class="admin-badge">
+          Admin
+        </span>
+
+      </div>
+
+
+      <nav class="nav-links">
+
+        <a
+          href="../index.html"
+          class="back-store-link"
+          aria-label="Back to store"
+        >
+
+          <img
+            class="store"
+            src="../images/store.png"
+            alt=""
+          />
+
+        </a>
+
+
+        <button
+          type="button"
+          id="admin-logout-btn"
+          class="admin-logout-btn"
+          aria-label="Logout"
+        >
+
+          <img
+            class="logout"
+            src="../images/logout.png"
+            alt=""
+          />
+
+        </button>
+
+      </nav>
+
+    </header>
+
+
+    <!-- ================================================
+         ORDER DETAIL
+    ================================================= -->
+
+    <main class="order-detail-page">
+
+
+      <!-- ========================
+           BACK
+      ======================== -->
+
+      <a
+        href="./orders.html"
+        class="back-orders-link"
+      >
+        Back to Orders
+      </a>
+
+
+      <!-- ========================
+           LOADING
+      ======================== -->
+
+      <div
+        id="order-detail-loading"
+        class="orders-message"
+      >
+        Loading order...
+      </div>
+
+
+      <!-- ========================
+           ERROR
+      ======================== -->
+
+      <div
+        id="order-detail-error"
+        class="orders-message error-message"
+        hidden
+      >
+        Unable to load order.
+      </div>
+
+
+      <!-- ========================
+           ORDER
+           order-detail.js renders here
+      ======================== -->
+
+      <div
+        id="order-detail"
+        class="order-detail"
+      >
+      </div>
+
+      <br>
+      <a
+        href="./orders.html"
+        class="back-orders-link-center" 
+      >
+        Back to Orders
+      </a>
+
+    </main>
+
+
+    <!-- ================================================
+         JS
+    ================================================= -->
+
+    <script
+      type="module"
+      src="../js/admin/order-detail.js"
+    ></script>
+
+  </body>
+
+</html>

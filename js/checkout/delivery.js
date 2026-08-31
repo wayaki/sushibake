@@ -258,27 +258,27 @@ function toggleDelivery() {
   const totalTrays =
     getTotalMainTrays();
 
-  // TEMPORARY 
-  // if (totalTrays < 1) {
-  //   deliveryRadio.disabled = true;
+  // Delivery requires at least 2 trays
+  if (totalTrays < 2) {
+    deliveryRadio.disabled = true;
 
-  //   if (deliveryRadio.checked) {
-  //     selfRadio.checked = true;
-  //   }
-  // } else {
-  //   deliveryRadio.disabled = false;
-  // }
+    if (deliveryRadio.checked) {
+      selfRadio.checked = true;
+    }
+  } else {
+    deliveryRadio.disabled = false;
+  }
 
   // ========================
   // TEMPORARY SELF COLLECTION ONLY
   // 17 Aug - 31 Aug 2026
   // ========================
 
-  deliveryRadio.disabled = true;
+  // deliveryRadio.disabled = true;
 
-  if (deliveryRadio.checked) {
-    selfRadio.checked = true;
-  }
+  // if (deliveryRadio.checked) {
+  //   selfRadio.checked = true;
+  // }
 
   const method =
     getSelectedMethod();

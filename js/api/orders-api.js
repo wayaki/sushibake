@@ -36,6 +36,11 @@ export async function getOrders() {
       admin_notes,
       created_at,
 
+      payment_method,
+      payment_status,
+      payment_proof_path,
+      paid_at,
+
       order_items (
         id,
         quantity,
@@ -77,6 +82,7 @@ export async function getOrders() {
 
   return data || [];
 }
+
 
 // ================================================
 // UPDATE ORDER STATUS

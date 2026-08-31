@@ -1,315 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-  <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <title>WAYAKI Orders</title>
 
-  <title>WAYAKI Orders</title>
-  
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Global CSS -->
-  <link
-    rel="stylesheet"
-    href="../css/global.css"
-  >
+    <!-- Global CSS -->
+    <link
+      rel="stylesheet"
+      href="../css/global.css"
+    />
 
-  <!-- Orders CSS -->
-  <link
-    rel="stylesheet"
-    href="../css/admin/orders.css"
-  >
-</head> 
+    <!-- Orders CSS -->
+    <link
+      rel="stylesheet"
+      href="../css/admin/orders.css"
+    />
+  </head>
 
+  <body>
 
-<body>
+    <!-- ================================================
+         ADMIN HEADER
+    ================================================= -->
 
-  <!-- ================================================
-       ADMIN HEADER
-  ================================================= -->
+    <header>
 
-  <header>
+      <!-- ========================
+           ADMIN BRAND
+      ======================== -->
+
       <div class="admin-brand">
+
         <a href="../admin/orders.html">
-          <img class="logo" src="../images/logo.png" alt="WAYAKI Logo">
+
+          <img
+            class="logo"
+            src="../images/logo.png"
+            alt="WAYAKI Logo"
+          />
+
         </a>
+
         <span class="admin-badge">
           Admin
         </span>
+
       </div>
+
+
+      <!-- ========================
+           ADMIN NAVIGATION
+      ======================== -->
 
       <nav class="nav-links">
-      <a
-        href="../index.html"
-        class="back-store-link"
-      >
-        <img class="store" src="../images/store.png" alt="Store">
-      </a>
 
-      <button
-        type="button"
-        id="admin-logout-btn"
-        class="admin-logout-btn"
+        <!-- Back to Store -->
+
+        <a
+          href="../index.html"
+          class="back-store-link"
+          aria-label="Back to store"
         >
-        <img class="logout" src="../images/logout.png" alt="Logout">
-      </button>
-    </nav>
 
-  </header>
+          <img
+            class="store"
+            src="../images/store.png"
+            alt="Store"
+          />
 
-
-  <!-- ================================================
-       MAIN
-  ================================================= -->
-
-  <main class="orders-page">
-
-    <div class="sg61-lucky-draw">
-      <a
-        href="../admin/admin-spin.html"
-        class="sg61-link"
-      >
-        <img class="sg61-mascot" src="../images/wheel/sg61-mascot.png" alt="SG61">
-        <span>SG61 Admin</span>
-      </a>
-    </div>
-
-    <!-- ========================
-         ORDER SUMMARY
-    ========================= -->
-
-    <section class="order-summary">
-
-      <div class="summary-card">
-        <span
-          id="pending-count"
-          class="summary-number"
-        >
-          0
-        </span>
-
-        <span class="summary-label">
-          Pending
-        </span>
-      </div>
+        </a>
 
 
-      <div class="summary-card">
-        <span
-          id="confirmed-count"
-          class="summary-number"
-        >
-          0
-        </span>
-
-        <span class="summary-label">
-          Confirmed
-        </span>
-      </div>
-
-
-      <div class="summary-card">
-        <span
-          id="completed-count"
-          class="summary-number"
-        >
-          0
-        </span>
-
-        <span class="summary-label">
-          Completed
-        </span>
-      </div>
-
-    </section>
-
-
-    <!-- ========================
-         FILTERS
-    ========================= -->
-
-    <section class="orders-toolbar">
-
-      <div class="status-tabs">
+        <!-- Logout -->
 
         <button
           type="button"
-          class="status-tab active"
-          data-status="pending"
+          id="admin-logout-btn"
+          class="admin-logout-btn"
+          aria-label="Logout"
         >
-          Pending
+
+          <img
+            class="logout"
+            src="../images/logout.png"
+            alt="Logout"
+          />
+
         </button>
 
-        <button
-          type="button"
-          class="status-tab"
-          data-status="confirmed"
-        >
-          Confirmed
-        </button>
+      </nav>
 
-        <button
-          type="button"
-          class="status-tab"
-          data-status="completed"
-        >
-          Completed
-        </button>
+    </header>
 
-        <button
-          type="button"
-          class="status-tab"
-          data-status="cancelled"
-        >
-          Cancelled
-        </button>
 
-        <button
-          type="button"
-          class="status-tab"
-          data-status="all"
+    <!-- ================================================
+         MAIN ORDERS PAGE
+    ================================================= -->
+
+    <main class="orders-page">
+
+
+      <!-- ================================================
+           SG61 ADMIN SHORTCUT
+      ================================================= -->
+
+      <div class="sg61-lucky-draw">
+
+        <a
+          href="../admin/admin-spin.html"
+          class="sg61-link"
         >
-          All
-        </button>
+
+          <img
+            class="sg61-mascot"
+            src="../images/wheel/sg61-mascot.png"
+            alt="SG61"
+          />
+
+          <span>
+            SG61 Admin
+          </span>
+
+        </a>
 
       </div>
 
 
-      <div class="orders-search">
+      <!-- ================================================
+           ORDER SUMMARY
+      ================================================= -->
 
-        <input
-          type="search"
-          id="order-search"
-          placeholder="Search order, name or phone"
-        >
-
-      </div>
-
-    </section>
+      <section class="order-summary">
 
 
-    <!-- ========================
-         ORDERS HEADER
-    ========================= -->
+        <!-- Pending -->
 
-    <section class="orders-heading">
+        <div class="summary-card">
 
-      <div>
-        <h2 id="orders-list-title">
-          Pending Orders
-        </h2>
+          <span
+            id="pending-count"
+            class="summary-number"
+          >
+            0
+          </span>
 
-        <p id="orders-list-description">
-          Orders waiting for confirmation.
-        </p>
-      </div>
+          <span class="summary-label">
+            Pending
+          </span>
 
-    </section>
-
-
-    <!-- ========================
-         LOADING
-    ========================= -->
-
-    <div
-      id="orders-loading"
-      class="orders-message"
-    >
-      Loading orders...
-    </div>
+        </div>
 
 
-    <!-- ========================
-         ERROR
-    ========================= -->
+        <!-- Confirmed -->
 
-    <div
-      id="orders-error"
-      class="orders-message error-message"
-      hidden
-    >
-      Unable to load orders.
-    </div>
+        <div class="summary-card">
 
+          <span
+            id="confirmed-count"
+            class="summary-number"
+          >
+            0
+          </span>
 
-    <!-- ========================
-         EMPTY
-    ========================= -->
+          <span class="summary-label">
+            Confirmed
+          </span>
 
-    <div
-      id="orders-empty"
-      class="orders-message"
-      hidden
-    >
-      No orders found.
-    </div>
+        </div>
 
 
-    <!-- ========================
-         ORDER LIST
-         orders.js will render cards here
-    ========================= -->
+        <!-- Completed -->
 
-    <section
-      id="orders-list"
-      class="orders-list"
-    >
-    </section>
+        <div class="summary-card">
+
+          <span
+            id="completed-count"
+            class="summary-number"
+          >
+            0
+          </span>
+
+          <span class="summary-label">
+            Completed
+          </span>
+
+        </div>
+
+      </section>
 
 
-  </main>
+      <!-- ================================================
+           ORDER FILTERS
+      ================================================= -->
+
+      <section class="orders-toolbar">
 
 
-  <!-- ================================================
-       ORDER DETAIL MODAL
-       We will use this later for View / Edit
-  ================================================= -->
+        <!-- ========================
+             STATUS TABS
+        ======================== -->
 
-  <div
-    id="order-modal"
-    class="order-modal hidden"
-  >
+        <div class="status-tabs">
 
-    <div class="order-modal-backdrop"></div>
+          <button
+            type="button"
+            class="status-tab active"
+            data-status="pending"
+          >
+            Pending
+          </button>
 
-    <div class="order-modal-card">
 
-      <button
-        type="button"
-        id="close-order-modal"
-        class="modal-close-btn"
-        aria-label="Close order"
-      >
-        ✕
-      </button>
+          <button
+            type="button"
+            class="status-tab"
+            data-status="confirmed"
+          >
+            Confirmed
+          </button>
 
+
+          <button
+            type="button"
+            class="status-tab"
+            data-status="completed"
+          >
+            Completed
+          </button>
+
+
+          <button
+            type="button"
+            class="status-tab"
+            data-status="cancelled"
+          >
+            Cancelled
+          </button>
+
+
+          <button
+            type="button"
+            class="status-tab"
+            data-status="all"
+          >
+            All
+          </button>
+
+        </div>
+
+
+        <!-- ========================
+             SEARCH
+        ======================== -->
+
+        <div class="orders-search">
+
+          <input
+            type="search"
+            id="order-search"
+            placeholder="Search order, name or phone"
+            autocomplete="off"
+          />
+
+        </div>
+
+      </section>
+
+
+      <!-- ================================================
+           ORDERS HEADING
+      ================================================= -->
+
+      <section class="orders-heading">
+
+        <div>
+
+          <h2 id="orders-list-title">
+            Pending Orders
+          </h2>
+
+          <p id="orders-list-description">
+            Orders waiting for confirmation.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================================================
+           PAGE MESSAGES
+      ================================================= -->
+
+      <!-- Loading -->
 
       <div
-        id="order-modal-content"
-        class="order-modal-content"
+        id="orders-loading"
+        class="orders-message"
       >
+        Loading orders...
+      </div>
+
+
+      <!-- Error -->
+
+      <div
+        id="orders-error"
+        class="orders-message error-message"
+        hidden
+      >
+        Unable to load orders.
+      </div>
+
+
+      <!-- Empty -->
+
+      <div
+        id="orders-empty"
+        class="orders-message"
+        hidden
+      >
+        No orders found.
+      </div>
+
+
+      <!-- ================================================
+           ORDER LIST
+           orders.js renders compact order cards here
+      ================================================= -->
+
+      <section
+        id="orders-list"
+        class="orders-list"
+      >
+      </section>
+
+    </main>
+
+
+    <!-- ================================================
+         ORDER DETAIL MODAL
+    ================================================= -->
+
+    <div
+      id="order-modal"
+      class="order-modal hidden"
+      aria-hidden="true"
+    >
+
+      <!-- ========================
+           BACKDROP
+      ======================== -->
+
+      <div
+        class="order-modal-backdrop"
+        data-close-order-modal
+      >
+      </div>
+
+
+      <!-- ========================
+           MODAL CARD
+      ======================== -->
+
+      <div
+        class="order-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="order-modal-title"
+      >
+
+        <!-- ========================
+             CLOSE BUTTON
+        ======================== -->
+
+        <button
+          type="button"
+          id="close-order-modal"
+          class="modal-close-btn"
+          aria-label="Close order"
+        >
+          ✕
+        </button>
+
       </div>
 
     </div>
 
-  </div>
+    <!-- ================================================
+         ADMIN ORDERS JS
+    ================================================= -->
 
+    <script
+      type="module"
+      src="../js/admin/orders.js"
+    ></script>
 
-  <!-- ================================================
-       JS
-  ================================================= -->
-
-  <script
-    type="module"
-    src="../js/admin/orders.js"
-  ></script>
-
-</body>
-
+  </body>
 </html>

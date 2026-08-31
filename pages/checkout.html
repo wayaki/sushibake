@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WAYAKI Checkout</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/global.css" />
+
+    <link rel="stylesheet" href="../css/checkout.css" />
+  </head>
+
+  <body>
+    <!-- ========================
+         HEADER
+    ======================== -->
+
+    <header>
+      <a href="https://wayaki.github.io/sushibake/">
+        <img class="logo" src="../images/logo.png" alt="WAYAKI Logo" />
+      </a>
+
+      <div class="header-right">
+        <!-- Instagram -->
+        <a
+          class="ig-link"
+          href="https://www.instagram.com/wayaki.sushibake/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WAYAKI Instagram"
+        >
+          <img class="ig-logo" src="../images/ig-logo-mascot.png" alt="" />
+        </a>
+
+        <!-- Navigation -->
+        <nav class="nav-links">
+          <a href="https://wayaki.github.io/sushibake/"> Menu </a>
+
+          <a href="https://wayaki.github.io/sushibake/pages/cart.html">
+            Cart
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ========================
+         CUSTOMER DETAILS
+    ======================== -->
+
+    <div class="container">
+      <div class="section-title">
+        <h2>Customer Details</h2>
+      </div>
+
+      <div class="checkout-card">
+        <div class="checkout-section">
+          <label>
+            Full Name
+
+            <input
+              type="text"
+              id="name"
+              placeholder="e.g. Charlie"
+              autocomplete="name"
+              required
+            />
+          </label>
+
+          <label>
+            Phone Number
+
+            <input
+              type="tel"
+              id="phone"
+              placeholder="e.g. 9123 4567"
+              autocomplete="tel"
+              required
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================
+         COLLECTION METHOD
+    ======================== -->
+
+    <div class="container">
+      <div class="section-title">
+        <h2>Collection Method</h2>
+      </div>
+
+      <div class="checkout-card">
+        <div class="checkout-section">
+          <!-- SELF COLLECTION -->
+          <label class="method-option">
+            <input
+              type="radio"
+              name="method"
+              value="self"
+              checked
+              onchange="toggleDelivery()"
+            />
+
+            <div class="method-content">
+              <strong> Self Collect </strong>
+
+              <span> Free </span>
+            </div>
+          </label>
+
+          <!-- SELF COLLECTION DETAILS -->
+          <div id="self-options" class="method-details">
+            <div class="pickup-box">
+              <div class="pickup-title">Pick-up Location</div>
+
+              <div class="pickup-value">
+                <strong id="pickup-location">
+                  Woodlands, Singapore 730877
+                </strong>
+
+                <small>
+                  Exact unit number will be shared via WhatsApp after ordering.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- DELIVERY -->
+          <label class="method-option">
+            <input
+              type="radio"
+              name="method"
+              value="delivery"
+              onchange="toggleDelivery()"
+            />
+
+            <div class="method-content">
+              <div class="method-title-row">
+                <strong> Delivery </strong>
+
+                <!-- <span class="unavailable-label"> Back in September </span> -->
+              </div>
+
+              <span> Delivered to your doorstep </span>
+            </div>
+          </label>
+
+          <!-- DELIVERY DETAILS -->
+          <div
+            id="delivery-options"
+            class="method-details"
+            style="display: none"
+          >
+            <label class="area-field">
+              <div class="area-label-row">
+                <span> Delivery Area </span>
+
+                <span class="info-wrap">
+                  <span class="info-icon" tabindex="0"> i </span>
+
+                  <div class="area-info-box">
+                    🧡 North – Woodlands, Yishun, Sembawang
+
+                    <br />
+
+                    🧡 West – Jurong, CCK, Bukit Batok
+
+                    <br />
+
+                    🧡 North-East – Punggol, Sengkang
+
+                    <br />
+
+                    🧡 Central – Orchard, Bishan, Toa Payoh
+
+                    <br />
+
+                    🧡 East – Bedok, Tampines, Pasir Ris
+                  </div>
+                </span>
+              </div>
+
+              <select id="area" onchange="updateTotal()" disabled>
+                <option value="">Select area</option>
+
+                <option value="north">North (+$8)</option>
+
+                <option value="west">West (+$12)</option>
+
+                <option value="northeast">North-East (+$12)</option>
+
+                <option value="central">Central (+$15)</option>
+
+                <option value="east">East (+$15)</option>
+              </select>
+            </label>
+
+            <label>
+              Address
+
+              <input
+                type="text"
+                id="address"
+                placeholder="Block / Street Name"
+                autocomplete="address-line1"
+                disabled
+              />
+            </label>
+
+            <label>
+              Postal Code
+
+              <input
+                type="text"
+                id="postal"
+                placeholder="e.g. 560123"
+                autocomplete="postal-code"
+                disabled
+              />
+            </label>
+
+            <label>
+              Unit Number
+
+              <input type="text" id="unit" placeholder="#01-23" disabled />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================
+         ORDER SCHEDULE
+    ======================== -->
+
+    <div class="container">
+      <div class="section-title">
+        <h2>Order Schedule</h2>
+      </div>
+
+      <div class="checkout-card">
+        <div class="checkout-section">
+          <label>
+            Choose Your Date
+
+            <select id="order-date" required>
+              <option value="">Select a date</option>
+            </select>
+          </label>
+
+          <label>
+            Choose Your Time
+
+            <select id="pickup-time" required>
+              <option value="">Select time</option>
+
+              <option value="12:00 - 14:00">12:00pm - 2:00pm</option>
+
+              <option value="15:00 - 17:00">3:00pm - 5:00pm</option>
+
+              <option id="late-slot" value="18:00 - 20:00">
+                6:00pm - 8:00pm (Self-Collection Only)
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================
+        PAYMENT METHOD
+    ================================================ -->
+
+    <div class="container">
+      <!-- ========================
+          SECTION TITLE
+      ======================== -->
+
+      <div class="section-title">
+        <h2>Payment Method</h2>
+      </div>
+
+      <div class="checkout-card">
+        <div class="checkout-section">
+          <!-- ========================
+              PAYNOW
+          ======================== -->
+
+          <label class="method-option">
+            <input
+              type="radio"
+              name="payment-method"
+              value="paynow"
+              id="paynow-method"
+            />
+
+            <!-- LOGO -->
+            <img
+              class="payments"
+              src="../images/paynow-logo.png"
+              alt="PayNow Logo"
+            />
+
+            <!-- CONTENT -->
+            <div class="method-content">
+              <div class="method-title-row">
+                <strong> PayNow </strong>
+
+                <span class="recommended"> Recommended </span>
+              </div>
+
+              <span> Pay securely using PayNow QR. </span>
+            </div>
+          </label>
+
+          <!-- ========================
+              WHATSAPP
+          ======================== -->
+
+          <label class="method-option">
+            <input
+              type="radio"
+              name="payment-method"
+              value="whatsapp"
+              id="whatsapp-method"
+            />
+
+            <img
+              class="payments"
+              src="../images/ws-logo.png"
+              alt="Whatsapp Logo"
+            />
+            <div class="method-content">
+              <strong> Order via WhatsApp </strong>
+
+              <span>
+                Send your order to us and arrange payment through WhatsApp.
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================
+         STICKY CHECKOUT BAR
+    ======================== -->
+
+    <div class="checkout-bar">
+      <div class="price-breakdown">
+        <div class="price-line">
+          <span> Subtotal </span>
+
+          <span> $<span id="subtotal-price"> 0.00 </span> </span>
+        </div>
+
+        <div class="price-line" id="delivery-line" style="display: none">
+          <span> Delivery Fee </span>
+
+          <span id="delivery-fee-text"> $0.00 </span>
+        </div>
+
+        <div class="price-line total-line">
+          <span> Total </span>
+
+          <span> $<span id="total-price"> 0.00 </span> </span>
+        </div>
+      </div>
+
+      <button type="button" id="payment-btn">Continue to Payment</button>
+    </div>
+
+    <!-- ========================
+         JAVASCRIPT
+    ======================== -->
+
+    <script src="../js/cart/cart.js"></script>
+    <script src="../js/checkout/delivery.js"></script>
+    <script src="../js/checkout/form.js"></script>
+    <script src="../js/checkout/dates.js"></script>
+    <script type="module" src="../js/checkout/checkout.js"></script>
+  </body>
+</html>

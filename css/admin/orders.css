@@ -85,8 +85,10 @@ body {
 ================================================ */
 
 .orders-page {
-  width: min(1100px, calc(100% - 32px));
+  width: min(760px, calc(100% - 32px));
+
   margin: 0 auto;
+
   padding: 28px 0 50px;
 }
 
@@ -452,6 +454,62 @@ body {
   color: #9e3f35;
 }
 
+/* ================================================
+   ADMIN PAYMENT PROOF
+================================================ */
+
+.admin-payment-proof {
+  margin-top: 18px;
+}
+
+
+.payment-proof-title {
+  margin-bottom: 8px;
+
+  color: var(--color-brown-dark);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+.payment-proof-image-wrapper {
+  width: 100%;
+
+  padding: 10px;
+
+  border-radius: 14px;
+
+  background: #fffaf5;
+
+  text-align: center;
+}
+
+
+.payment-proof-image {
+  display: block;
+
+  width: 100%;
+  max-width: 420px;
+  max-height: 500px;
+
+  margin: 0 auto;
+
+  border-radius: 10px;
+
+  object-fit: contain;
+}
+
+
+.payment-proof-loading,
+.proof-missing {
+  padding: 20px;
+
+  color: #8b735f;
+
+  font-size: 13px;
+  text-align: center;
+}
 
 /* ================================================
    MODAL
