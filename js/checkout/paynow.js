@@ -992,6 +992,9 @@ async function uploadPaymentProof() {
   // ========================
 
   const {
+    data:
+      uploadData,
+
     error:
       uploadError
   } =
@@ -1025,57 +1028,80 @@ async function uploadPaymentProof() {
   }
 
 
+  // ========================
+  // GET ACTUAL STORED PATH
+  // ========================
+
+  const storedPath =
+    uploadData?.path;
+
+
+  if (
+    !storedPath
+  ) {
+
+    console.error(
+      "Supabase did not return a payment proof path:",
+      uploadData
+    );
+
+    throw new Error(
+      "Payment proof path was not returned."
+    );
+  }
+
+
   console.log(
     "Payment proof uploaded:",
-    filePath
+    storedPath
   );
 
 
-// ========================
-// SAVE PATH TO ORDER
-// ========================
+  // ========================
+  // SAVE PATH TO ORDER
+  // ========================
 
-const {
-  error:
+  const {
+    error:
+      updateError
+  } =
+    await supabase.rpc(
+      "save_payment_proof",
+      {
+        p_order_id:
+          createdOrder
+            .created_order_id,
+
+        p_checkout_token:
+          checkoutSession
+            .sessionId,
+
+        p_payment_proof_path:
+          storedPath,
+      }
+    );
+
+
+  if (
     updateError
-} =
-  await supabase.rpc(
-    "save_payment_proof",
-    {
-      p_order_id:
-        createdOrder
-          .created_order_id,
+  ) {
 
-      p_checkout_token:
-        checkoutSession
-          .sessionId,
+    console.error(
+      "Unable to save payment proof path:",
+      updateError
+    );
 
-      p_payment_proof_path:
-        filePath,
-    }
+    throw updateError;
+  }
+
+
+  console.log(
+    "Payment proof path saved:",
+    storedPath
   );
 
 
-if (
-  updateError
-) {
-
-  console.error(
-    "Unable to save payment proof path:",
-    updateError
-  );
-
-  throw updateError;
-}
-
-
-console.log(
-  "Payment proof path saved:",
-  filePath
-);
-
-
-return filePath;
+  return storedPath;
 }
 
 
