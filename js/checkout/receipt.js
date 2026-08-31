@@ -3,6 +3,10 @@ import {
 } from "../supabase-config.js";
 
 
+import {
+  clearCheckoutSession
+} from "./checkout-session.js";
+
 // ================================================
 // RECEIPT PAGE
 // ================================================
@@ -742,18 +746,25 @@ newOrderButton?.addEventListener(
   "click",
   () => {
 
+    // Clear cart
     localStorage.removeItem(
       "sushibakeCart"
     );
 
+    // Clear checkout data
     localStorage.removeItem(
       "wayakiCheckout"
     );
 
+    // Clear created order snapshot
     localStorage.removeItem(
-      "wayakiPendingOrder"
+      "wayakiCreatedOrder"
     );
 
+    // Clear checkout session
+    clearCheckoutSession();
+
+    // Go back to menu
     window.location.href =
       "https://wayaki.github.io/sushibake/";
   }
@@ -791,7 +802,7 @@ function showReceiptError(
         )}
       </p>
 
-      <a href="../index.html">
+      <a href="https://wayaki.github.io/sushibake/">
         Back to WAYAKI
       </a>
 
