@@ -1031,49 +1031,41 @@ async function uploadPaymentProof() {
   );
 
 
-  // ========================
-  // SAVE PATH TO ORDER
-  // ========================
+// ========================
+// SAVE PATH TO ORDER
+// ========================
 
-  const {
-    error:
-      updateError
-  } =
-    await supabase
-      .from(
-        "orders"
-      )
-      .update({
-        payment_proof_path:
-          filePath,
-      })
-      .eq(
-        "id",
-        createdOrder
-          .created_order_id
-      );
-
-
-  if (
+const {
+  error:
     updateError
-  ) {
+} =
+  await supabase.rpc(
+    "save_payment_proof",
+    {
+      p_order_id:
+        createdOrder
+          .created_order_id,
 
-    console.error(
-      "Unable to save payment proof path:",
-      updateError
-    );
+      p_checkout_token:
+        checkoutSession
+          .sessionId,
 
-    throw updateError;
-  }
-
-
-  console.log(
-    "Payment proof path saved:",
-    filePath
+      p_payment_proof_path:
+        filePath,
+    }
   );
 
 
-  return filePath;
+if (
+  updateError
+) {
+
+  console.error(
+    "Unable to save payment proof path:",
+    updateError
+  );
+
+  throw updateError;
 }
 
 
