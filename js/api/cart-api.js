@@ -55,8 +55,7 @@ const PRODUCT_NAME_MAP = {
   "Salmon Deluxe": "salmon_deluxe",
   "Shroom Bliss": "shroom_bliss",
   "Chicken Comfort": "chicken_comfort",
-  "Tuna Delight": "tuna_delight",
-  "Luncheon Melt": "luncheon_melt"
+  "Tuna Delight": "tuna_delight"
 };
 
 
@@ -84,8 +83,7 @@ const INGREDIENT_CODE_MAP = {
   "Egg": "egg",
   "Tuna": "tuna",
   "Cucumber": "cucumber",
-  "Cream Cheese": "cream_cheese",
-  "Luncheon Meat": "luncheon_meat"
+  "Cream Cheese": "cream_cheese"
 };
 
 // ================================================
