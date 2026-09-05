@@ -293,6 +293,11 @@ function renderItems(
   items.forEach(
     (item) => {
 
+      console.log(
+        "Selections:",
+        item.selections
+      );
+
       const container =
         document.createElement(
           "div"
@@ -320,9 +325,17 @@ function renderItems(
         item.instructions
           ? `
             <div class="receipt-item-note">
-              Note: ${escapeHtml(
-                item.instructions
-              )}
+
+              <div class="receipt-note-title">
+                📝 Special Request
+              </div>
+
+              <div class="receipt-note-text">
+                ${escapeHtml(
+                  item.instructions
+                )}
+              </div>
+
             </div>
           `
           : "";
@@ -378,70 +391,206 @@ function renderSelections(
   }
 
 
-  const lines =
-    selections.map(
-      (selection) => {
+  // ========================
+  // GROUP BY selection_group
+  // ========================
 
-        return `
-          <div class="receipt-selection">
-            ${escapeHtml(
-              formatSelection(
-                selection
+  const groupedSelections =
+    selections.reduce(
+      (
+        groups,
+        selection
+      ) => {
+
+        const groupNumber =
+          selection.selection_group ||
+          1;
+
+
+        if (!groups[groupNumber]) {
+          groups[groupNumber] = [];
+        }
+
+
+        groups[groupNumber].push(
+          selection
+        );
+
+
+        return groups;
+      },
+      {}
+    );
+
+
+  // ========================
+  // RENDER GROUPS
+  // ========================
+
+  const groupHtml =
+    Object.entries(
+      groupedSelections
+    )
+      .sort(
+        (
+          [groupA],
+          [groupB]
+        ) =>
+          Number(groupA) -
+          Number(groupB)
+      )
+      .map(
+        (
+          [
+            groupNumber,
+            groupSelections
+          ]
+        ) => {
+
+          // ========================
+          // FIND FLAVOUR
+          // ========================
+
+          const flavourSelection =
+            groupSelections.find(
+              (selection) =>
+                selection.selection_type ===
+                "flavour"
+            );
+
+
+          const flavourName =
+            flavourSelection
+              ? titleCase(
+                  String(
+                    flavourSelection
+                      .selection_value ||
+                    ""
+                  ).replaceAll(
+                    "_",
+                    " "
+                  )
+                )
+              : `Option ${groupNumber}`;
+
+
+          // ========================
+          // OTHER OPTIONS
+          // ========================
+
+          const options =
+            groupSelections
+              .filter(
+                (selection) =>
+                  selection.selection_type !==
+                  "flavour"
               )
-            )}
-          </div>
-        `;
-      }
-    ).join("");
+              .map(
+                (selection) => {
+
+                  const type =
+                    String(
+                      selection.selection_type ||
+                      ""
+                    ).toLowerCase();
+
+
+                  const value =
+                    titleCase(
+                      String(
+                        selection.selection_value ||
+                        ""
+                      ).replaceAll(
+                        "_",
+                        " "
+                      )
+                    );
+
+
+                  return `
+                    <div class="receipt-option">
+
+                      <span class="receipt-option-label">
+                        ${escapeHtml(
+                          getSelectionLabel(
+                            type
+                          )
+                        )}
+                      </span>
+
+                      <span class="receipt-option-value">
+                        ${escapeHtml(
+                          value
+                        )}
+                      </span>
+
+                    </div>
+                  `;
+                }
+              )
+              .join("");
+
+
+          return `
+            <div class="receipt-selection-group">
+
+              <div class="receipt-flavour">
+
+                <span class="receipt-flavour-number">
+                  ${escapeHtml(
+                    groupNumber
+                  )}
+                </span>
+
+                <strong>
+                  ${escapeHtml(
+                    flavourName
+                  )}
+                </strong>
+
+              </div>
+
+
+              <div class="receipt-option-list">
+                ${options}
+              </div>
+
+            </div>
+          `;
+        }
+      )
+      .join("");
 
 
   return `
     <div class="receipt-selections">
-      ${lines}
+      ${groupHtml}
     </div>
   `;
 }
 
 
-function formatSelection(
-  selection
+function getSelectionLabel(
+  type
 ) {
 
-  const value =
-    String(
-      selection.selection_value ||
-      ""
-    )
-      .replaceAll(
-        "_",
-        " "
-      );
-
-
-  if (
-    selection.selection_type ===
-    "flavour"
-  ) {
-
-    return `Flavour: ${titleCase(
-      value
-    )}`;
+  if (type === "portion") {
+    return "Portion";
   }
 
 
-  if (
-    selection.selection_type ===
-    "upgrade"
-  ) {
+  if (type === "base") {
+    return "Base";
+  }
 
-    return `Upgrade: ${titleCase(
-      value
-    )}`;
+
+  if (type === "upgrade") {
+    return "Upgrade";
   }
 
 
   return titleCase(
-    value
+    type
   );
 }
 
