@@ -12,7 +12,7 @@ function calculateUnitPrice() {
   let unitPrice =
     product.price;
 
-  if (product.id === "doubleup") {
+  if (product.id === "double_up") {
     const firstFlavour =
       document.getElementById(
         "doubleup-flavour-1"
@@ -39,7 +39,7 @@ function calculateUnitPrice() {
         "base"
       );
   } else if (
-    product.id === "trio"
+    product.id === "wayaki_trio"
   ) {
     for (
       let trayIndex = 0;
@@ -84,7 +84,7 @@ function calculateUnitPrice() {
 
 function updatePrice() {
   if (
-    product.id === "doubleup" &&
+    product.id === "double_up" &&
     !validateDoubleUpSelection()
   ) {
     actionBtn.disabled = true;
@@ -96,7 +96,7 @@ function updatePrice() {
   }
 
   if (
-    product.id === "trio" &&
+    product.id === "wayaki_trio" &&
     !validateTrioSelection()
   ) {
     return;

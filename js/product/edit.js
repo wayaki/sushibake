@@ -5,7 +5,7 @@
 
 // ========================
 // NORMAL PRODUCT SELECTIONS
-// Restore removed ingredients, base and portion
+// Restore removed ingredients, spiciness, base, portion
 // ========================
 
 function restoreNormalProductSelections() {
@@ -32,6 +32,11 @@ function restoreNormalProductSelections() {
   restoreRadioSelection(
     "portion",
     editingItem.portion
+  );
+
+  restoreRadioSelection(
+    "spiciness",
+    editingItem.spiciness
   );
 }
 
@@ -254,10 +259,10 @@ function restoreEditSelections() {
       editingItem.instructions || "";
   }
 
-  if (product.id === "trio") {
+  if (product.id === "wayaki_trio") {
     restoreTrioSelections();
   } else if (
-    product.id === "doubleup"
+    product.id === "double_up"
   ) {
     restoreDoubleUpSelections();
   } else {

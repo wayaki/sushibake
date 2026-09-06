@@ -1,69 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>WAYAKI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>WAYAKI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/index.css">
-</head> 
-<body>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <header>
+      <a href="https://wayaki.github.io/sushibake/">
+        <img class="logo" src="./images/logo.png" alt="WAYAKI Logo" />
+      </a>
 
-  <header>
-    <a href="https://wayaki.github.io/sushibake/">
-        <img
-        class="logo"
-        src="./images/logo.png"
-        alt="WAYAKI Logo"
-        >
-    </a>
-
-    <div class="header-right">
-
+      <div class="header-right">
         <!-- Instagram -->
         <a
-        class="ig-link"
-        href="https://www.instagram.com/wayaki.sushibake/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WAYAKI Instagram"
+          class="ig-link"
+          href="https://www.instagram.com/wayaki.sushibake/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WAYAKI Instagram"
         >
-        <img
-            class="ig-logo"
-            src="./images/ig-logo-mascot.png"
-            alt=""
-        >
+          <img class="ig-logo" src="./images/ig-logo-mascot.png" alt="" />
         </a>
 
         <!-- Navigation -->
         <nav class="nav-links">
-        <a
-            href="https://wayaki.github.io/sushibake/"
-            class="linked"
-        >
+          <a href="https://wayaki.github.io/sushibake/" class="linked">
             Menu
-        </a>
+          </a>
 
-        <a href="https://wayaki.github.io/sushibake/pages/cart.html">
+          <a href="https://wayaki.github.io/sushibake/pages/cart.html">
             Cart
-        </a>
+          </a>
         </nav>
+      </div>
+    </header>
 
+    <div class="cutoff-banner" id="cutoff-banner">
+      <span class="cutoff-icon"></span>
+      <span class="cutoff-text" id="cutoff-text">Loading...</span>
     </div>
-  </header>
 
-  <div class="cutoff-banner" id="cutoff-banner">
-    <span class="cutoff-icon"></span>
-    <span class="cutoff-text" id="cutoff-text">Loading...</span>
-  </div>
-
-  <!-- SG 61 Spin -->
-  <!-- <div class="sg61-lucky-draw">
+    <!-- SG 61 Spin -->
+    <!-- <div class="sg61-lucky-draw">
     <a
       href="https://wayaki.github.io/sushibake/pages/sg61-lucky-spin"
       class="sg61-link"
@@ -79,238 +68,222 @@
     </a>
   </div> -->
 
-  <div class="container">
-    <!-- BUNDLE  DEALS -->
-    <div class="section-title">
-      <h2>Bundle Deals</h2>
-    </div>
-
-    <div class="menu-container">
-
-      <!-- BUNDLE 1 -->
-      <div class="menu-item" onclick="goToProduct('trio')">
-        <img src="images/wayaki-trio.jpg" alt="Wayaki Trio">
-
-        <div class="item-info">
-          <div class="item-name">Wayaki Trio</div>
-          <div class="item-price">$31.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="trio-qty-container">
-            <div class="quantity-count" id="trio-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
+    <div class="container">
+      <!-- BUNDLE  DEALS -->
+      <div class="section-title">
+        <h2>Bundle Deals</h2>
       </div>
 
-      <!-- BUNDLE 2 -->
-      <div class="menu-item" onclick="goToProduct('doubleup')">
-        <img src="images/double-up.jpg" alt="Double Up">
+      <div class="menu-container">
+        <!-- BUNDLE 1 -->
+        <div class="menu-item" onclick="goToProduct('wayaki_trio')">
+          <img src="images/wayaki-trio.jpg" alt="Wayaki Trio" />
 
-        <div class="item-info">
-          <div class="item-name">Double Up</div>
-          <div class="item-price">$16.90+</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="doubleup-qty-container">
-            <div class="quantity-count" id="doubleup-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>      
-
-
-
-
-      
-    </div>
-  </div>
-
-
-  <div class="container">
-    <!-- MAINS -->
-    <div class="section-title">
-      <h2>Mains</h2>
-    </div>
-
-    <!-- MAIN 1 -->
-    <div class="menu-container">
-      <div class="menu-item" onclick="goToProduct('salmon')">
-        <img src="images/salmon-deluxe.jpg" alt="Salmon Deluxe">
-
-        <div class="item-info">
-          <div class="item-name">Salmon Deluxe</div>
-          <div class="item-price">$12.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="salmon-qty-container">
-            <div class="quantity-count" id="salmon-count">0</div>
-            <button>+</button>
+          <div class="item-info">
+            <div class="item-name">Wayaki Trio</div>
+            <div class="item-price" id="wayaki_trio-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="wayaki_trio-qty-container">
+              <div class="quantity-count" id="wayaki_trio-count">0</div>
+              <button>+</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- MAIN 2 -->
-      <div class="menu-item" onclick="goToProduct('shroom')">
-        <img src="images/shroom-bliss.jpg" alt="Shroom Bliss">
+        <!-- BUNDLE 2 -->
+        <div class="menu-item" onclick="goToProduct('double_up')">
+          <img src="images/double-up.jpg" alt="Double Up" />
 
-        <div class="item-info">
-          <div class="item-name">Shroom Bliss</div>
-          <div class="item-price">$11.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="shroom-qty-container">
-            <div class="quantity-count" id="shroom-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN 3 -->
-      <div class="menu-item" onclick="goToProduct('chicken')">
-        <img src="images/chicken-comfort.jpg" alt="Chicken Comfort">
-
-        <div class="item-info">
-          <div class="item-name">Chicken Comfort</div>
-          <div class="item-price">$10.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="chicken-qty-container">
-            <div class="quantity-count" id="chicken-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN 4 -->
-      <div class="menu-item" onclick="goToProduct('tuna')">
-        <img src="images/tuna-delight.jpg" alt="Tuna Delight">
-
-        <div class="item-info">
-          <div class="item-name">Tuna Delight</div>
-          <div class="item-price">$9.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="tuna-qty-container">
-            <div class="quantity-count" id="tuna-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- MAIN 5 -->
-      <!-- <div class="menu-item" unavailable> -->
-      <!-- <div class="menu-item" onclick="goToProduct('luncheon')"> -->
-        <!-- <img src="images/luncheon-melt.jpg" alt="Luncheon Melt">
-
-        <div class="item-info">
-          <div class="item-name">Luncheon Melt</div>
-          <div class="item-price">$5.90</div>
-          <div class="unavailable-label">
-            Back in September
-          </div>
-          <div class="quantity" id="luncheon-qty-container">
-            <div class="quantity-count" id="luncheon-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div> -->
-    </div>
-  </div>
-
-  <div class="container">
-    <!-- SIDES AND UPGRADES -->
-    <div class="section-title">
-      <h2>Upgrades & Add-Ons</h2>
-    </div>
-
-    <div class="menu-container">
-      <!-- UPGRADE SET -->
-
-      <!-- SIDE 1 -->
-      <div class="menu-item" onclick="goToProduct('seaweed')">
-        <img src="images/seaweed.png" alt="Seaweed">
-
-        <div class="item-info">
-          <div class="item-name">Seaweed</div>
-          <div class="item-price">$1.00</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="seaweed-qty-container">
-            <div class="quantity-count" id="seaweed-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- SIDE 2 -->
-      <div class="menu-item" onclick="goToProduct('tea')">
-        <img src="images/tea-bag.png" alt="Tea Bag">
-
-        <div class="item-info">
-          <div class="item-name">Tea</div>
-          <div class="item-price">$0.50</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="tea-qty-container">
-            <div class="quantity-count" id="tea-count">0</div>
-            <button>+</button>
-          </div>
-        </div>
-      </div>      
-      
-      <!-- UPGRADE SET -->
-      <div class="menu-item" onclick="goToProduct('upgrade')">
-        <img src="images/upgrade-set.jpg" alt="Upgrade Set">
-
-        <div class="item-info">
-          <div class="item-name">Upgrade to Set</div>
-          <div class="item-price">$3.90</div>
-          <div class="available-label">
-            Available
-          </div>
-          <div class="quantity" id="upgrade-qty-container">
-            <div class="quantity-count" id="upgrade-count">0</div>
-            <button>+</button>
+          <div class="item-info">
+            <div class="item-name">Double Up</div>
+            <div class="item-price" id="double_up-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="double_up-qty-container">
+              <div class="quantity-count" id="double_up-count">0</div>
+              <button>+</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <div class="container">
+      <!-- MAINS -->
+      <div class="section-title">
+        <h2>Mains</h2>
+      </div>
 
-  <!-- Cart Bar -->
-  <div class="cart-bar" id="cartBar" onclick="goToCart()">
-    <div class="cart-left">
-      <img class="cart-mascot" src="images/cart-mascot.png" alt="Cart mascot">
+      <!-- MAIN 1 -->
+      <div class="menu-container">
+        <!-- MAIN 5 -->
+        <div class="menu-item" onclick="goToProduct('fiery_tuna')">
+          <div class="menu-image-wrapper">
+            <img src="images/fiery-tuna.jpg" alt="Fiery Tuna" />
+            <span class="product-badge"> NEW! </span>
+          </div>
 
-      <div class="cart-info">
-        <span id="cart-count">0 items in cart</span>
-        <span id="cart-total">$0.00</span>
+          <div class="item-info">
+            <div class="item-name">Fiery Tuna</div>
+
+            <div class="item-price" id="fiery_tuna-price"></div>
+
+            <div class="available-label">Available</div>
+
+            <div class="quantity" id="fiery_tuna-qty-container">
+              <div class="quantity-count" id="fiery_tuna-count">0</div>
+
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item" onclick="goToProduct('salmon_deluxe')">
+          <div class="menu-image-wrapper">
+            <img src="images/salmon-deluxe.jpg" alt="Salmon Deluxe" />
+            <span class="product-badge"> BESTSELLER </span>
+          </div>
+
+          <div class="item-info">
+            <div class="item-name">
+              Salmon Deluxe
+            </div>
+            <div class="item-price" id="salmon_deluxe-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="salmon_deluxe-qty-container">
+              <div class="quantity-count" id="salmon_deluxe-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN 2 -->
+        <div class="menu-item" onclick="goToProduct('shroom_bliss')">
+          <img src="images/shroom-bliss.jpg" alt="Shroom Bliss" />
+
+          <div class="item-info">
+            <div class="item-name">Shroom Bliss</div>
+            <div class="item-price" id="shroom_bliss-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="shroom_bliss-qty-container">
+              <div class="quantity-count" id="shroom_bliss-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN 3 -->
+        <div class="menu-item" onclick="goToProduct('chicken_comfort')">
+          <img src="images/chicken-comfort.jpg" alt="Chicken Comfort" />
+
+          <div class="item-info">
+            <div class="item-name">Chicken Comfort</div>
+            <div class="item-price" id="chicken_comfort-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="chicken_comfort-qty-container">
+              <div class="quantity-count" id="chicken_comfort-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN 4 -->
+        <div class="menu-item" onclick="goToProduct('tuna_delight')">
+          <img src="images/tuna-delight.jpg" alt="Tuna Delight" />
+
+          <div class="item-info">
+            <div class="item-name">Tuna Delight</div>
+            <div class="item-price" id="tuna_delight-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="tuna_delight-qty-container">
+              <div class="quantity-count" id="tuna_delight-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <button class="cart-btn" type="button">View Cart</button>
-  </div>
+    <div class="container">
+      <!-- SIDES AND UPGRADES -->
+      <div class="section-title">
+        <h2>Upgrades & Add-Ons</h2>
+      </div>
 
-  <!-- Image Modal -->
-  <div id="imageModal" class="image-modal">
-    <span class="close-btn" onclick="closeModal()">×</span>
-    <img class="modal-content" id="modalImg">
-  </div>
+      <div class="menu-container">
+        <!-- UPGRADE SET -->
 
-  
-  <!-- JavaScript -->
-  <script src="js/product/products.js"></script>
-  <script src="js/index.js"></script>
+        <!-- SIDE 1 -->
+        <div class="menu-item" onclick="goToProduct('seaweed_pack')">
+          <img src="images/seaweed.png" alt="Seaweed" />
 
-</body>
+          <div class="item-info">
+            <div class="item-name">Seaweed</div>
+            <div class="item-price" id="seaweed_pack-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="seaweed_pack-qty-container">
+              <div class="quantity-count" id="seaweed_pack-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIDE 2 -->
+        <div class="menu-item" onclick="goToProduct('green_tea_bag')">
+          <img src="images/tea-bag.png" alt="Green Tea Bag" />
+
+          <div class="item-info">
+            <div class="item-name">Green Tea</div>
+            <div class="item-price" id="green_tea_bag-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="green_tea_bag-qty-container">
+              <div class="quantity-count" id="green_tea_bag-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPGRADE SET -->
+        <div class="menu-item" onclick="goToProduct('upgrade_set')">
+          <img src="images/upgrade-set.jpg" alt="Upgrade Set" />
+
+          <div class="item-info">
+            <div class="item-name">Upgrade to Set</div>
+            <div class="item-price" id="upgrade_set-price"></div>
+            <div class="available-label">Available</div>
+            <div class="quantity" id="upgrade_set-qty-container">
+              <div class="quantity-count" id="upgrade_set-count">0</div>
+              <button>+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Bar -->
+    <div class="cart-bar" id="cartBar" onclick="goToCart()">
+      <div class="cart-left">
+        <img
+          class="cart-mascot"
+          src="images/cart-mascot.png"
+          alt="Cart mascot"
+        />
+
+        <div class="cart-info">
+          <span id="cart-count"></span>
+          <span id="cart-total"></span>
+        </div>
+      </div>
+
+      <button class="cart-btn" type="button">View Cart</button>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <img class="modal-content" id="modalImg" />
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/product/products.js"></script>
+    <script src="js/index.js"></script>
+  </body>
 </html>

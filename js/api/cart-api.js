@@ -9,44 +9,6 @@ import {
 
 
 // ================================================
-// PRODUCT CODE MAP
-// Frontend product IDs / names → database codes
-// ================================================
-
-const PRODUCT_CODE_MAP = {
-  salmon: "salmon_deluxe",
-  salmon_deluxe: "salmon_deluxe",
-
-  shroom: "shroom_bliss",
-  shroom_bliss: "shroom_bliss",
-
-  chicken: "chicken_comfort",
-  chicken_comfort: "chicken_comfort",
-
-  tuna: "tuna_delight",
-  tuna_delight: "tuna_delight",
-
-  luncheon: "luncheon_melt",
-  luncheon_melt: "luncheon_melt",
-
-  doubleup: "double_up",
-  double_up: "double_up",
-
-  trio: "wayaki_trio",
-  wayaki_trio: "wayaki_trio",
-
-  upgrade: "upgrade_set",
-  upgrade_set: "upgrade_set",
-
-  seaweed: "seaweed_pack",
-  seaweed_pack: "seaweed_pack",
-
-  tea: "yuzu_jasmine_tea",
-  yuzu_jasmine_tea: "yuzu_jasmine_tea"
-};
-
-
-// ================================================
 // PRODUCT NAME MAP
 // Used when Trio / Double-Up stores display names
 // ================================================
@@ -55,9 +17,15 @@ const PRODUCT_NAME_MAP = {
   "Salmon Deluxe": "salmon_deluxe",
   "Shroom Bliss": "shroom_bliss",
   "Chicken Comfort": "chicken_comfort",
-  "Tuna Delight": "tuna_delight"
+  "Tuna Delight": "tuna_delight",
+  "Fiery Tuna": "fiery_tuna"
 };
 
+const SPICINESS_CODE_MAP = {
+  "Level 1": "level_1",
+  "Level 2": "level_2",
+  "Level 3": "level_3"
+};
 
 const BASE_CODE_MAP = {
   "Japanese Rice": "rice",
@@ -96,8 +64,14 @@ function getProductCode(value) {
   }
 
   return (
-    PRODUCT_CODE_MAP[value] ||
     PRODUCT_NAME_MAP[value] ||
+    value
+  );
+}
+
+function getSpicinessCode(value) {
+  return (
+    SPICINESS_CODE_MAP[value] ||
     value
   );
 }
@@ -133,7 +107,7 @@ function getFlavourCode(flavour) {
 
   // Example:
   // {
-  //   id: "salmon",
+  //   id: "salmon_deluxe",
   //   name: "Salmon Deluxe"
   // }
 
@@ -183,6 +157,16 @@ function getUpgradeQuantity(item) {
 
 function buildNormalSelections(item) {
   const selections = [];
+
+  if (item.spiciness) {
+    selections.push({
+      selection_type: "spiciness",
+      selection_value:
+        getSpicinessCode(
+          item.spiciness
+        )
+    });
+  }
 
   if (item.base) {
     selections.push({

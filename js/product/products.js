@@ -72,8 +72,8 @@ const PRODUCTS  = {
   // Large tray with two selectable flavours
   // ========================
 
-  doubleup: {
-    id: "doubleup",
+  double_up: {
+    id: "double_up",
     name: "Double-Up",
     price: 16.90,
     image: "../images/double-up.jpg",
@@ -83,19 +83,19 @@ const PRODUCTS  = {
 
     flavourOptions: [
       { 
-        productId: "tuna", 
+        productId: "tuna_delight", 
         extra: 0 
       },
       { 
-        productId: "chicken", 
+        productId: "chicken_comfort", 
         extra: 1 
       },
       { 
-        productId: "shroom", 
+        productId: "shroom_bliss", 
         extra: 2 
       },
       { 
-        productId: "salmon", 
+        productId: "salmon_deluxe", 
         extra: 3 
       }
     ],
@@ -135,8 +135,8 @@ const PRODUCTS  = {
   // Bundle of three different individual trays
   // ========================
 
-  trio: {
-    id: "trio",
+  wayaki_trio: {
+    id: "wayaki_trio",
     name: "Wayaki Trio",
     price: 31.90,
     image: "../images/wayaki-trio.jpg",
@@ -146,16 +146,16 @@ const PRODUCTS  = {
 
     flavourOptions: [
       {
-        productId: "salmon"
+        productId: "salmon_deluxe"
       },
       {
-        productId: "shroom"
+        productId: "shroom_bliss"
       },
       {
-        productId: "chicken"
+        productId: "chicken_comfort"
       },
       {
-        productId: "tuna"
+        productId: "tuna_delight"
       }
     ],
 
@@ -185,19 +185,13 @@ const PRODUCTS  = {
   // Salmon, crabstick and mentaiko sushi bake
   // ========================
 
-  salmon: {
-    id: "salmon",
+  salmon_deluxe: {
+    id: "salmon_deluxe",
     name: "Salmon Deluxe",
     price: 12.90,
     image: "../images/salmon-deluxe.jpg",
 
-    description: "Mentaiko · Salmon · Crabstick",
-
-    ingredients: [
-      "Mentaiko",
-      "Salmon",
-      "Crabstick",
-    ],
+    description: "Mentaiko · Salmon · Crabstick · Cream Cheese",
 
     removable: [
       "Mentaiko",
@@ -220,20 +214,13 @@ const PRODUCTS  = {
   // Mushroom, corn, cheese and truffle sushi bake
   // ========================
 
-  shroom: {
-    id: "shroom",
+  shroom_bliss: {
+    id: "shroom_bliss",
     name: "Shroom Bliss",
     price: 11.90,
     image: "../images/shroom-bliss.jpg",
 
-    description: "Shrooms · Corn · Cheese · Truffle",
-
-    ingredients: [
-      "Shrooms",
-      "Corn",
-      "Cheese",
-      "Truffle",
-    ],
+    description: "Shrooms · Corn · Cheese · Truffle · Cream Cheese",
 
     removable: [
       "Corn",
@@ -255,20 +242,13 @@ const PRODUCTS  = {
   // Teriyaki chicken and egg sushi bake
   // ========================
 
-  chicken: {
-    id: "chicken",
+  chicken_comfort: {
+    id: "chicken_comfort",
     name: "Chicken Comfort",
     price: 10.90,
     image: "../images/chicken-comfort.jpg",
 
     description: "Mayo · Teriyaki · Chicken · Egg",
-
-    ingredients: [
-      "Mayo",
-      "Teriyaki",
-      "Chicken",
-      "Egg",
-    ],
 
     removable: [
       "Mayo",
@@ -290,20 +270,13 @@ const PRODUCTS  = {
   // Creamy tuna and cucumber sushi bake
   // ========================
 
-  tuna: {
-    id: "tuna",
+  tuna_delight: {
+    id: "tuna_delight",
     name: "Tuna Delight",
     price: 9.90,
     image: "../images/tuna-delight.jpg",
 
-    description: "Mayo · Tuna · Cucumber",
-
-    ingredients: [
-      "Mayo",
-      "Tuna",
-      "Cucumber",
-      "Cream Cheese"
-    ],
+    description: "Mayo · Tuna · Cucumber · Cream Cheese",
 
     removable: [
       "Cucumber",
@@ -320,37 +293,36 @@ const PRODUCTS  = {
 
 
   // ========================
-  // LUNCHEON MELT
-  // Luncheon meat and egg sushi bake
+  // FIERY TUNA
+  // Spicy tuna and cucumber sushi bake
   // ========================
 
-  // luncheon: {
-  //   id: "luncheon",
-  //   name: "Luncheon Melt",
-  //   price: 5.90,
-  //   image: "../images/luncheon-melt.jpg",
+  fiery_tuna: {
+    id: "fiery_tuna",
+    name: "Fiery Tuna",
+    price: 9.90,
+    image: "../images/fiery-tuna.jpg",
 
-  //   description: "Mayo · Luncheon Meat · Egg",
+    description: "Mayo · Tabasco · Chilli Flakes · Tuna · Cucumber · Cream Cheese",
 
-  //   ingredients: [
-  //     "Mayo",
-  //     "Luncheon Meat",
-  //     "Egg",
-  //   ],
+    removable: [
+      "Cucumber",
+      "Cream Cheese"
+    ],
 
-  //   removable: [
-  //     "Mayo",
-  //     "Luncheon Meat",
-  //     "Egg"
-  //   ],
+    spicinessOptions: [
+      "Level 1",
+      "Level 2",
+      "Level 3"
+    ],
 
-  //   baseOptions: DEFAULT_BASE_OPTIONS,
+    baseOptions: DEFAULT_BASE_OPTIONS,
 
-  //   portionOptions: DEFAULT_PORTION_OPTIONS,
+    portionOptions: DEFAULT_PORTION_OPTIONS,
 
-  //   upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
 
-  // },
+  },
 
 
   // ========================
@@ -358,8 +330,8 @@ const PRODUCTS  = {
   // Edamame and Yuzu Jasmine Tea set
   // ========================
 
-  upgrade: {
-    id: "upgrade",
+  upgrade_set: {
+    id: "upgrade_set",
     name: "Upgrade to Set",
     price: 3.90,
     image: "../images/upgrade-set.jpg",
@@ -373,8 +345,8 @@ const PRODUCTS  = {
   // Individual roasted seaweed add-on
   // ========================
 
-  seaweed: {
-    id: "seaweed",
+  seaweed_pack: {
+    id: "seaweed_pack",
     name: "Seaweed",
     price: 1.0,
     image: "../images/seaweed.png",
@@ -388,9 +360,9 @@ const PRODUCTS  = {
   // Individual green tea bag add-on
   // ========================
 
-  tea: {
-    id: "tea",
-    name: "Tea bag",
+  green_tea_bag: {
+    id: "green_tea_bag",
+    name: "Green tea bag",
     price: 0.5,
     image: "../images/tea-bag.png",
 

@@ -10,7 +10,7 @@
 
 function renderTrioTrayDetails(item) {
   if (
-    item.id !== "trio" ||
+    item.id !== "wayaki_trio" ||
     !Array.isArray(item.trays)
   ) {
     return "";
@@ -57,6 +57,16 @@ function renderTrioTrayDetails(item) {
 
 function renderNormalProductDetails(item) {
   return `
+    ${
+      item.spiciness
+        ? `
+          <div class="cart-note">
+            Spiciness: ${item.spiciness}
+          </div>
+        `
+        : ""
+    }
+    
     ${
       item.base
         ? `
@@ -162,7 +172,7 @@ function renderInstructionsDetails(item) {
 // ========================
 
 function renderFreeSeaweedDetails(item) {
-  if (item.id === "trio") {
+  if (item.id === "wayaki_trio") {
     return `
       <div class="free-seaweed-line">
         🎁 Free ${item.qty * 3} seaweed
@@ -170,7 +180,7 @@ function renderFreeSeaweedDetails(item) {
     `;
   }
 
-  if (item.id === "doubleup") {
+  if (item.id === "double_up") {
     return `
       <div class="free-seaweed-line">
         🎁 Free ${item.qty * 2} seaweed
@@ -179,11 +189,11 @@ function renderFreeSeaweedDetails(item) {
   }
 
   const productsWithSeaweed = [
-    "salmon",
-    "shroom",
-    "chicken",
-    "tuna",
-    "luncheon"
+    "salmon_deluxe",
+    "shroom_bliss",
+    "chicken_comfort",
+    "tuna_delight",
+    "fiery_tuna"
   ];
 
   if (productsWithSeaweed.includes(item.id)) {
@@ -206,10 +216,10 @@ function renderFreeSeaweedDetails(item) {
 function renderCartItem(item, index) {
   let productDetails = "";
 
-  if (item.id === "trio") {
+  if (item.id === "wayaki_trio") {
     productDetails =
       renderTrioTrayDetails(item);
-  } else if (item.id === "doubleup") {
+  } else if (item.id === "double_up") {
     productDetails =
       renderDoubleUpDetails(item);
   } else {

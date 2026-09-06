@@ -64,6 +64,16 @@ const removeContainer =
     "remove-options"
   );
 
+const spicinessSection =
+  document.getElementById(
+    "spiciness-section"
+  );
+
+const spicinessContainer =
+  document.getElementById(
+    "spiciness-options"
+  );
+
 const baseSection =
   document.getElementById(
     "base-section"
@@ -160,10 +170,35 @@ document.getElementById(
 ).textContent =
   product.description || "";
 
-document.getElementById(
-  "product-price"
-).textContent =
+const productPriceElement =
+  document.getElementById(
+    "product-price"
+  );
+
+const originalPriceElement =
+  document.getElementById(
+    "original-price"
+  );
+
+productPriceElement.textContent =
   `$${product.price.toFixed(2)}`;
+
+if (
+  product.originalPrice &&
+  product.originalPrice > product.price
+) {
+  originalPriceElement.textContent =
+    `$${product.originalPrice.toFixed(2)}`;
+
+  originalPriceElement.style.display =
+    "inline";
+} else {
+  originalPriceElement.textContent = "";
+
+  originalPriceElement.style.display =
+    "none";
+}
+
 
 qtyElement.textContent =
   quantity;
@@ -272,26 +307,28 @@ function closeProductPage() {
 function initialiseProductPage() {
   hideSection(flavourSection);
   hideSection(removeSection);
+  hideSection(spicinessSection);
   hideSection(baseSection);
   hideSection(portionSection);
   hideSection(includeSection);
   hideSection(upgradeSection);
 
-  if (product.id === "trio") {
+  if (product.id === "wayaki_trio") {
     renderTrioSections();
     renderUpgradeOptions();
   } else if (
-    product.id === "doubleup"
+    product.id === "double_up"
   ) {
     renderDoubleUpFlavours();
     renderBaseOptions();
     renderUpgradeOptions();
   } else if (
-    product.id === "upgrade"
+    product.id === "upgrade_set"
   ) {
     renderIncludedItems();
   } else {
     renderRemoveOptions();
+    renderSpicinessOptions();
     renderBaseOptions();
     renderPortionOptions();
     renderUpgradeOptions();

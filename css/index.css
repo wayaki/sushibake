@@ -98,7 +98,6 @@
   padding: 12px;
 
   border-radius: 20px;
-
   background: #fff3e0;
 
   cursor: pointer;
@@ -111,7 +110,6 @@
     transform 0.2s ease;
 }
 
-
 .menu-item:hover {
   box-shadow:
     0 8px 16px rgba(0, 0, 0, 0.12);
@@ -120,14 +118,50 @@
 }
 
 
-.menu-item img {
+/* ========================
+   MENU IMAGE
+======================== */
+
+.menu-image-wrapper {
+  position: relative;
+
   width: 100%;
   max-width: 320px;
+}
+
+.menu-image-wrapper img {
+  display: block;
+
+  width: 100%;
   height: auto;
 
   border-radius: 16px;
-
   object-fit: cover;
+}
+
+
+/* ========================
+   PRODUCT BADGE
+======================== */
+
+.product-badge {
+  position: absolute;
+
+  top: 10px;
+  left: 10px;
+
+  padding: 4px 9px;
+
+  border-radius: 999px;
+
+  background: #e84a27;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+
+  z-index: 2;
 }
 
 
@@ -146,21 +180,34 @@
   min-width: 0;
 }
 
-
 .item-name {
   color: var(--color-brown-light);
 
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
+
   text-align: center;
 }
 
-
 .item-price {
   color: #000;
-  font-weight: 700;
+
   font-size: 20px;
+  font-weight: 700;
+}
+
+.current-price {
+  font-weight: 700;
+}
+
+.menu-original-price {
+  margin-left: 5px;
+
+  text-decoration: line-through;
+  opacity: 0.55;
+
+  font-size: 16px;
 }
 
 
@@ -486,67 +533,63 @@
     gap: 12px;
   }
 
-
   .menu-item {
     padding: 10px;
   }
-
 
   .item-name {
     font-size: 18px;
   }
 
-
   .item-price {
     font-size: 16px;
   }
-
 
   .quantity {
     gap: 6px;
   }
 
-
   .quantity-count {
     padding: 5px 8px;
   }
-
 
   .quantity button {
     width: 36px;
     height: 36px;
   }
 
-
   .cart-bar {
     padding: 8px 14px;
   }
 
-
   .cart-left {
     gap: 10px;
   }
-
 
   .cart-mascot {
     width: 58px;
     height: 58px;
   }
 
-
   #cart-count {
     font-size: 14px;
   }
 
-
   #cart-total {
     font-size: 18px;
   }
-
 
   .cart-btn {
     padding: 9px 12px;
 
     font-size: 14px;
   }
+
+  .menu-original-price {
+    font-size: 14px;
+  }
+
+  .product-badge {
+  font-size: 11px;
+}
 }

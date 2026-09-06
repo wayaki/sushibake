@@ -69,7 +69,7 @@ export function buildOrderMessage(
     // WAYAKI TRIO
 
     if (
-      item.id === "trio" &&
+      item.id === "wayaki_trio" &&
       Array.isArray(item.trays)
     ) {
       item.trays.forEach((tray) => {
@@ -99,7 +99,7 @@ export function buildOrderMessage(
     // DOUBLE-UP
 
     else if (
-      item.id === "doubleup"
+      item.id === "double_up"
     ) {
       const firstHalf =
         item.flavours?.[0];
@@ -141,6 +141,11 @@ export function buildOrderMessage(
     // NORMAL PRODUCT
 
     else {
+      if (item.spiciness) {
+        message +=
+          `  Spiciness: ${item.spiciness}\n`;
+      }
+
       if (item.base) {
         message +=
           `  Base: ${item.base}\n`;

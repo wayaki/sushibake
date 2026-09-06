@@ -483,7 +483,7 @@ function updateTrioFlavourLimits() {
 // ========================
 
 function validateTrioSelection() {
-  if (product.id !== "trio") {
+  if (product.id !== "wayaki_trio") {
     return true;
   }
 
@@ -525,7 +525,7 @@ function validateTrioSelection() {
 // ========================
 
 function updateTrioSaving() {
-  if (product.id !== "trio") {
+  if (product.id !== "wayaki_trio") {
     return;
   }
 

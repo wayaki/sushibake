@@ -26,7 +26,7 @@ function addToCart() {
     JSON.parse(localStorage.getItem("sushibakeCart")) || [];
 
   if (
-    product.id === "doubleup" &&
+    product.id === "double_up" &&
     !validateDoubleUpSelection()
   ) {
     alert(
@@ -37,7 +37,7 @@ function addToCart() {
   }
 
   if (
-    product.id === "trio" &&
+    product.id === "wayaki_trio" &&
     !validateTrioSelection()
   ) {
     alert(
@@ -84,11 +84,11 @@ function addToCart() {
     upgradePrice
   };
 
-  if (product.id === "trio") {
+  if (product.id === "wayaki_trio") {
     cartItem.trays =
       getTrioSelections();
   } else if (
-    product.id === "doubleup"
+    product.id === "double_up"
   ) {
     cartItem.flavours =
       getDoubleUpSelections();
@@ -126,6 +126,11 @@ function addToCart() {
       getSelectedRadioValue(
         "portion"
       );
+
+    cartItem.spiciness =
+      getSelectedRadioValue(
+        "spiciness"
+      );
   }
 
   if (editIndex !== null) {
@@ -135,10 +140,7 @@ function addToCart() {
     cart.push(cartItem);
   }
 
-  localStorage.setItem(
-    "sushibakeCart",
-    JSON.stringify(cart)
-  );
+  saveProductCart(cart);
 
   window.location.href =
     "./cart.html";

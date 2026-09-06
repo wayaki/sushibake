@@ -95,18 +95,19 @@ function editCartItem(index) {
 
 function getTotalMainTrays() {
   const mainProducts = [
-    "salmon",
-    "shroom",
-    "tuna",
-    "chicken"
+    "salmon_deluxe",
+    "shroom_bliss",
+    "chicken_comfort",
+    "tuna_delight",
+    "fiery_tuna"
   ];
 
   return cart.reduce((total, item) => {
-    if (item.id === "trio") {
+    if (item.id === "wayaki_trio") {
       return total + item.qty * 3;
     }
 
-    if (item.id === "doubleup") {
+    if (item.id === "double_up") {
       return total + item.qty;
     }
 

@@ -316,6 +316,45 @@ function renderItems(
           item.selections || []
         );
 
+      const SELECTION_DISPLAY_ORDER = {
+        base: 1,
+        portion: 2,
+        spiciness: 3,
+        removed: 4,
+        upgrade: 5
+      };
+
+
+      function sortSelections(
+        selections
+      ) {
+        return [...selections].sort(
+          (a, b) => {
+            const typeA =
+              String(
+                a.selection_type || ""
+              ).toLowerCase();
+
+            const typeB =
+              String(
+                b.selection_type || ""
+              ).toLowerCase();
+
+            return (
+              (
+                SELECTION_DISPLAY_ORDER[
+                  typeA
+                ] || 99
+              ) -
+              (
+                SELECTION_DISPLAY_ORDER[
+                  typeB
+                ] || 99
+              )
+            );
+          }
+        );
+      }
 
       // ========================
       // SPECIAL INSTRUCTIONS
@@ -484,6 +523,32 @@ function renderSelections(
                 (selection) =>
                   selection.selection_type !==
                   "flavour"
+              )
+              .sort(
+                (a, b) => {
+                  const order = {
+                    spiciness: 1,
+                    base: 2,
+                    portion: 3,
+                    removed: 4,
+                    upgrade: 5
+                  };
+
+                  const typeA =
+                    String(
+                      a.selection_type || ""
+                    ).toLowerCase();
+
+                  const typeB =
+                    String(
+                      b.selection_type || ""
+                    ).toLowerCase();
+
+                  return (
+                    (order[typeA] || 99) -
+                    (order[typeB] || 99)
+                  );
+                }
               )
               .map(
                 (selection) => {

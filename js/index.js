@@ -244,6 +244,51 @@ function updateMenuQuantities() {
 
 
 // ========================
+// LOAD PRODUCT PRICES
+// Display prices from products.js
+// ========================
+
+function loadProductPrices() {
+  Object.values(PRODUCTS).forEach(
+    (product) => {
+      const priceElement =
+        document.getElementById(
+          `${product.id}-price`
+        );
+
+      if (!priceElement) {
+        return;
+      }
+
+      const currentPrice =
+        `$${product.price.toFixed(2)}`;
+
+      if (
+        product.originalPrice &&
+        product.originalPrice > product.price
+      ) {
+        priceElement.innerHTML = `
+          <span class="current-price">
+            ${currentPrice}
+          </span>
+
+          <span class="menu-original-price">
+            $${product.originalPrice.toFixed(2)}
+          </span>
+        `;
+      } else {
+        priceElement.innerHTML = `
+          <span class="current-price">
+            ${currentPrice}
+          </span>
+        `;
+      }
+    }
+  );
+}
+
+
+// ========================
 // WEEKDAY CHECK
 // Check whether a date is Monday to Friday
 // ========================
@@ -508,7 +553,7 @@ function updateCutoffBanner() {
 // ================================================
 
 const CURRENT_SITE_VERSION =
-  "2026-09-01";
+  "2026-09-06";
 
 const savedSiteVersion =
   localStorage.getItem(
@@ -546,6 +591,7 @@ if (
 document.addEventListener(
   "DOMContentLoaded",
   () => {
+    loadProductPrices();
     updateMenuQuantities();
     updateCartBar();
     updateCutoffBanner();

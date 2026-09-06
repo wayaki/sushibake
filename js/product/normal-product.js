@@ -43,6 +43,52 @@ function renderRemoveOptions() {
 
 
 // ========================
+// SPICINESS OPTIONS
+// Render available spiciness levels
+// ========================
+
+function renderSpicinessOptions() {
+  spicinessContainer.innerHTML = "";
+
+  if (
+    !product.spicinessOptions?.length
+  ) {
+    hideSection(spicinessSection);
+    return;
+  }
+
+  showSection(spicinessSection);
+
+  product.spicinessOptions.forEach(
+    (option, index) => {
+
+      const chilliIcons =
+        "🌶️".repeat(index + 1);
+
+      spicinessContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+          <div class="option">
+            <label>
+              <input
+                type="radio"
+                name="spiciness"
+                value="${option}"
+                ${index === 0
+                  ? "checked"
+                  : ""}
+              >
+
+              ${option} ${chilliIcons} 
+            </label>
+          </div>
+        `
+      );
+    }
+  );
+}
+
+// ========================
 // BASE OPTIONS
 // Render available base options
 // ========================
