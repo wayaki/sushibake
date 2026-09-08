@@ -510,7 +510,7 @@ function renderSelections(
                     " "
                   )
                 )
-              : `Option ${groupNumber}`;
+              : "";
 
 
           // ========================
