@@ -599,21 +599,27 @@ function renderSelections(
           return `
             <div class="receipt-selection-group">
 
-              <div class="receipt-flavour">
-
-                <span class="receipt-flavour-number">
-                  ${escapeHtml(
-                    groupNumber
-                  )}
-                </span>
-
-                <strong>
-                  ${escapeHtml(
-                    flavourName
-                  )}
-                </strong>
-
-              </div>
+              ${
+                flavourName
+                  ? `
+                    <div class="receipt-flavour">
+                    
+                      <span class="receipt-flavour-number">
+                        ${escapeHtml(
+                          groupNumber
+                        )}
+                      </span>
+              
+                      <strong>
+                        ${escapeHtml(
+                          flavourName
+                        )}
+                      </strong>
+                      
+                    </div>
+                  `
+                  : ""
+              }
 
 
               <div class="receipt-option-list">
