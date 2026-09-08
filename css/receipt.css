@@ -382,9 +382,10 @@
 .receipt-option-list {
   display: flex;
   flex-direction: column;
-
   gap: 3px;
+}
 
+.receipt-flavour + .receipt-option-list {
   padding-left: 30px;
 }
 
@@ -803,11 +804,6 @@
     height: 20px;
 
     font-size: 10px;
-  }
-
-
-  .receipt-option-list {
-    padding-left: 28px;
   }
 
 
