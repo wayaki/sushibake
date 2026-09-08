@@ -180,20 +180,50 @@ const originalPriceElement =
     "original-price"
   );
 
+// productPriceElement.textContent =
+//   `$${product.price.toFixed(2)}`;
+
+// if (
+//   product.originalPrice &&
+//   product.originalPrice > product.price
+// ) {
+//   originalPriceElement.textContent =
+//     `$${product.originalPrice.toFixed(2)}`;
+
+//   originalPriceElement.style.display =
+//     "inline";
+// } else {
+//   originalPriceElement.textContent = "";
+
+//   originalPriceElement.style.display =
+//     "none";
+// }
+
+const displayPrice =
+  getProductPrice(
+    product
+  );
+
+
 productPriceElement.textContent =
-  `$${product.price.toFixed(2)}`;
+  `$${displayPrice.toFixed(2)}`;
+
 
 if (
-  product.originalPrice &&
-  product.originalPrice > product.price
+  displayPrice <
+  product.price
 ) {
+
   originalPriceElement.textContent =
-    `$${product.originalPrice.toFixed(2)}`;
+    `$${product.price.toFixed(2)}`;
 
   originalPriceElement.style.display =
     "inline";
+
 } else {
-  originalPriceElement.textContent = "";
+
+  originalPriceElement.textContent =
+    "";
 
   originalPriceElement.style.display =
     "none";

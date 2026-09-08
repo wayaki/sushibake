@@ -73,7 +73,10 @@ function addToCart() {
     image: product.image,
 
     qty: quantity,
-    basePrice: product.price,
+    basePrice:
+      getProductPrice(
+        product
+      ),
     unitPrice,
     finalPrice,
 

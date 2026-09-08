@@ -244,13 +244,17 @@ function updateMenuQuantities() {
 
 
 // ========================
-// LOAD PRODUCT PRICES
+// LOAD PRODUCT PRICES 9.9 Sale
 // Display prices from products.js
 // ========================
 
 function loadProductPrices() {
-  Object.values(PRODUCTS).forEach(
+
+  Object.values(
+    PRODUCTS
+  ).forEach(
     (product) => {
+
       const priceElement =
         document.getElementById(
           `${product.id}-price`
@@ -260,32 +264,78 @@ function loadProductPrices() {
         return;
       }
 
-      const currentPrice =
-        `$${product.price.toFixed(2)}`;
+
+      const displayPrice =
+        getProductPrice(
+          product
+        );
+
 
       if (
-        product.originalPrice &&
-        product.originalPrice > product.price
+        displayPrice <
+        product.price
       ) {
+
         priceElement.innerHTML = `
           <span class="current-price">
-            ${currentPrice}
+            $${displayPrice.toFixed(2)}
           </span>
 
           <span class="menu-original-price">
-            $${product.originalPrice.toFixed(2)}
+            $${product.price.toFixed(2)}
           </span>
         `;
+
       } else {
+
         priceElement.innerHTML = `
           <span class="current-price">
-            ${currentPrice}
+            $${displayPrice.toFixed(2)}
           </span>
         `;
       }
     }
   );
 }
+
+// function loadProductPrices() {
+//   Object.values(PRODUCTS).forEach(
+//     (product) => {
+//       const priceElement =
+//         document.getElementById(
+//           `${product.id}-price`
+//         );
+
+//       if (!priceElement) {
+//         return;
+//       }
+
+//       const currentPrice =
+//         `$${product.price.toFixed(2)}`;
+
+//       if (
+//         product.originalPrice &&
+//         product.originalPrice > product.price
+//       ) {
+//         priceElement.innerHTML = `
+//           <span class="current-price">
+//             ${currentPrice}
+//           </span>
+
+//           <span class="menu-original-price">
+//             $${product.originalPrice.toFixed(2)}
+//           </span>
+//         `;
+//       } else {
+//         priceElement.innerHTML = `
+//           <span class="current-price">
+//             ${currentPrice}
+//           </span>
+//         `;
+//       }
+//     }
+//   );
+// }
 
 
 // ========================

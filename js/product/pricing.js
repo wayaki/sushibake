@@ -8,10 +8,16 @@
 // Calculate the price for one customised product
 // ========================
 
+// function calculateUnitPrice() {
+//   let unitPrice =
+//     product.price;
+
 function calculateUnitPrice() {
   let unitPrice =
-    product.price;
-
+    getProductPrice(
+      product
+    );
+    
   if (product.id === "double_up") {
     const firstFlavour =
       document.getElementById(

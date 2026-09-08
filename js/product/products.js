@@ -139,6 +139,7 @@ const PRODUCTS  = {
     id: "wayaki_trio",
     name: "Wayaki Trio",
     price: 31.90,
+    originalPrice: 31.90,
     image: "../images/wayaki-trio.jpg",
 
     description:
@@ -369,3 +370,50 @@ const PRODUCTS  = {
     description: "Green tea bag",
   }
 };
+
+function isNineNinePromoActive() {
+  const now = new Date();
+
+  const sgTime =
+    new Date(
+      now.toLocaleString(
+        "en-US",
+        {
+          timeZone: "Asia/Singapore"
+        }
+      )
+    );
+
+  return (
+    sgTime.getFullYear() === 2026 &&
+    sgTime.getMonth() === 8 &&
+    sgTime.getDate() === 9
+  );
+}
+
+
+function getProductPrice(
+  product
+) {
+
+  const promoProducts = [
+    "salmon_deluxe",
+    "shroom_bliss",
+    "chicken_comfort",
+    "tuna_delight",
+    "fiery_tuna"
+  ];
+
+
+  if (
+    isNineNinePromoActive() &&
+    promoProducts.includes(
+      product.id
+    )
+  ) {
+    return 9.90;
+  }
+
+
+  return product.price;
+}
