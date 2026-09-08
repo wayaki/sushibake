@@ -715,15 +715,13 @@ async function renderPaymentProof(
 ) {
 
   if (
-    receipt.payment_method !==
-      "paynow" ||
     !receipt
       .payment_proof_submitted
   ) {
-
+  
     proofSection.style.display =
       "none";
-
+  
     return;
   }
 
