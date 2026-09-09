@@ -387,7 +387,8 @@ function isNineNinePromoActive() {
   return (
     sgTime.getFullYear() === 2026 &&
     sgTime.getMonth() === 8 &&
-    sgTime.getDate() === 9
+    sgTime.getDate() >= 9 &&
+    sgTime.getDate() <= 10
   );
 }
 
