@@ -943,7 +943,7 @@ function buildReceiptMessage(
 
 
   return [
-    "Hi WAYAKI! 🧡",
+    "Hi WAYAKI! \u{1F9E1}",
     "",
     `Order: ${receipt.order_number}`,
     `Name: ${receipt.customer_name}`,
