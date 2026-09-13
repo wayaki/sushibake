@@ -186,6 +186,9 @@
 
   font-size: 14px;
   font-weight: 600;
+  
+  max-width: 65%;
+  overflow-wrap: break-word;
 }
 
 
