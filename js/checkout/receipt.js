@@ -71,6 +71,11 @@ const methodElement =
   document.getElementById(
     "receipt-method"
   );
+  
+const addressElement =
+  document.getElementById(
+    "receipt-address"
+  );
 
 const itemsElement =
   document.getElementById(
@@ -1231,6 +1236,32 @@ function formatOrderDate(
       year: "numeric"
     }
   );
+}
+
+
+const fulfilmentMethod =
+  String(
+    receipt.fulfilment_method || ""
+  ).toLowerCase();
+
+
+if (fulfilmentMethod === "self") {
+
+  addressElement.textContent =
+    "Block 877 Woodlands Avenue 9 Singapore 730877";
+
+} else if (fulfilmentMethod === "delivery") {
+
+  addressElement.textContent =
+    receipt.customer_address ||
+    receipt.delivery_address ||
+    receipt.address ||
+    "Not provided";
+
+} else {
+
+  addressElement.textContent =
+    "-";
 }
 
 
