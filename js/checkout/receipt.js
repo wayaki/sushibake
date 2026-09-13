@@ -313,7 +313,8 @@ function renderItems(
 
       const selections =
         renderSelections(
-          item.selections || []
+          item.selections || [],
+          item.product_name
         );
 
       const SELECTION_DISPLAY_ORDER = {
@@ -422,11 +423,44 @@ function renderItems(
 // ================================================
 
 function renderSelections(
-  selections
+  selections,
+  productName = ""
 ) {
 
   if (!selections.length) {
     return "";
+  }
+
+
+  // ========================
+  // CHECK PRODUCT TYPE
+  // ========================
+
+  const isDoubleUp =
+    String(productName)
+      .toLowerCase()
+      .includes("double-up") ||
+    String(productName)
+      .toLowerCase()
+      .includes("double up");
+
+
+  // ========================
+  // DOUBLE-UP SHARED OPTIONS
+  // ========================
+
+  let sharedBase = null;
+
+
+  if (isDoubleUp) {
+
+    sharedBase =
+      selections.find(
+        (selection) =>
+          String(
+            selection.selection_type || ""
+          ).toLowerCase() === "base"
+      );
   }
 
 
@@ -493,7 +527,10 @@ function renderSelections(
           const flavourSelection =
             groupSelections.find(
               (selection) =>
-                selection.selection_type ===
+                String(
+                  selection.selection_type ||
+                  ""
+                ).toLowerCase() ===
                 "flavour"
             );
 
@@ -520,12 +557,38 @@ function renderSelections(
           const options =
             groupSelections
               .filter(
-                (selection) =>
-                  selection.selection_type !==
-                  "flavour"
+                (selection) => {
+
+                  const type =
+                    String(
+                      selection.selection_type ||
+                      ""
+                    ).toLowerCase();
+
+
+                  // Don't show flavour here
+                  if (type === "flavour") {
+                    return false;
+                  }
+
+
+                  // For Double-Up,
+                  // base is shared and shown
+                  // after flavour 1 + 2
+                  if (
+                    isDoubleUp &&
+                    type === "base"
+                  ) {
+                    return false;
+                  }
+
+
+                  return true;
+                }
               )
               .sort(
                 (a, b) => {
+
                   const order = {
                     spiciness: 1,
                     base: 2,
@@ -533,6 +596,7 @@ function renderSelections(
                     removed: 4,
                     upgrade: 5
                   };
+
 
                   const typeA =
                     String(
@@ -543,6 +607,7 @@ function renderSelections(
                     String(
                       b.selection_type || ""
                     ).toLowerCase();
+
 
                   return (
                     (order[typeA] || 99) -
@@ -603,28 +668,34 @@ function renderSelections(
                 flavourName
                   ? `
                     <div class="receipt-flavour">
-                    
+
                       <span class="receipt-flavour-number">
                         ${escapeHtml(
                           groupNumber
                         )}
                       </span>
-              
+
                       <strong>
                         ${escapeHtml(
                           flavourName
                         )}
                       </strong>
-                      
+
                     </div>
                   `
                   : ""
               }
 
 
-              <div class="receipt-option-list">
-                ${options}
-              </div>
+              ${
+                options
+                  ? `
+                    <div class="receipt-option-list">
+                      ${options}
+                    </div>
+                  `
+                  : ""
+              }
 
             </div>
           `;
@@ -633,13 +704,62 @@ function renderSelections(
       .join("");
 
 
+  // ========================
+  // SHARED DOUBLE-UP BASE
+  // ========================
+
+  let sharedOptionsHtml = "";
+
+
+  if (
+    isDoubleUp &&
+    sharedBase
+  ) {
+
+    const baseValue =
+      titleCase(
+        String(
+          sharedBase.selection_value ||
+          ""
+        ).replaceAll(
+          "_",
+          " "
+        )
+      );
+
+
+    sharedOptionsHtml = `
+      <div class="receipt-option-list receipt-shared-options">
+
+        <div class="receipt-option">
+
+          <span class="receipt-option-label">
+            Base
+          </span>
+
+          <span class="receipt-option-value">
+            ${escapeHtml(
+              baseValue
+            )}
+          </span>
+
+        </div>
+
+      </div>
+    `;
+  }
+
+
   return `
     <div class="receipt-selections">
+
       ${groupHtml}
+
+      ${sharedOptionsHtml}
+
     </div>
   `;
 }
-
 
 function getSelectionLabel(
   type
