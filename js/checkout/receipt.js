@@ -238,6 +238,10 @@ function renderReceipt(
       receipt.fulfilment_method
     );
 
+  addressElement.textContent =
+    getReceiptAddress(
+      receipt
+    );
 
   paymentElement.textContent =
     formatPaymentMethod(
@@ -266,6 +270,38 @@ function renderReceipt(
 
   renderNextStep(
     receipt
+  );
+}
+
+
+// address
+
+function getReceiptAddress(
+  receipt
+) {
+
+  const method =
+    String(
+      receipt.fulfilment_method ||
+      ""
+    ).toLowerCase();
+
+
+  if (
+    method === "self-collection" ||
+    method === "self_collection" ||
+    method === "self collection" ||
+    method === "collection"
+  ) {
+
+    return "Block 877 Woodlands Avenue 9 Singapore 730877";
+  }
+
+
+  return (
+    receipt.customer_address ||
+    receipt.address ||
+    "Not provided"
   );
 }
 
