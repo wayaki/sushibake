@@ -262,6 +262,10 @@
 
 
 .receipt-item-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
   flex: 1;
 
   color: var(--color-brown-dark);
@@ -271,6 +275,25 @@
   line-height: 1.4;
 }
 
+.receipt-item-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: #f6aa5b;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
 
 .receipt-item-price {
   flex-shrink: 0;
@@ -289,12 +312,12 @@
 ======================== */
 
 .receipt-item-details {
-  margin-top: 10px;
-
-  color: #80664e;
+  margin-left: 26px;
+  color: var(--color-brown-dark);
 
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1;
+  
 }
 
 
@@ -339,42 +362,32 @@
 ======================== */
 
 .receipt-flavour {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns:
+    70px minmax(0, 1fr);
 
-  gap: 8px;
+  column-gap: 10px;
 
-  margin-bottom: 7px;
+  align-items: baseline;
 
-  color: var(--color-brown-dark);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
 
-  font-size: 13px;
+
+.receipt-flavour-label {
+  color: #80664e;
+
+  font-weight: 600;
 }
 
 
 .receipt-flavour strong {
-  font-size: 13px;
+  color: var(--color-brown-dark);
+
   font-weight: 700;
-}
 
-
-.receipt-flavour-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  width: 22px;
-  height: 22px;
-
-  border-radius: 50%;
-
-  background: #f6aa5b;
-  color: #ffffff;
-
-  font-size: 11px;
-  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 
@@ -385,11 +398,10 @@
 .receipt-option-list {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-}
 
-.receipt-flavour + .receipt-option-list {
-  padding-left: 30px;
+  gap: 2px;
+
+  margin-top: 2px;
 }
 
 
@@ -397,9 +409,11 @@
   display: grid;
 
   grid-template-columns:
-    68px minmax(0, 1fr);
+    70px minmax(0, 1fr);
 
   column-gap: 10px;
+
+  align-items: baseline;
 
   font-size: 12.5px;
   line-height: 1.5;
@@ -787,32 +801,15 @@
   }
 
 
-  .receipt-item-details {
-    margin-top: 9px;
-  }
-
-
   .receipt-selection-group {
     padding: 0px 0;
   }
 
 
-  .receipt-flavour {
-    margin-bottom: 6px;
-  }
-
-
-  .receipt-flavour-number {
-    width: 20px;
-    height: 20px;
-
-    font-size: 10px;
-  }
-
-
+  .receipt-flavour,
   .receipt-option {
     grid-template-columns:
-      62px minmax(0, 1fr);
+      66px minmax(0, 1fr);
 
     column-gap: 8px;
 

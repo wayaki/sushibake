@@ -292,22 +292,22 @@ function getReceiptAddress(
     ).toLowerCase();
 
 
-  if (
-    method === "self-collection" ||
-    method === "self_collection" ||
-    method === "self collection" ||
-    method === "collection"
-  ) {
+  if (method === "self") {
 
     return "Block 877 Woodlands Avenue 9 Singapore 730877";
   }
 
 
-  return (
-    receipt.customer_address ||
-    receipt.address ||
-    "Not provided"
-  );
+  if (method === "delivery") {
+
+    return (
+      receipt.delivery_address ||
+      "Not provided"
+    );
+  }
+
+
+  return "-";
 }
 
 
@@ -332,7 +332,7 @@ function renderItems(
 
 
   items.forEach(
-    (item) => {
+  (item, index) => {
 
       console.log(
         "Selections:",
@@ -430,12 +430,19 @@ function renderItems(
         <div class="receipt-item-top">
 
           <div class="receipt-item-name">
-            ${escapeHtml(
-              item.product_name
-            )}
-            ×${item.quantity}
-          </div>
 
+            <span class="receipt-item-number">
+              ${index + 1}
+            </span>
+
+            <span>
+              ${escapeHtml(
+                item.product_name
+              )}
+              ×${item.quantity}
+            </span>
+
+          </div>
           <div class="receipt-item-price">
             $${Number(
               item.item_total
@@ -476,6 +483,11 @@ function renderSelections(
   // ========================
   // CHECK PRODUCT TYPE
   // ========================
+
+  const isWayakiTrio =
+  String(productName)
+    .toLowerCase()
+    .includes("wayaki trio");
 
   const isDoubleUp =
     String(productName)
@@ -710,16 +722,18 @@ function renderSelections(
                   ? `
                     <div class="receipt-flavour">
 
-                      <span class="receipt-flavour-number">
-                        ${escapeHtml(
-                          groupNumber
-                        )}
+                      <span class="receipt-flavour-label">
+                        ${
+                          isDoubleUp
+                            ? `Flavour ${escapeHtml(groupNumber)}`
+                            : isWayakiTrio
+                              ? `Tray ${escapeHtml(groupNumber)}`
+                              : escapeHtml(groupNumber)
+                        }
                       </span>
 
                       <strong>
-                        ${escapeHtml(
-                          flavourName
-                        )}
+                        ${escapeHtml(flavourName)}
                       </strong>
 
                     </div>
@@ -1236,32 +1250,6 @@ function formatOrderDate(
       year: "numeric"
     }
   );
-}
-
-
-const fulfilmentMethod =
-  String(
-    receipt.fulfilment_method || ""
-  ).toLowerCase();
-
-
-if (fulfilmentMethod === "self") {
-
-  addressElement.textContent =
-    "Block 877 Woodlands Avenue 9 Singapore 730877";
-
-} else if (fulfilmentMethod === "delivery") {
-
-  addressElement.textContent =
-    receipt.customer_address ||
-    receipt.delivery_address ||
-    receipt.address ||
-    "Not provided";
-
-} else {
-
-  addressElement.textContent =
-    "-";
 }
 
 
