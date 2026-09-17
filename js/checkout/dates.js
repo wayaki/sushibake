@@ -73,12 +73,6 @@ function getCutoffDate(orderDate) {
 }
 
 
-// ========================
-// ORDER DATE OPTIONS
-// Pre-orders open up to 2 weeks in advance
-// Weekends are closed
-// ========================
-
 function populateOrderDates() {
   const select =
     document.getElementById(
@@ -113,12 +107,20 @@ function populateOrderDates() {
 
   // ========================
   // SOLD OUT / CLOSED DATES
-  // Add dates here when needed
   // ========================
 
   const soldOutDates = [
-    // "2026-09-04",
-    // "2026-09-10"
+    // "2026-09-18"
+  ];
+
+
+  // ========================
+  // SPECIAL WEEKEND OPENINGS
+  // Normally weekends are closed
+  // ========================
+
+  const specialOpenDates = [
+    "2026-09-19"
   ];
 
 
@@ -140,15 +142,22 @@ function populateOrderDates() {
     );
 
 
+    const value =
+      formatDateValue(date);
+
+
     // ========================
-    // CLOSE WEEKENDS
-    // 0 = Sunday
-    // 6 = Saturday
+    // WEEKEND CHECK
+    // Allow special opening dates
     // ========================
 
-    if (
+    const isWeekend =
       date.getDay() === 0 ||
-      date.getDay() === 6
+      date.getDay() === 6;
+
+    if (
+      isWeekend &&
+      !specialOpenDates.includes(value)
     ) {
       continue;
     }
@@ -156,8 +165,6 @@ function populateOrderDates() {
 
     // ========================
     // CUTOFF CHECK
-    // Hide a date once its
-    // 8 PM cutoff has passed
     // ========================
 
     if (
@@ -166,10 +173,6 @@ function populateOrderDates() {
     ) {
       continue;
     }
-
-
-    const value =
-      formatDateValue(date);
 
 
     const option =
@@ -187,7 +190,6 @@ function populateOrderDates() {
 
     // ========================
     // SOLD OUT DATE
-    // Keep visible but disabled
     // ========================
 
     if (
