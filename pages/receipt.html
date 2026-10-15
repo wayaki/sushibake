@@ -178,7 +178,7 @@
         <div class="receipt-row">
 
           <span>
-            Collection
+            Fulfilment Method
           </span>
 
           <strong
@@ -233,38 +233,43 @@
 
       <div class="receipt-section">
 
-        <div class="receipt-row">
-
-          <span>
-            Payment
-          </span>
-
-          <strong
-            id="receipt-payment"
-          >
-            -
-          </strong>
-
-        </div>
-
-
-        <div
-          class="receipt-row total-row"
-        >
-
-          <span>
-            Total
-          </span>
-
-          <strong
-            id="receipt-total"
-          >
-            $0.00
-          </strong>
-
-        </div>
-
+      <!-- SUBTOTAL -->
+      <div class="receipt-row">
+        <span>Subtotal</span>
+        <strong id="receipt-subtotal">
+          $0.00
+        </strong>
       </div>
+
+      <!-- DELIVERY FEE -->
+      <div
+        class="receipt-row"
+        id="receipt-delivery-row"
+        style="display: none;"
+      >
+        <span>Delivery Fee</span>
+        <strong id="receipt-delivery-fee">
+          $0.00
+        </strong>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="receipt-row total-row">
+        <span>Total</span>
+        <strong id="receipt-total">
+          $0.00
+        </strong>
+      </div>
+
+      <!-- PAYMENT -->
+      <div class="receipt-row">
+        <span>Payment Method</span>
+        <strong id="receipt-payment">
+          -
+        </strong>
+      </div>
+
+    </div>
 
 
         <!-- ================================================

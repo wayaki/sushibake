@@ -71,7 +71,7 @@ const methodElement =
   document.getElementById(
     "receipt-method"
   );
-  
+
 const addressElement =
   document.getElementById(
     "receipt-address"
@@ -80,6 +80,21 @@ const addressElement =
 const itemsElement =
   document.getElementById(
     "receipt-items"
+  );
+
+const subtotalElement =
+  document.getElementById(
+    "receipt-subtotal"
+  );
+
+const deliveryRowElement =
+  document.getElementById(
+    "receipt-delivery-row"
+  );
+
+const deliveryFeeElement =
+  document.getElementById(
+    "receipt-delivery-fee"
   );
 
 const paymentElement =
@@ -172,19 +187,19 @@ async function initialiseReceipt() {
     // ORDER HAS REACHED RECEIPT
     // Clear shopping / checkout browser data
     // ================================================
-    
+
     localStorage.removeItem(
       "sushibakeCart"
     );
-    
+
     localStorage.removeItem(
       "wayakiCheckout"
     );
-    
+
     localStorage.removeItem(
       "wayakiCreatedOrder"
     );
-    
+
     clearCheckoutSession();
 
 
@@ -194,7 +209,7 @@ async function initialiseReceipt() {
     // ================================================
 
     renderReceipt(
-    data
+      data
     );
 
   } catch (error) {
@@ -248,11 +263,49 @@ function renderReceipt(
       receipt
     );
 
+  // ========================
+  // ORDER SUBTOTAL
+  // ========================
+
+  const subtotal = Number(
+    receipt.food_subtotal ?? 0
+  );
+
+  subtotalElement.textContent =
+    `$${subtotal.toFixed(2)}`;
+
+
+  // ========================
+  // DELIVERY FEE
+  // ========================
+
+  const deliveryFee = Number(
+    receipt.customer_delivery_paid ?? 0
+  );
+
+  const isDelivery =
+    receipt.fulfilment_method === "delivery";
+
+  deliveryRowElement.style.display =
+    isDelivery ? "flex" : "none";
+
+  deliveryFeeElement.textContent =
+    `$${deliveryFee.toFixed(2)}`;
+
+
+  // ========================
+  // PAYMENT METHOD
+  // ========================
+
   paymentElement.textContent =
     formatPaymentMethod(
       receipt.payment_method
     );
 
+
+  // ========================
+  // TOTAL
+  // ========================
 
   totalElement.textContent =
     `$${Number(
@@ -332,7 +385,7 @@ function renderItems(
 
 
   items.forEach(
-  (item, index) => {
+    (item, index) => {
 
       console.log(
         "Selections:",
@@ -385,12 +438,12 @@ function renderItems(
             return (
               (
                 SELECTION_DISPLAY_ORDER[
-                  typeA
+                typeA
                 ] || 99
               ) -
               (
                 SELECTION_DISPLAY_ORDER[
-                  typeB
+                typeB
                 ] || 99
               )
             );
@@ -413,8 +466,8 @@ function renderItems(
 
               <div class="receipt-note-text">
                 ${escapeHtml(
-                  item.instructions
-                )}
+            item.instructions
+          )}
               </div>
 
             </div>
@@ -437,16 +490,17 @@ function renderItems(
 
             <span>
               ${escapeHtml(
-                item.product_name
-              )}
+        item.product_name
+      )}
               ×${item.quantity}
             </span>
 
           </div>
           <div class="receipt-item-price">
-            $${Number(
-              item.item_total
-            ).toFixed(2)}
+            $${(
+          Number(item.base_price ?? 0) *
+          Number(item.quantity ?? 1)
+        ).toFixed(2)}
           </div>
 
         </div>
@@ -485,9 +539,9 @@ function renderSelections(
   // ========================
 
   const isWayakiTrio =
-  String(productName)
-    .toLowerCase()
-    .includes("wayaki trio");
+    String(productName)
+      .toLowerCase()
+      .includes("wayaki trio");
 
   const isDoubleUp =
     String(productName)
@@ -497,6 +551,15 @@ function renderSelections(
       .toLowerCase()
       .includes("double up");
 
+  // WAYAKI TRIO SHARED UPGRADES
+  const trioUpgrades = isWayakiTrio
+    ? selections.filter(
+      (selection) =>
+        String(
+          selection.selection_type || ""
+        ).toLowerCase() === "upgrade"
+    )
+    : [];
 
   // ========================
   // DOUBLE-UP SHARED OPTIONS
@@ -591,17 +654,21 @@ function renderSelections(
           const flavourName =
             flavourSelection
               ? titleCase(
-                  String(
-                    flavourSelection
-                      .selection_value ||
-                    ""
-                  ).replaceAll(
-                    "_",
-                    " "
-                  )
+                String(
+                  flavourSelection
+                    .selection_value ||
+                  ""
+                ).replaceAll(
+                  "_",
+                  " "
                 )
+              )
               : "";
 
+          const flavourAdjustment = flavourSelection
+            ? Number(flavourSelection.price_adjustment ?? 0) *
+              Number(flavourSelection.quantity ?? 1)
+            : 0;
 
           // ========================
           // OTHER OPTIONS
@@ -621,6 +688,14 @@ function renderSelections(
 
                   // Don't show flavour here
                   if (type === "flavour") {
+                    return false;
+                  }
+
+                  // Show WAYAKI Trio upgrades separately
+                  if (
+                    isWayakiTrio &&
+                    type === "upgrade"
+                  ) {
                     return false;
                   }
 
@@ -689,22 +764,32 @@ function renderSelections(
                       )
                     );
 
+                  // Display quantity for upgrade selections
+                  const quantity = Number(
+                    selection.quantity ?? 1
+                  );
+
+                  const displayValue =
+                    type === "upgrade"
+                      ? `${value} ×${quantity}`
+                      : value;
+
 
                   return `
                     <div class="receipt-option">
 
                       <span class="receipt-option-label">
                         ${escapeHtml(
-                          getSelectionLabel(
-                            type
-                          )
-                        )}
+                    getSelectionLabel(
+                      type
+                    )
+                  )}
                       </span>
 
                       <span class="receipt-option-value">
                         ${escapeHtml(
-                          value
-                        )}
+                    displayValue
+                  )}
                       </span>
 
                     </div>
@@ -717,40 +802,42 @@ function renderSelections(
           return `
             <div class="receipt-selection-group">
 
-              ${
-                flavourName
-                  ? `
+              ${flavourName
+              ? `
                     <div class="receipt-flavour">
 
                       <span class="receipt-flavour-label">
-                        ${
-                          isDoubleUp
-                            ? `Flavour ${escapeHtml(groupNumber)}`
-                            : isWayakiTrio
-                              ? `Tray ${escapeHtml(groupNumber)}`
-                              : escapeHtml(groupNumber)
-                        }
+                        ${isDoubleUp
+                ? `Flavour ${escapeHtml(groupNumber)}`
+                : isWayakiTrio
+                  ? `Tray ${escapeHtml(groupNumber)}`
+                  : escapeHtml(groupNumber)
+              }
                       </span>
 
                       <strong>
                         ${escapeHtml(flavourName)}
+                        ${flavourAdjustment > 0 ? `
+                        <span class="receipt-extra-price">
+                          +$${flavourAdjustment.toFixed(2)}
+                        </span>
+                      ` : ""}
                       </strong>
 
                     </div>
                   `
-                  : ""
-              }
+              : ""
+            }
 
 
-              ${
-                options
-                  ? `
+              ${options
+              ? `
                     <div class="receipt-option-list">
                       ${options}
                     </div>
                   `
-                  : ""
-              }
+              : ""
+            }
 
             </div>
           `;
@@ -758,6 +845,51 @@ function renderSelections(
       )
       .join("");
 
+
+  // ========================
+  // WAYAKI TRIO UPGRADE SETS
+  // ========================
+
+  const trioUpgradesHtml = trioUpgrades
+    .map((selection) => {
+      const quantity = Number(
+        selection.quantity ?? 1
+      );
+
+      const upgradeName = titleCase(
+        String(
+          selection.selection_value || ""
+        ).replaceAll("_", " ")
+      );
+
+      const upgradeTotal =
+        Number(selection.price_adjustment ?? 0) *
+        quantity;
+
+      return `
+        <div class="receipt-trio-upgrade">
+
+          <div class="receipt-flavour">
+
+            <span class="receipt-flavour-label">
+              Upgrade
+            </span>
+
+            <strong>
+              ${escapeHtml(upgradeName)} ×${quantity}
+            </strong>
+
+            ${upgradeTotal > 0 ? `
+              <span class="receipt-extra-price">
+                +$${upgradeTotal.toFixed(2)}
+              </span>
+            ` : ""}
+          </div>
+
+        </div>
+      `;
+    })
+    .join("");
 
   // ========================
   // SHARED DOUBLE-UP BASE
@@ -794,8 +926,8 @@ function renderSelections(
 
           <span class="receipt-option-value">
             ${escapeHtml(
-              baseValue
-            )}
+      baseValue
+    )}
           </span>
 
         </div>
@@ -809,6 +941,8 @@ function renderSelections(
     <div class="receipt-selections">
 
       ${groupHtml}
+
+      ${trioUpgradesHtml}
 
       ${sharedOptionsHtml}
 
@@ -861,13 +995,13 @@ function renderPaymentStatus(
 
       paymentStatusElement
         .textContent =
-          "Payment proof submitted";
+        "Payment proof submitted";
 
     } else {
 
       paymentStatusElement
         .textContent =
-          "Waiting for payment proof";
+        "Waiting for payment proof";
     }
 
     return;
@@ -893,10 +1027,10 @@ async function renderPaymentProof(
     !receipt
       .payment_proof_submitted
   ) {
-  
+
     proofSection.style.display =
       "none";
-  
+
     return;
   }
 
@@ -909,9 +1043,9 @@ async function renderPaymentProof(
 
     const {
       data:
-        proofPath,
+      proofPath,
       error:
-        proofError
+      proofError
     } =
       await supabase.rpc(
         "get_receipt_payment_proof",
@@ -943,9 +1077,9 @@ async function renderPaymentProof(
 
     const {
       data:
-        signedData,
+      signedData,
       error:
-        signedError
+      signedError
     } =
       await supabase.storage
         .from(
@@ -1125,11 +1259,10 @@ function buildReceiptMessage(
     `Order Date: ${formatOrderDate(
       receipt.order_date
     )}`,
-    `Payment: ${paymentText}`,
     `Total: $${Number(
       receipt.customer_total
     ).toFixed(2)}`,
-    "",
+    `Payment: ${paymentText}`,
     "Receipt:",
     receiptLink,
     "",
@@ -1198,8 +1331,8 @@ function showReceiptError(
 
       <p>
         ${escapeHtml(
-          message
-        )}
+    message
+  )}
       </p>
 
       <a href="https://wayaki.github.io/sushibake/">
@@ -1320,9 +1453,9 @@ function titleCase(
       (word) =>
         word
           ? word[0]
-              .toUpperCase()
-            +
-            word.slice(1)
+            .toUpperCase()
+          +
+          word.slice(1)
           : ""
     )
     .join(" ");
