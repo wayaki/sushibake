@@ -347,7 +347,7 @@ function getReceiptAddress(
 
   if (method === "self") {
 
-    return "Block 877 Woodlands Avenue 9 Singapore 730877";
+    return "Block 877 Woodlands Avenue 9\nSingapore 730877";
   }
 
 
@@ -551,15 +551,16 @@ function renderSelections(
       .toLowerCase()
       .includes("double up");
 
-  // WAYAKI TRIO SHARED UPGRADES
-  const trioUpgrades = isWayakiTrio
-    ? selections.filter(
-      (selection) =>
-        String(
-          selection.selection_type || ""
-        ).toLowerCase() === "upgrade"
-    )
-    : [];
+  // WAYAKI TRIO & DOUBLE-UP SHARED UPGRADES
+  const sharedUpgrades =
+    isWayakiTrio || isDoubleUp
+      ? selections.filter(
+          (selection) =>
+            String(
+              selection.selection_type || ""
+            ).toLowerCase() === "upgrade"
+        )
+      : [];
 
   // ========================
   // DOUBLE-UP SHARED OPTIONS
@@ -691,9 +692,9 @@ function renderSelections(
                     return false;
                   }
 
-                  // Show WAYAKI Trio upgrades separately
+                  // Show Trio and Double-Up upgrades separately
                   if (
-                    isWayakiTrio &&
+                    (isWayakiTrio || isDoubleUp) &&
                     type === "upgrade"
                   ) {
                     return false;
@@ -817,12 +818,13 @@ function renderSelections(
 
                       <strong>
                         ${escapeHtml(flavourName)}
-                        ${flavourAdjustment > 0 ? `
+                      </strong>
+
+                      ${flavourAdjustment > 0 ? `
                         <span class="receipt-extra-price">
                           +$${flavourAdjustment.toFixed(2)}
                         </span>
                       ` : ""}
-                      </strong>
 
                     </div>
                   `
@@ -850,7 +852,7 @@ function renderSelections(
   // WAYAKI TRIO UPGRADE SETS
   // ========================
 
-  const trioUpgradesHtml = trioUpgrades
+  const sharedUpgradesHtml = sharedUpgrades
     .map((selection) => {
       const quantity = Number(
         selection.quantity ?? 1
@@ -867,7 +869,7 @@ function renderSelections(
         quantity;
 
       return `
-        <div class="receipt-trio-upgrade">
+        <div class="receipt-item-upgrade">
 
           <div class="receipt-flavour">
 
@@ -942,9 +944,9 @@ function renderSelections(
 
       ${groupHtml}
 
-      ${trioUpgradesHtml}
-
       ${sharedOptionsHtml}
+
+      ${sharedUpgradesHtml}
 
     </div>
   `;
