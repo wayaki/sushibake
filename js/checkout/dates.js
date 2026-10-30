@@ -120,7 +120,7 @@ function populateOrderDates() {
   // ========================
 
   const specialOpenDates = [
-    "2026-10-24"
+    "2026-10-31"
   ];
 
 
