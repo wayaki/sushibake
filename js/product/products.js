@@ -333,7 +333,7 @@ const PRODUCTS  = {
   golden_tamago: {
     id: "golden_tamago",
     name: "Golden Tamago",
-    price: 9.90,
+    price: 8.90,
     image: "../images/golden-tamago.jpg",
 
     description: "Teriyaki · Mayo · Tamagoyaki · Chicken Floss / Bonito Flakes / Both",

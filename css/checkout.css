@@ -372,6 +372,15 @@
   font-weight: 800;
 }
 
+.old-delivery {
+  text-decoration: line-through var(--color-brown-dark) 1px;
+  margin-right: 2px;
+}
+
+.free-delivery, .new-delivery{
+  color: var(--color-brown-light);
+  font-size: 15px;
+}
 
 /* ========================
    CONTINUE BUTTON
