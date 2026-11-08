@@ -89,6 +89,42 @@ function renderSpicinessOptions() {
 }
 
 // ========================
+// TOPPING OPTIONS
+// Render available topping choices
+// ========================
+
+function renderToppingOptions() {
+  toppingContainer.innerHTML = "";
+
+  if (!product.toppingOptions?.length) {
+    hideSection(toppingSection);
+    return;
+  }
+
+  showSection(toppingSection);
+
+  product.toppingOptions.forEach((option, index) => {
+    toppingContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="option">
+          <label>
+            <input
+              type="radio"
+              name="topping"
+              value="${option}"
+              ${index === 0 ? "checked" : ""}
+            >
+
+            ${option}
+          </label>
+        </div>
+      `
+    );
+  });
+}
+
+// ========================
 // BASE OPTIONS
 // Render available base options
 // ========================

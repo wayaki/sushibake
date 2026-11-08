@@ -66,6 +66,16 @@ function renderNormalProductDetails(item) {
         `
         : ""
     }
+
+    ${
+      item.topping
+        ? `
+          <div class="cart-note">
+            Topping(s): ${item.topping}
+          </div>
+        `
+        : ""
+    }
     
     ${
       item.base
@@ -193,7 +203,8 @@ function renderFreeSeaweedDetails(item) {
     "shroom_bliss",
     "chicken_comfort",
     "tuna_delight",
-    "fiery_tuna"
+    "fiery_tuna",
+    "golden_tamago"
   ];
 
   if (productsWithSeaweed.includes(item.id)) {

@@ -27,6 +27,12 @@ const SPICINESS_CODE_MAP = {
   "Level 3": "level_3"
 };
 
+const TOPPING_CODE_MAP = {
+  "Bonito Flakes": "bonito_flakes",
+  "Chicken Floss": "chicken_floss",
+  "Both": "both"
+};
+
 const BASE_CODE_MAP = {
   "Japanese Rice": "rice",
   "Rice": "rice",
@@ -74,6 +80,10 @@ function getSpicinessCode(value) {
     SPICINESS_CODE_MAP[value] ||
     value
   );
+}
+
+function getToppingCode(value) {
+  return TOPPING_CODE_MAP[value] || value;
 }
 
 function getBaseCode(value) {
@@ -165,6 +175,14 @@ function buildNormalSelections(item) {
         getSpicinessCode(
           item.spiciness
         )
+    });
+  }
+
+  if (item.topping) {
+    selections.push({
+      selection_type: "topping",
+      selection_value:
+        getToppingCode(item.topping)
     });
   }
 

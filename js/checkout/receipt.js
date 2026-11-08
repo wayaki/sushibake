@@ -362,8 +362,9 @@ function renderItems(
         base: 1,
         portion: 2,
         spiciness: 3,
-        removed: 4,
-        upgrade: 5
+        topping: 4,
+        removed: 5,
+        upgrade: 6
       };
 
 
@@ -644,10 +645,11 @@ function renderSelections(
 
                   const order = {
                     spiciness: 1,
-                    base: 2,
-                    portion: 3,
-                    removed: 4,
-                    upgrade: 5
+                    topping: 2,
+                    base: 3,
+                    portion: 4,
+                    removed: 5,
+                    upgrade: 6
                   };
 
 

@@ -99,7 +99,8 @@ function getTotalMainTrays() {
     "shroom_bliss",
     "chicken_comfort",
     "tuna_delight",
-    "fiery_tuna"
+    "fiery_tuna",
+    "golden_tamago"
   ];
 
   return cart.reduce((total, item) => {

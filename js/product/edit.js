@@ -38,6 +38,11 @@ function restoreNormalProductSelections() {
     "spiciness",
     editingItem.spiciness
   );
+
+  restoreRadioSelection(
+    "topping",
+    editingItem.topping
+  );
 }
 
 

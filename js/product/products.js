@@ -325,6 +325,32 @@ const PRODUCTS  = {
 
   },
 
+  // ========================
+  // GOLDEN EGG
+  // Teriyaki Tamagoyaki with Bonito Flakes and/or Chicken Floss sushi bake
+  // ========================
+
+  golden_tamago: {
+    id: "golden_tamago",
+    name: "Golden Tamago",
+    price: 9.90,
+    image: "../images/golden-tamago.jpg",
+
+    description: "Teriyaki · Mayo · Tamagoyaki · Chicken Floss / Bonito Flakes / Both",
+
+    toppingOptions: [
+      "Bonito Flakes",
+      "Chicken Floss",
+      "Both"
+    ],
+
+    baseOptions: DEFAULT_BASE_OPTIONS,
+
+    portionOptions: DEFAULT_PORTION_OPTIONS,
+
+    upgradeOptions: DEFAULT_UPGRADE_OPTIONS,
+
+  },
 
   // ========================
   // UPGRADE SET

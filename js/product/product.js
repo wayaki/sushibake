@@ -74,6 +74,12 @@ const spicinessContainer =
     "spiciness-options"
   );
 
+const toppingSection =
+  document.getElementById("topping-section");
+
+const toppingContainer =
+  document.getElementById("topping-options");
+
 const baseSection =
   document.getElementById(
     "base-section"
@@ -338,6 +344,7 @@ function initialiseProductPage() {
   hideSection(flavourSection);
   hideSection(removeSection);
   hideSection(spicinessSection);
+  hideSection(toppingSection);
   hideSection(baseSection);
   hideSection(portionSection);
   hideSection(includeSection);
@@ -359,6 +366,7 @@ function initialiseProductPage() {
   } else {
     renderRemoveOptions();
     renderSpicinessOptions();
+    renderToppingOptions();
     renderBaseOptions();
     renderPortionOptions();
     renderUpgradeOptions();

@@ -134,6 +134,11 @@ function addToCart() {
       getSelectedRadioValue(
         "spiciness"
       );
+    
+    cartItem.topping =
+      getSelectedRadioValue(
+        "topping"
+      );
   }
 
   if (editIndex !== null) {
